@@ -1,0 +1,166 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class NewPlayer : MonoBehaviour
+{
+    public Rigidbody rig;
+    public GameObject cam;
+
+    public Transform orientation;
+   
+    // floats ------------------------- 
+    private float dash = 50000f;
+    public float movespeed = 17500;
+    private float maxVertSpeed = 200;
+     public float maxspeed = 300f;
+     private float sensitivity = 50f;
+    private float sensMultiplier = 1f;
+    public float sprintime = 100f;
+    // bools---------------------------
+    public bool isgroundedboi;
+    public bool sprinting;
+    // input---------------------------
+    float x, z;
+    // ui stamina and health --------------------
+    public Slider sildevalue;
+    public TextMeshProUGUI numbersilder;
+    void FixedUpdate()
+    {
+        Vector3 xzVel = new Vector3(rig.velocity.x, 0, rig.velocity.z);
+        Vector3 yVel = new Vector3(0, rig.velocity.y, 0);
+
+        xzVel = Vector3.ClampMagnitude(xzVel, maxspeed);
+        yVel = Vector3.ClampMagnitude(yVel, maxVertSpeed);
+
+        rig.velocity = xzVel + yVel;
+
+
+       // if (rig.velocity.magnitude > maxspeed && (!(health.Health <= 0f)))
+       // {
+       //     speedeffect.Play();
+       // }
+
+
+
+        //if (rig.velocity.magnitude < maxspeed)
+        //{
+        //    speedeffect.Stop();
+        //}
+
+        if (isgroundedboi) //&& !(health.Health <= 0))
+        {
+           // jumpower = 7000f;
+            rig.drag = 10;
+        
+        }
+        if (!isgroundedboi)
+        {
+            //jumpower = 0f;
+            rig.AddForce(orientation.up * -100 * Time.fixedDeltaTime, ForceMode.Impulse);
+            rig.drag = 0.5f;
+            movespeed = 400;
+        }
+   
+       // if (isgroundedboi && (Input.GetKey(KeyCode.Space)))
+       // {
+       //     rig.AddForce(orientation.up * jumpower * Time.fixedDeltaTime, ForceMode.Impulse);
+       //
+       //
+       // }
+    }
+    
+    public void  Playermovement()
+    {
+        rig.AddForce(orientation.transform.forward * z * movespeed * Time.deltaTime );
+        rig.AddForce(orientation.transform.right * x * movespeed * Time.deltaTime );
+    }
+ 
+    public void sprint()
+    {
+        sildevalue.value = sprintime;
+        numbersilder.text = Mathf.Clamp((int)sprintime, 0, int.MaxValue).ToString();
+        if (sprintime >= 25)
+        {
+            sprinting = true;
+        }
+        if(sprintime == 0)
+        {
+            sprinting = false;
+        }
+        if (Input.GetKey(KeyCode.LeftShift) && sprinting == true && isgroundedboi)
+        {
+            movespeed = 200000;
+            maxspeed = 16;
+            sprintime -= 2.5f *  Time.deltaTime;
+        }
+        else if (isgroundedboi )
+        {
+            movespeed = 100000;
+            maxspeed = 8;
+            sprintime += Time.deltaTime;
+        }
+    }
+ 
+    void Update()
+    {
+         sprintime = Mathf.Clamp((float)sprintime, 0, 100 );
+        float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
+        orientation.Rotate(Vector3.up * mouseX);
+        x = Input.GetAxisRaw("Horizontal");
+        z = Input.GetAxisRaw("Vertical");
+      
+        Playermovement();
+        sprint();
+       
+        if (Input.GetKeyDown(KeyCode.H) && !isgroundedboi)
+        {
+            rig.velocity = Vector3.ClampMagnitude(rig.velocity, 1000);
+            rig.AddForce(orientation.forward * dash * Time.deltaTime, ForceMode.VelocityChange);
+
+        }
+
+       // if (health.Health <= 0)
+       // {
+       //     forwardspeed = 0f;
+       //     backwards = -0f;
+       //     right = 0f;
+       //     left = -0f;
+       //     sensitivity = 0f;
+       //     sensMultiplier = 0;
+       // }
+       // if (Time.timeScale == 0)
+       // {
+       //     forwardspeed = 0f;
+       //     backwards = -0f;
+       //     right = 0f;
+       //     left = -0f;
+       //     sensitivity = 0f;
+       //     sensMultiplier = 0;
+       // }
+      // if (Time.timeScale == 1 && !(health.Health <= 0))
+      // {
+      //     sensitivity = 50f;
+      //     sensMultiplier = 1;
+      // }
+    }
+    public void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            isgroundedboi = true;
+
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            isgroundedboi = false;
+
+        }
+    }
+}
