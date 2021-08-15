@@ -8,7 +8,7 @@ public class NewPlayer : MonoBehaviour
 {
     public Rigidbody rig;
     public GameObject cam;
-
+    public Animator anim;
     public Transform orientation;
    
     // floats ------------------------- 
@@ -23,7 +23,7 @@ public class NewPlayer : MonoBehaviour
     public bool isgroundedboi;
     public bool sprinting;
     // input---------------------------
-    float x, z;
+     public float x, z;
     // ui stamina and health --------------------
     public Slider sildevalue;
     public TextMeshProUGUI numbersilder;
@@ -74,8 +74,8 @@ public class NewPlayer : MonoBehaviour
     
     public void  Playermovement()
     {
-        rig.AddForce(orientation.transform.forward * z * movespeed * Time.deltaTime );
-        rig.AddForce(orientation.transform.right * x * movespeed * Time.deltaTime );
+        rig.AddForce(orientation.forward * x * movespeed * Time.deltaTime );
+        rig.AddForce(orientation.right * z * movespeed * Time.deltaTime );
     }
  
     public void sprint()
@@ -109,9 +109,24 @@ public class NewPlayer : MonoBehaviour
          sprintime = Mathf.Clamp((float)sprintime, 0, 100 );
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
         orientation.Rotate(Vector3.up * mouseX);
-        x = Input.GetAxisRaw("Horizontal");
-        z = Input.GetAxisRaw("Vertical");
-      
+        z = Input.GetAxisRaw("Horizontal");
+        x = Input.GetAxisRaw("Vertical");
+        if (x == 1)
+        {
+            anim.SetBool("walking", true);
+        }
+        else
+        {
+            anim.SetBool("walking", false);
+        }
+        if(z == -1)
+        {
+            anim.SetBool("left walking", true);
+        }
+        else if(z == 0)
+        {
+            anim.SetBool("left walking", false);
+        }
         Playermovement();
         sprint();
        

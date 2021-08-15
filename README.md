@@ -1,7 +1,9 @@
 # thisgamehasnonameyet
  transfur game
 
-
+15/08/2021)
+### ( was gonna  make head bop i spented some time thinking how i should do it 
+i have found a way but ill finish it torromow bc im tired)
 
 
 ___
