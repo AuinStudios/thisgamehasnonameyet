@@ -111,22 +111,22 @@ public class NewPlayer : MonoBehaviour
         orientation.Rotate(Vector3.up * mouseX);
         z = Input.GetAxisRaw("Horizontal");
         x = Input.GetAxisRaw("Vertical");
-        if (x == 1)
-        {
-            anim.SetBool("walking", true);
-        }
-        else
-        {
-            anim.SetBool("walking", false);
-        }
-        if(z == -1)
-        {
-            anim.SetBool("left walking", true);
-        }
-        else if(z == 0)
-        {
-            anim.SetBool("left walking", false);
-        }
+       // if (x == 1)
+       // {
+       //     anim.SetBool("walking", true);
+       // }
+       // else
+       // {
+       //     anim.SetBool("walking", false);
+       // }
+       // if(z == -1)
+       // {
+       //     anim.SetBool("left walking", true);
+       // }
+       // else if(z == 0)
+       // {
+       //     anim.SetBool("left walking", false);
+       // }
         Playermovement();
         sprint();
        

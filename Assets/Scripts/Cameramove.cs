@@ -9,7 +9,6 @@ public class Cameramove : MonoBehaviour
     public float sensitivity = 50f;
     private float sensMultiplier = 1f;
     public float testingsmooth = 0f;
-    public Camera cam;
 
     public void Start()
     {
