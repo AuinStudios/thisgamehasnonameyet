@@ -1,6 +1,11 @@
 # thisgamehasnonameyet
  transfur game
 
+
+16/08/2021)
+### (finished the head bop for now itts abit glitchy but ill remaster it in the future)
+
+
 15/08/2021)
 ### ( was gonna  make head bop i spented some time thinking how i should do it 
 i have found a way but ill finish it torromow bc im tired)

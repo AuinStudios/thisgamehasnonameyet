@@ -22,6 +22,7 @@ public class NewPlayer : MonoBehaviour
     // bools---------------------------
     public bool isgroundedboi;
     public bool sprinting;
+    public headbop bop;
     // input---------------------------
      public float x, z;
     // ui stamina and health --------------------
@@ -90,14 +91,17 @@ public class NewPlayer : MonoBehaviour
         {
             sprinting = false;
         }
-        if (Input.GetKey(KeyCode.LeftShift) && sprinting == true && isgroundedboi)
+        if (Input.GetKey(KeyCode.LeftShift) && sprinting == true  && isgroundedboi )
         {
             movespeed = 200000;
             maxspeed = 16;
             sprintime -= 2.5f *  Time.deltaTime;
+            anim.SetBool("running", true);
+            anim.SetBool("walking", false);
         }
         else if (isgroundedboi )
         {
+            anim.SetBool("running", false);
             movespeed = 100000;
             maxspeed = 8;
             sprintime += Time.deltaTime;
@@ -111,22 +115,26 @@ public class NewPlayer : MonoBehaviour
         orientation.Rotate(Vector3.up * mouseX);
         z = Input.GetAxisRaw("Horizontal");
         x = Input.GetAxisRaw("Vertical");
-       // if (x == 1)
-       // {
-       //     anim.SetBool("walking", true);
-       // }
-       // else
-       // {
-       //     anim.SetBool("walking", false);
-       // }
-       // if(z == -1)
-       // {
-       //     anim.SetBool("left walking", true);
-       // }
-       // else if(z == 0)
-       // {
-       //     anim.SetBool("left walking", false);
-       // }
+        if (x == 1 && !bop.walking)
+        {
+            anim.SetBool("walking", true);
+        }
+        else if((x == -1 && !bop.walking))
+        {
+            anim.SetBool("walking", true);
+        }
+        if(z == 1 && !bop.walking)
+        {
+            anim.SetBool("walking", true);
+        }
+        else if(z == -1 && !bop.walking)
+        {
+            anim.SetBool("walking", true);
+        }
+        else if (z == 0 && x ==  0 && bop.walking)
+        {
+            anim.SetBool("walking",false);
+        }
         Playermovement();
         sprint();
        

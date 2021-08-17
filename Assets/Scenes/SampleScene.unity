@@ -741,6 +741,7 @@ MonoBehaviour:
   sprintime: 100
   isgroundedboi: 0
   sprinting: 1
+  bop: {fileID: 1697626101}
   x: 0
   z: 0
   sildevalue: {fileID: 508517809}
@@ -1272,7 +1273,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 9eeb729cae136bc47b627fe5499a0f0a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1290,11 +1291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8138211b92426754b86be9dd1b59e732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oriRotation: {fileID: 1917878434}
-  camRot: {fileID: 1687258585}
-  pointA: {fileID: 0}
-  pointB: {fileID: 0}
-  shakevalue: 0.5
+  walking: 0
 --- !u!1 &1801222295
 GameObject:
   m_ObjectHideFlags: 0
