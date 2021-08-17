@@ -2,6 +2,13 @@
  transfur game
 
 
+
+
+17/08/2021)
+### (started working on the combat system it is 40 percent complete   might finish it soon )
+
+
+
 16/08/2021)
 ### (finished the head bop for now itts abit glitchy but ill remaster it in the future)
 
