@@ -16,7 +16,6 @@ public class Cameramove : MonoBehaviour
         Cursor.visible = false;
     }
 
-
     public void Update()
     {
 

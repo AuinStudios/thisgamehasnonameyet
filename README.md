@@ -2,6 +2,8 @@
  transfur game
 
 
+20/08/2021)
+### (finally finished  the head bop im satified with it for now might rework it in the future its a  tiny tiny bit bugy but its barely noticeable so this is a 8/10 head bop)
 
 
 17/08/2021)

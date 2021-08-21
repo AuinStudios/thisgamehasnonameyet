@@ -96,7 +96,16 @@ public class NewPlayer : MonoBehaviour
             movespeed = 200000;
             maxspeed = 16;
             sprintime -= 2.5f *  Time.deltaTime;
-            anim.SetBool("running", true);
+           
+              
+            if(  z == 0 && x == 0)
+            {
+                anim.SetBool("running", false);
+            }
+            else
+            {
+              anim.SetBool("running", true);
+            }
             anim.SetBool("walking", false);
         }
         else if (isgroundedboi )
@@ -117,6 +126,7 @@ public class NewPlayer : MonoBehaviour
         x = Input.GetAxisRaw("Vertical");
         if (x == 1 && !bop.walking)
         {
+           
             anim.SetBool("walking", true);
         }
         else if((x == -1 && !bop.walking))
@@ -131,10 +141,11 @@ public class NewPlayer : MonoBehaviour
         {
             anim.SetBool("walking", true);
         }
-        else if (z == 0 && x ==  0 && bop.walking)
+        else if (z == 0 && x ==  0 )
         {
             anim.SetBool("walking",false);
         }
+
         Playermovement();
         sprint();
        
