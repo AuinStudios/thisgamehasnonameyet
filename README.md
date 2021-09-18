@@ -1,6 +1,7 @@
 # thisgamehasnonameyet
  transfur game
-
+18/09/2021)
+### (so i came back to the game after a break and now i made a sway system  its not done yet i havent done the rotations but now it moves up and down on the x  and y axis  of the vector whenever u move ur camera it goes to the oppsite direction of where u make ur mouse to and   comes to its location abit fast)
 
 20/08/2021)
 ### (finally finished  the head bop im satified with it for now might rework it in the future its a  tiny tiny bit bugy but its barely noticeable so this is a 8/10 head bop)
