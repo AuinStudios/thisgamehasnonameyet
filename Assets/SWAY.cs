@@ -16,11 +16,11 @@ public class SWAY : MonoBehaviour
         // x axis-----------------------------------------------------------
         if (x < 0.6f && stop == false)
         {
-         x += Time.fixedDeltaTime * 1f ;
+         x += Time.deltaTime * 1.4f ;
         }
         else if(x > 0.6f  )
         {
-          x -= Time.fixedDeltaTime * 1f ;
+          x -= Time.deltaTime * 1.4f ;
         }
 
         if(x > 0.49)

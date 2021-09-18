@@ -1017,7 +1017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  sensitivity: 2.5
+  sensitivity: 1
   xaxisleft: {x: -0.3, y: 0, z: 0}
   xaxisright: {x: 0.3, y: 0, z: 0}
   yup: {x: 0, y: 0.25, z: -0.01}
