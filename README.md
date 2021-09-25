@@ -1,7 +1,12 @@
 # thisgamehasnonameyet
  transfur game
+
+25/09/2021)
+### (added animations to the charged attack and stab attack i  redid abit of the  weapon code to sync with the animation and its abit more efficent then it was beforce  and i think the melee system is like 80-70 percent done just need add blocking and maybe make better animations and effects and an indicator for the cooldown)
+
 19/09/2021)
 ### (finished the sway system its abit buggy ill probably improve in the future but for now its good enough and also i might add animations to it torromow nad  finish the weapon system)
+
 18/09/2021)
 ### (so i came back to the game after a break and now i made a sway system  its not done yet i havent done the rotations but now it moves up and down on the x  and y axis  of the vector whenever u move ur camera it goes to the oppsite direction of where u make ur mouse to and   comes to its location abit fast)
 

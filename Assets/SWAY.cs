@@ -7,7 +7,7 @@ public class SWAY : MonoBehaviour
     public float x , y , xrotation , yrotation;
     public float sensitivity = 2f;
     public float rotationsenstivity = 3f;
-    public Animator anim;
+    
     private bool xstop;
     private bool  ystop;
     private bool xrotationstop;
@@ -102,10 +102,7 @@ public class SWAY : MonoBehaviour
         // sway move code --------------------------------------------------------
         transform.localPosition = Vector3.Lerp(yup, ydown, y) + Vector3.Lerp(xaxisleft,xaxisright , x);
         transform.localRotation = Quaternion.Lerp(yuprotation, ydownrotation, yrotation) * Quaternion.Lerp(xaxisrotationleft, xaxisrotationright,xrotation); ;
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            anim.SetTrigger("axe");
-        }
+       
       x = Mathf.Clamp(x, 0, 1);
         y = Mathf.Clamp(y, 0, 1);
         xrotation = Mathf.Clamp(xrotation, 0, 1);
