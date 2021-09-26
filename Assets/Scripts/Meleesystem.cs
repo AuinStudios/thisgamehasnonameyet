@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class Meleesystem : MonoBehaviour
 {
     public Animator anim;
     public GameObject nocharge;
     public float Damage;
     public Slider value;
+    public Slider cooldownslider;
+    public Image Chargebarbackground;
+    public Image cooldownbarbackground;
     private bool enabletimerun;
     private float timeruntllreset;
     private float cooldown;
@@ -16,11 +21,13 @@ public class Meleesystem : MonoBehaviour
     void Update()
     { 
         //clamps values
-        cooldown = Mathf.Clamp((float)cooldown, 0, 5);
-         Damage = Mathf.Clamp((float)Damage, 0, 10);
-        clickorhold = Mathf.Clamp((float)clickorhold, 0, 10);
+        cooldown = Mathf.Clamp(cooldown, 0, 5);
+         Damage = Mathf.Clamp(Damage, 0, 10);
+        clickorhold = Mathf.Clamp(clickorhold, 0, 10);
+        // slider ------------------------------------------------
         value.value = Damage;
-      
+        cooldownslider.value = cooldown;
+
         // the main function -----------------------------------------------
         if (Input.GetKey(KeyCode.Mouse0)  && cooldown == 0)
         {
@@ -31,9 +38,10 @@ public class Meleesystem : MonoBehaviour
           if ( clickorhold > 0.3f &&  cooldown == 0)
           {
               nocharge.GetComponent<CanvasGroup>().alpha = 1;
-              
-              value.GetComponent<CanvasGroup>().alpha = 0.5f;
-
+                Chargebarbackground.GetComponent<CanvasGroup>().alpha = 1f;
+                cooldownslider.GetComponent<CanvasGroup>().alpha = 0f;
+                cooldownbarbackground.GetComponent<CanvasGroup>().alpha = 0f;
+                value.GetComponent<CanvasGroup>().alpha = 0.5f;
               anim.SetBool("Chargeing", true);
           }
          
@@ -44,7 +52,7 @@ public class Meleesystem : MonoBehaviour
           }
           else if(clickorhold >= 0.3f && cooldown == 0)
           {
-              Damage += Time.deltaTime * 3;
+              Damage += Time.deltaTime * 8;
           }
           else
           {
@@ -59,9 +67,12 @@ public class Meleesystem : MonoBehaviour
                 
                 anim.SetBool("Chargeing", false);
                 enabletimerun = true;
-                cooldown = 5; 
+                cooldown = 5;
+                cooldownslider.GetComponent<CanvasGroup>().alpha = 0.5f;
+                cooldownbarbackground.GetComponent<CanvasGroup>().alpha = 1f;
                 nocharge.GetComponent<CanvasGroup>().alpha = 0;
                 value.GetComponent<CanvasGroup>().alpha = 0;
+                Chargebarbackground.GetComponent<CanvasGroup>().alpha = 0f;
             }
             else if(clickorhold < 0.3f && cooldown == 0)
             {
@@ -95,10 +106,17 @@ public class Meleesystem : MonoBehaviour
             timeruntllreset = 0;
         }
 
-        //  decrease the cooldown over time------------------------------------------------------------------------
+        //  decrease the cooldown over time and enable cooldownslider background ------------------------------------------------------------------------
         if (cooldown != 0)
         {
             cooldown -= Time.deltaTime;
+            //cooldownslider.GetComponent<CanvasGroup>().alpha = 0.5f;
+          //  cooldownbarbackground.GetComponent<CanvasGroup>().alpha = 1f;
+        }
+        else
+        {
+            //cooldownslider.GetComponent<CanvasGroup>().alpha = 0f;
+            //cooldownbarbackground.GetComponent<CanvasGroup>().alpha = 0f;
         }
     }
 }

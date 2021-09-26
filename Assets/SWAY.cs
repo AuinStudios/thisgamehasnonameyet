@@ -7,7 +7,6 @@ public class SWAY : MonoBehaviour
     public float x , y , xrotation , yrotation;
     public float sensitivity = 2f;
     public float rotationsenstivity = 3f;
-    
     private bool xstop;
     private bool  ystop;
     private bool xrotationstop;
@@ -61,7 +60,7 @@ public class SWAY : MonoBehaviour
 
 
         //xrotation -------------------------------------------------------------------
-        if (xrotation < 0.51f && xrotationstop == false)
+        if (xrotation < 0.51f &&xrotationstop == false  )
         {
             xrotation += Time.deltaTime * 1f;
         }
@@ -81,7 +80,7 @@ public class SWAY : MonoBehaviour
 
         
         // yrot ----------------------------------------------------------------
-        if (yrotation < 0.51f && yrotationstop == false)
+        if (yrotation < 0.51f && yrotationstop == false )
         {
             yrotation += Time.deltaTime * 1f;
         }

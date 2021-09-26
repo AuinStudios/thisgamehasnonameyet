@@ -1,6 +1,9 @@
 # thisgamehasnonameyet
  transfur game
 
+26/09/2021)
+### ( i somehow spended like  5 hours just to change alittle bit of the ui and animation god im so terrible at game development  i didnt even did and also added an indicator for cooldown and thats basically it  ugh i hate my self)
+
 25/09/2021)
 ### (added animations to the charged attack and stab attack i  redid abit of the  weapon code to sync with the animation and its abit more efficent then it was beforce  and i think the melee system is like 80-70 percent done just need add blocking and maybe make better animations and effects and an indicator for the cooldown)
 
