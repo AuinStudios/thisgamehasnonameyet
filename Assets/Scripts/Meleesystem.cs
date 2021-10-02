@@ -7,7 +7,9 @@ using UnityEngine.UI;
 
 public class Meleesystem : MonoBehaviour
 {
-    public Animator anim;
+    //public Animator anim;
+    public Transform camtransform;
+    public bool enableattack;
     public GameObject nocharge;
     public float Damage;
     public Slider value;
@@ -42,7 +44,7 @@ public class Meleesystem : MonoBehaviour
                 cooldownslider.GetComponent<CanvasGroup>().alpha = 0f;
                 cooldownbarbackground.GetComponent<CanvasGroup>().alpha = 0f;
                 value.GetComponent<CanvasGroup>().alpha = 0.5f;
-              anim.SetBool("Chargeing", true);
+              gameObject.GetComponent<Animator>().SetBool("Chargeing", true);
           }
          
           // stab and  chargeing damages
@@ -59,13 +61,34 @@ public class Meleesystem : MonoBehaviour
               Damage = 0;
           }
         }
-        // plays the animation and enables hitbox whenever u let go of the mouse to attack and add cooldown
-        else if ((Input.GetKeyUp(KeyCode.Mouse0)   && cooldown == 0))
+        if (enableattack == true)
         {
-            if(clickorhold > 0.3f && cooldown == 0)
+            RaycastHit hit;
+            if (Physics.Raycast(camtransform.position, camtransform.TransformDirection(Vector3.forward), out hit, 10) )
             {
                 
-                anim.SetBool("Chargeing", false);
+                if(hit.collider.gameObject.CompareTag("Enemy"))
+                {
+                Debug.Log("killednemey");
+                }
+                else
+                {
+                    Debug.Log("wasnt");
+                }
+            }
+            else
+            {
+                Debug.Log("m");
+
+            }
+        }
+        // plays the animation and enables hitbox whenever u let go of the mouse to attack and add cooldown
+        else if ((Input.GetKeyUp(KeyCode.Mouse0) && cooldown == 0))
+        {
+            if (clickorhold > 0.3f && cooldown == 0)
+            {
+
+                gameObject.GetComponent<Animator>().SetBool("Chargeing", false);
                 enabletimerun = true;
                 cooldown = 5;
                 cooldownslider.GetComponent<CanvasGroup>().alpha = 0.5f;
@@ -74,13 +97,13 @@ public class Meleesystem : MonoBehaviour
                 value.GetComponent<CanvasGroup>().alpha = 0;
                 Chargebarbackground.GetComponent<CanvasGroup>().alpha = 0f;
             }
-            else if(clickorhold < 0.3f && cooldown == 0)
+            else if (clickorhold < 0.3f && cooldown == 0)
             {
-                anim.SetTrigger("Axestab");
+                gameObject.GetComponent<Animator>().SetTrigger("Axestab");
                 enabletimerun = true;
                 cooldown = 2;
-            nocharge.GetComponent<CanvasGroup>().alpha = 0;
-            value.GetComponent<CanvasGroup>().alpha = 0;
+                nocharge.GetComponent<CanvasGroup>().alpha = 0;
+                value.GetComponent<CanvasGroup>().alpha = 0;
             }
         }
         // timers to help make the damage values not go away instanly---------------------------------------------

@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Cameramove : MonoBehaviour
 {
     public Transform orientation;
+    public Image indicator;
     public float xRotation = 0f;
     public float sensitivity = 50f;
     private float sensMultiplier = 1f;
@@ -33,6 +35,26 @@ public class Cameramove : MonoBehaviour
         //    sensitivity = 0;
         //}
         //makes the   camera stop moveing when the game  is paused
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 10))
+        {
+
+           Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
+            if (hit.collider.gameObject.CompareTag("Enemy"))
+            {
+             indicator.GetComponent<Image>().color = new Vector4(255, 0, 0, 255);
+            }
+            else
+            {
+                indicator.GetComponent<Image>().color = new Vector4(255, 255, 255, 255);
+            }
+                
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10, Color.white);
+            indicator.GetComponent<Image>().color = new Vector4(255, 255, 255, 255);
+        }
         if (Time.timeScale == 0)
         {
             sensitivity = 0;

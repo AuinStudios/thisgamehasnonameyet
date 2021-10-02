@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SWAY : MonoBehaviour
 {
-    public float x , y , xrotation , yrotation;
+    private float x , y , xrotation , yrotation;
     public float sensitivity = 2f;
     public float rotationsenstivity = 3f;
     private bool xstop;

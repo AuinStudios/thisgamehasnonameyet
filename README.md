@@ -1,6 +1,7 @@
 # thisgamehasnonameyet
  transfur game
-
+02/10/2021)
+### ( didnt do much today just looked   a  tiny bit into raycasts made an indicator and stuff)
 26/09/2021)
 ### ( i somehow spended like  5 hours just to change alittle bit of the ui and animation god im so terrible at game development  i didnt even did and also added an indicator for cooldown and thats basically it  ugh i hate my self)
 
