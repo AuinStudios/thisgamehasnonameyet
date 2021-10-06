@@ -1,5 +1,9 @@
 # thisgamehasnonameyet
  transfur game
+06/10/2021)
+### ( also didnt do much today  denied helped me abit with the animations they re alot better now and other then that i made raycast hitboxes to box collider because it just feels  better that way)
+
+
 02/10/2021)
 ### ( didnt do much today just looked   a  tiny bit into raycasts made an indicator and stuff)
 26/09/2021)
