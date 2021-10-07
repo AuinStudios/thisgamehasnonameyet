@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class Cameramove : MonoBehaviour
 {
     public Transform orientation;
@@ -11,7 +10,7 @@ public class Cameramove : MonoBehaviour
     public float sensitivity = 50f;
     private float sensMultiplier = 1f;
     public float testingsmooth = 0f;
-
+    public float raycastrange;
     public void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -36,23 +35,25 @@ public class Cameramove : MonoBehaviour
         //}
         //makes the   camera stop moveing when the game  is paused
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 10))
+      
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit,raycastrange ))
         {
 
-           Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
+           Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * raycastrange, Color.red);
             if (hit.collider.gameObject.CompareTag("Enemy"))
             {
              indicator.GetComponent<Image>().color = new Vector4(255, 0, 0, 255);
             }
             else
             {
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * raycastrange, Color.white);
                 indicator.GetComponent<Image>().color = new Vector4(255, 255, 255, 255);
             }
-                
+               
         }
         else
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10, Color.white);
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * raycastrange, Color.white);
             indicator.GetComponent<Image>().color = new Vector4(255, 255, 255, 255);
         }
         if (Time.timeScale == 0)

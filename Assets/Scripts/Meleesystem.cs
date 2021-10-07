@@ -11,6 +11,9 @@ public class Meleesystem : MonoBehaviour
     //public Animator anim;
     public Transform camtransform;
     public GameObject nocharge;
+    public GameObject spawneffect;
+    public Transform spawneffectpos;
+    public customsliderhealthui health;
     public float Damage;
     public Slider value;
     public Slider cooldownslider;
@@ -27,7 +30,10 @@ public class Meleesystem : MonoBehaviour
         
          if (col.gameObject.CompareTag("Enemy"))
          {
-             Debug.Log("a");
+            health.health -= Damage;
+            Instantiate(spawneffect);
+            
+            col.gameObject.GetComponent<Rigidbody>().AddForce(camtransform.forward * 10000);
          }
      
     }
@@ -36,9 +42,11 @@ public class Meleesystem : MonoBehaviour
 
     void Update()
     {
+
+        spawneffect.transform.position = spawneffectpos.position;
         //clamps values
         cooldown = Mathf.Clamp(cooldown, 0, 5);
-        Damage = Mathf.Clamp(Damage, 0, 10);
+        Damage = Mathf.Clamp(Damage, 0, 30);
         clickorhold = Mathf.Clamp(clickorhold, 0, 10);
         // slider ------------------------------------------------
         value.value = Damage;
@@ -65,11 +73,11 @@ public class Meleesystem : MonoBehaviour
             // stab and  chargeing damages
             if (clickorhold <= 0.045f && cooldown == 0)
             {
-                Damage = 5f;
+                Damage = 10f;
             }
             else if (clickorhold >= 0.3f && cooldown == 0)
             {
-                Damage += Time.deltaTime * 8;
+                Damage += Time.deltaTime * 12;
             }
             else
             {
