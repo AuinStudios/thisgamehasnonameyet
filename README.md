@@ -5,6 +5,7 @@
 
 07/10/2021)
 ### ( So today i made a enemy health system with color lerping and   damage lerping so makeing it look smooth and nice  made the raycast indicator way more  accurate  and added an effect when u hit it which depends on where ur axe is  rotation aiming is at ad thats basically like 7 hours of work there it srsly took me 7 hours god im slow anyway at least i tryed and i learnt today abit like how lerping works and the random color range i messed around with torromow i will makea  type writer  just for fun)
+
 06/10/2021)
 ### ( also didnt do much today  denied helped me abit with the animations they re alot better now and other then that i made raycast hitboxes to box collider because it just feels  better that way)
 
