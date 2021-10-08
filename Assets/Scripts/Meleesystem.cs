@@ -33,7 +33,7 @@ public class Meleesystem : MonoBehaviour
             health.health -= Damage;
             Instantiate(spawneffect);
             
-            col.gameObject.GetComponent<Rigidbody>().AddForce(camtransform.forward * 10000);
+            //col.gameObject.GetComponent<Rigidbody>().AddForce(camtransform.forward * 20000);
          }
      
     }

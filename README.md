@@ -1,6 +1,7 @@
 # thisgamehasnonameyet
  transfur game
-
+08/10/2021)
+### (So today i made the type writer i  god damm looked up a tutorial again but at least i learnt abit more about forloops and inemurator and text lengths im stll not sure how substings work tho and also fixed some bugs)
 
 
 07/10/2021)

@@ -38,39 +38,17 @@ public class NewPlayer : MonoBehaviour
 
         rig.velocity = xzVel + yVel;
 
-
-       // if (rig.velocity.magnitude > maxspeed && (!(health.Health <= 0f)))
-       // {
-       //     speedeffect.Play();
-       // }
-
-
-
-        //if (rig.velocity.magnitude < maxspeed)
-        //{
-        //    speedeffect.Stop();
-        //}
-
-        if (isgroundedboi) //&& !(health.Health <= 0))
+        if (isgroundedboi)
         {
-           // jumpower = 7000f;
             rig.drag = 10;
-        
         }
         if (!isgroundedboi)
         {
-            //jumpower = 0f;
             rig.AddForce(orientation.up * -100 * Time.fixedDeltaTime, ForceMode.Impulse);
             rig.drag = 0.5f;
             movespeed = 400;
         }
-   
-       // if (isgroundedboi && (Input.GetKey(KeyCode.Space)))
-       // {
-       //     rig.AddForce(orientation.up * jumpower * Time.fixedDeltaTime, ForceMode.Impulse);
-       //
-       //
-       // }
+
     }
     
     public void  Playermovement()
@@ -94,9 +72,16 @@ public class NewPlayer : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && sprinting == true  && isgroundedboi )
         {
             movespeed = 200000;
-            maxspeed = 16;
-            sprintime -= 2.5f *  Time.deltaTime;
-           
+             maxspeed = 16;
+            if(z != 0 || x != 0)
+            {
+             sprintime -= 2.5f *  Time.deltaTime;
+            }
+            
+            if(z == 0 || x == 0)
+            {
+                sprintime += Time.deltaTime;
+            }
               
             if(  z == 0 && x == 0)
             {
@@ -113,6 +98,7 @@ public class NewPlayer : MonoBehaviour
             anim.SetBool("running", false);
             movespeed = 100000;
             maxspeed = 8;
+          
             sprintime += Time.deltaTime;
         }
     }
@@ -126,7 +112,6 @@ public class NewPlayer : MonoBehaviour
         x = Input.GetAxisRaw("Vertical");
         if (x == 1 && !bop.walking)
         {
-           
             anim.SetBool("walking", true);
         }
         else if((x == -1 && !bop.walking))
@@ -156,29 +141,7 @@ public class NewPlayer : MonoBehaviour
 
         }
 
-       // if (health.Health <= 0)
-       // {
-       //     forwardspeed = 0f;
-       //     backwards = -0f;
-       //     right = 0f;
-       //     left = -0f;
-       //     sensitivity = 0f;
-       //     sensMultiplier = 0;
-       // }
-       // if (Time.timeScale == 0)
-       // {
-       //     forwardspeed = 0f;
-       //     backwards = -0f;
-       //     right = 0f;
-       //     left = -0f;
-       //     sensitivity = 0f;
-       //     sensMultiplier = 0;
-       // }
-      // if (Time.timeScale == 1 && !(health.Health <= 0))
-      // {
-      //     sensitivity = 50f;
-      //     sensMultiplier = 1;
-      // }
+      
     }
     public void OnTriggerStay(Collider other)
     {
