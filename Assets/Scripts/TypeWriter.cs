@@ -5,20 +5,19 @@ using TMPro;
 
 public class TypeWriter : MonoBehaviour
 {
-    public GameObject reset;
+    
+    public int maxstrings;
+    public float waitnoob;
     public float speedofwrite = 4;
-    public static float delay;
-    private bool cantext;
-    public bool delayenable;
-    public string textest;
-    public float caplock;
-    private int i = 0;
+    public string[] textest;
+    public bool ismaxornot ;
+    public  int i = 0;
     private string current = "";
-
+    public int addstring;
 
     public void Start()
     {
-        delayenable = true;
+        
         if (!gameObject.CompareTag("StartWriter"))
         {
             
@@ -28,75 +27,64 @@ public class TypeWriter : MonoBehaviour
     }
     public IEnumerator showtext()
     {
-        for(i = 0 ; i <= textest.Length; i++)
-        {
-            current = textest.Substring(0, i);
-                gameObject.GetComponent<TextMeshProUGUI>().text = current;
-            Debug.Log("test");
-            yield return new WaitForSeconds(speedofwrite);
-        }
+     
+       for(  int j  = 0; j < textest.Length; j++)
+       {
+           addstring = j;
+             
+           
+           for (int iii = 0; iii <= textest[j].Length; iii++)
+           {
+               i++;
+               current = textest[j].Substring(0, iii);
+               gameObject.GetComponent<TextMeshProUGUI>().text = current;
+               yield return new WaitForSeconds(speedofwrite);
+
+           }
+          
+            int max = maxstrings;
+          int add = addstring;
+             yield return new WaitUntil(() => ismaxornot == true && add != max);
+            yield return new WaitForSeconds(waitnoob);
+       }
+       
+       
     }
-     public IEnumerator testthing()
-     {
-      for (int a = 0; a < transform.childCount; a++)
-      {
-         transform.GetChild(a).gameObject.SetActive(true);
-            transform.GetChild(a).gameObject.GetComponent<TypeWriter>().enabled = true;
-            
-            transform.GetComponentInParent<TypeWriter>().enabled = false;
-            
-            transform.GetComponentInParent<TextMeshProUGUI>().SetText("");
-            
-            delay = 0;
-      }
-      yield return new WaitUntil(() => delay >= caplock);
-     }
+    
 
     void Update()
     {
-        //gameObject.GetComponent<TextMeshProUGUI>().color = Random.ColorHSV();
-     
-        if (Input.GetKeyDown(KeyCode.T)&& gameObject.CompareTag("StartWriter") && cantext == false)
+        if (addstring == 8)
         {
-            cantext = true;
-            
+         gameObject.GetComponent<TextMeshProUGUI>().color = Random.ColorHSV();
+        }
+        else
+        {
+            gameObject.GetComponent<TextMeshProUGUI>().color = new Vector4(255,255,255,255);
+        }
+         if (addstring >= maxstrings)
+         {
+            gameObject.GetComponent<Animator>().SetBool("texton", false);
+        }
+        if (Input.GetKeyDown(KeyCode.T)&& gameObject.CompareTag("StartWriter") )
+        {
+         
+             StartCoroutine(showtext());
             if (gameObject.CompareTag("StartWriter"))
             {
              gameObject.GetComponent<Animator>().SetBool("texton", true);
                
             }
-              StartCoroutine(showtext());
+             
         }
-        if(delay >= caplock)
-        {
 
-          StartCoroutine(testthing());
-        }
-        if(delayenable == true)
-        {
-            delay += Time.deltaTime * 2;
-        }
-        if(i >= textest.Length  )
-        {
-            if (gameObject.CompareTag("StartWriter"))
-            {
-                delayenable = true;
-            }
+       
+         if (i >= textest.Length )
+         {
+            // cantext = false;
+           
+            ismaxornot = true;
 
-            
-            
-         if (gameObject.CompareTag("EndWriter"))
-            {
-                GameObject.Find("textwriter").GetComponent<Animator>().SetBool("texton", false);
-                reset.GetComponent<TypeWriter>().enabled = true;
-                GameObject.FindGameObjectWithTag("MiddleWriter").GetComponent<Transform>().gameObject.SetActive(false);
-                gameObject.GetComponent<TypeWriter>().enabled = false;
-                delayenable = false;
-                delay = 0;
-                gameObject.SetActive(false);
-            }
-               
-            cantext = false;
-        }
+         }
     }
 }
