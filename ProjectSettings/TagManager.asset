@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - Enemy
+  - StartWriter
+  - EndWriter
+  - MiddleWriter
   layers:
   - Default
   - TransparentFX

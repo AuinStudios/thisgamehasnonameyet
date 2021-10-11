@@ -1,5 +1,10 @@
 # thisgamehasnonameyet
  transfur game
+
+
+10/10/2021)
+### (I tried finishing the dialouge system but i couldnt today so torromow i might find a way)
+
 08/10/2021)
 ### (So today i made the type writer i  god damm looked up a tutorial again but at least i learnt abit more about forloops and inemurator and text lengths im stll not sure how substings work tho and also fixed some bugs)
 
