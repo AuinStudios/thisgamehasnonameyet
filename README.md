@@ -2,7 +2,7 @@
  transfur game
 
 11/10/2021)
-### (  i Finished the dialogue system Now it works perfectly delay  continueing on its own only thing left is make it  activite on areas or when u interect with gameobjects im actually proud of how much i improved for once torromow ill add the black effects to the text and ill think of something else
+### (  i Finished the dialogue system Now it works perfectly delay  continueing on its own only thing left is make it  activite on areas or when u interect with gameobjects im actually proud of how much i improved for once torromow ill add the black effects to the text and ill think of something else)
 
 
 10/10/2021)
