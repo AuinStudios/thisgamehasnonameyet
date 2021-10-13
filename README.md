@@ -1,5 +1,11 @@
 # thisgamehasnonameyet
  transfur game
+
+
+13/10/2021)
+### (So i made it so if u step in spefic   locations thoses locaitons will say strings that i puted its basically just the code beforce but on mutltple gameobjects i thought this was inefficent so i turn them off every time   they end and they only turn on if u step on them  so far thats what i did today  dont know if ill do more)
+
+
 12/10/2021)
 ### (i added the black effect and also fixed alot of the dialogue and made it repeatable and some other bug fixes for the type writer)
 

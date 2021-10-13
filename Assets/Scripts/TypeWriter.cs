@@ -6,32 +6,34 @@ using UnityEngine.UI;
 
 public class TypeWriter : MonoBehaviour
 {
-    
+    public TextMeshProUGUI Text;
+    // THIS INT IS VERY IMPORTANT IF ITS NOT THE SAME AS THE STRING SIZE THEN IT WILL NOT WORK
     public int maxstrings;
+    // -----------------------------------------------------------------------
     public float delay;
     public float speedofwrite = 4;
     public float startext;
-    public string[] textest;
+    public string[] Dialogue;
    // public bool ismaxornot = true ;
     private  int i = 0;
     private string current = "";
     private int addstring;
-    public float backgroundphaseinout;
+    
 
     // the dialogue changer and writer ---------------------------------------------------
     public IEnumerator showtext()
     {
      
-       for(  int j  = 0; j < textest.Length; j++)
+       for(  int j  = 0; j < Dialogue.Length; j++)
        {
            addstring = j;
             j = addstring;
            
-           for (int iii = 0; iii <= textest[j].Length; iii++)
+           for (int iii = 0; iii <= Dialogue[j].Length; iii++)
            {
                 i = iii;
-               current = textest[j].Substring(0, iii);
-               gameObject.GetComponent<TextMeshProUGUI>().text = current;
+               current = Dialogue[j].Substring(0, iii);
+               Text.text = current;
                yield return new WaitForSeconds(speedofwrite);
 
            }
@@ -44,54 +46,56 @@ public class TypeWriter : MonoBehaviour
        
        
     }
-    // delay for when the writer finishes and when it starts ----------------------------------------
-    public IEnumerator waituntllfinishWriter()
+   
+    // start  typewriter ---------------------------------------------
+    public IEnumerator startfunction()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-         
+        Text.GetComponent<Animator>().SetBool("texton", true);
             yield return new WaitForSeconds(startext);
             StartCoroutine(showtext());
-        }
+    }
+ // delay for when the writer finishes and when it starts ----------------------------------------
+    public IEnumerator waituntllfinishWriter()
+    {
+       
 
-        if (i >= textest[addstring].Length && addstring >= maxstrings)
+        if (i >= Dialogue[addstring].Length && addstring >= maxstrings)
         {
-           gameObject.GetComponent<Animator>().SetBool("texton", false);
+           Text.GetComponent<Animator>().SetBool("texton", false);
              yield return new WaitForSeconds(delay);
             addstring = 0;
+            yield return new WaitForSeconds(1.5f);
+            gameObject.GetComponent<TypeWriter>().enabled = false;
         }
            
        
     }
-    // Update --------------------------------------------------------------
+    // main stuff--------------------------------------------------------------
+
+ //public  void OnTriggerEnter(Collider col)
+ //   {
+ //       if (col.gameObject.CompareTag("TypeWriterStarter"))
+ //       {
+ //           StartCoroutine(startfunction());
+ //       }
+ //   }
     void Update()
     {
-         
         // temp stuff-----------------------------------------------------
         if (addstring == 8)
         {
-         gameObject.GetComponent<TextMeshProUGUI>().color = Random.ColorHSV() * 1f;
+         Text.color = Random.ColorHSV() * 1f;
         }
         else
         {
-            gameObject.GetComponent<TextMeshProUGUI>().color = new Vector4(255,255,255,255);
+            Text.color = new Vector4(255,255,255,255);
         }
-        // main stuff -----------------------------------------------        
+        // functions and stuff -----------------------------------------------        
          StartCoroutine(waituntllfinishWriter());
 
-            if (Input.GetKeyDown(KeyCode.T)&& gameObject.CompareTag("StartWriter") )
-            {
-
-             gameObject.GetComponent<Animator>().SetBool("texton", true);
-            
-             
-            }
-            if(backgroundphaseinout == 1f)
-            {
-             
-            
-            }
+          
+          
         // background effect----------------------------------------------------
-         GameObject.Find("TypeWriterBackground").GetComponent<Image>().fillAmount = backgroundphaseinout;
+         GameObject.Find("TypeWriterBackground").GetComponent<Image>().fillAmount = GameObject.Find("textwriter").GetComponent<ValueForAnimationTypeWriter>().fillinvalue;
     }
 }
