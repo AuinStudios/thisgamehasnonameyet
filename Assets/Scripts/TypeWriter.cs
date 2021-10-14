@@ -7,8 +7,11 @@ using UnityEngine.UI;
 public class TypeWriter : MonoBehaviour
 {
     public TextMeshProUGUI Text;
+    //public bool canactiveornot;
     // THIS INT IS VERY IMPORTANT IF ITS NOT THE SAME AS THE STRING SIZE THEN IT WILL NOT WORK
     public int maxstrings;
+    public static bool canactiveornot = true;
+  
     // -----------------------------------------------------------------------
     public float delay;
     public float speedofwrite = 4;
@@ -18,9 +21,13 @@ public class TypeWriter : MonoBehaviour
     private  int i = 0;
     private string current = "";
     private int addstring;
+
+
     
 
     // the dialogue changer and writer ---------------------------------------------------
+
+    
     public IEnumerator showtext()
     {
      
@@ -48,24 +55,50 @@ public class TypeWriter : MonoBehaviour
     }
    
     // start  typewriter ---------------------------------------------
+
+    public IEnumerator startfunctionbool()
+    {
+
+
+        if (canactiveornot == true)
+        {
+            
+            yield return (null);
+            StartCoroutine(startfunction());
+        }
+    }
     public IEnumerator startfunction()
     {
+       
+        
+        
+         canactiveornot= false;
+        yield return new WaitForSeconds(1);
         Text.GetComponent<Animator>().SetBool("texton", true);
+           
             yield return new WaitForSeconds(startext);
-            StartCoroutine(showtext());
+          
+             StartCoroutine(showtext());
+        
+        
+        
     }
  // delay for when the writer finishes and when it starts ----------------------------------------
     public IEnumerator waituntllfinishWriter()
     {
-       
+        
 
         if (i >= Dialogue[addstring].Length && addstring >= maxstrings)
         {
            Text.GetComponent<Animator>().SetBool("texton", false);
              yield return new WaitForSeconds(delay);
             addstring = 0;
+            
             yield return new WaitForSeconds(1.5f);
-            gameObject.GetComponent<TypeWriter>().enabled = false;
+            canactiveornot = true;
+            
+            // GameObject.Find("subscript").GetComponent<textwriterstartscript>().textwriterstop = true;
+            // gameObject.GetComponent<TypeWriter>().enabled = false;
         }
            
        
@@ -81,6 +114,8 @@ public class TypeWriter : MonoBehaviour
  //   }
     void Update()
     {
+        
+
         // temp stuff-----------------------------------------------------
         if (addstring == 8)
         {
@@ -92,10 +127,42 @@ public class TypeWriter : MonoBehaviour
         }
         // functions and stuff -----------------------------------------------        
          StartCoroutine(waituntllfinishWriter());
-
-          
-          
+       
+        
         // background effect----------------------------------------------------
          GameObject.Find("TypeWriterBackground").GetComponent<Image>().fillAmount = GameObject.Find("textwriter").GetComponent<ValueForAnimationTypeWriter>().fillinvalue;
     }
+
+
+ 
+    public void OnTriggerEnter(Collider other)
+    {
+        {
+          if (other.gameObject.CompareTag("Player"))
+          {
+               
+            //col.gameObject.GetComponent<TypeWriter>().enabled = true;
+
+            if (Text.GetComponent<Animator>().GetBool("texton") == false)
+            {
+                if(canactiveornot == true)
+                {
+                  StartCoroutine(startfunctionbool());
+                }
+                else
+                {
+                        StopCoroutine(startfunctionbool());
+                }
+            }
+            else
+            {
+                canactiveornot = false;
+            }
+          }
+
+
+        }
+    }
+
+  
 }

@@ -1,6 +1,8 @@
 # thisgamehasnonameyet
  transfur game
 
+14/10/2021)
+### (Ugh today i failed so hard just to fucking make the trigger not do the typewriter but it keeps starting twicec or 3rd times only thing i did today was bug fixing but i stll didnt fix it it is way less buggy but stll glitchies sometimes god im such a terrible developer)
 
 13/10/2021)
 ### (So i made it so if u step in spefic   locations thoses locaitons will say strings that i puted its basically just the code beforce but on mutltple gameobjects i thought this was inefficent so i turn them off every time   they end and they only turn on if u step on them  so far thats what i did today  dont know if ill do more)

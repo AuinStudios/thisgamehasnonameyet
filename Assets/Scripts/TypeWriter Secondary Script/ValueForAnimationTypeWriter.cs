@@ -5,4 +5,5 @@ using UnityEngine;
 public class ValueForAnimationTypeWriter : MonoBehaviour
 {
     public float fillinvalue;
+   
 }

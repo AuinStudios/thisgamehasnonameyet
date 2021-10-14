@@ -23,6 +23,7 @@ public class NewPlayer : MonoBehaviour
     public bool isgroundedboi;
     public bool sprinting;
     public headbop bop;
+   
     // input---------------------------
      public float x, z;
     // ui stamina and health --------------------
@@ -143,16 +144,10 @@ public class NewPlayer : MonoBehaviour
 
       
     }
+  
     // Enableing Dialogue in a spefic area --------------------------------------------------------------------------------------
-    public void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.CompareTag("TypeWriterStarter"))
-        {
-            
-            col.gameObject.GetComponent<TypeWriter>().enabled = true;
-            col.gameObject.GetComponent<TypeWriter>().StartCoroutine(col.gameObject.GetComponent<TypeWriter>().startfunction());
-        }
-    }
+ 
+    
     // walking detection add stuff ----------------------------------------------------------------------------------------------
     public void OnTriggerStay(Collider other)
     {
@@ -170,5 +165,8 @@ public class NewPlayer : MonoBehaviour
             isgroundedboi = false;
 
         }
+   
+         
+
     }
 }
