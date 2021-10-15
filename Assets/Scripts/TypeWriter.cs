@@ -10,18 +10,17 @@ public class TypeWriter : MonoBehaviour
     //public bool canactiveornot;
     // THIS INT IS VERY IMPORTANT IF ITS NOT THE SAME AS THE STRING SIZE THEN IT WILL NOT WORK
     public int maxstrings;
-    public static bool canactiveornot = true;
-    private bool maketextnoglitchasmuch;
     // -----------------------------------------------------------------------
+    
     public float delay;
     public float speedofwrite = 4;
     public float startext;
     public string[] Dialogue;
-   // public bool ismaxornot = true ;
     private  int i = 0;
     private string current = "";
     private int addstring;
-
+    private static bool canactiveornot = true;
+    private static int MakeTriggerNotMutlple = 1;
 
     
 
@@ -59,20 +58,25 @@ public class TypeWriter : MonoBehaviour
     public IEnumerator startfunctionbool()
     {
 
-
-        if (canactiveornot == true)
+       for(int textmutlplestarterfixer = 0; textmutlplestarterfixer <= MakeTriggerNotMutlple; textmutlplestarterfixer++)
         {
+
+         if (canactiveornot == true)
+         {
             
             yield return (null);
             StartCoroutine(startfunction());
+         }
+            yield return new WaitUntil(() => textmutlplestarterfixer == 0);
         }
+        
     }
     public IEnumerator startfunction()
     {
-       
+
+
         
-        
-         canactiveornot= false;
+        canactiveornot = false;
         yield return new WaitForSeconds(0.5f);
       
         Text.GetComponent<Animator>().SetBool("texton", true);
@@ -84,6 +88,8 @@ public class TypeWriter : MonoBehaviour
         
         
     }
+
+   
  // delay for when the writer finishes and when it starts ----------------------------------------
     public IEnumerator waituntllfinishWriter()
     {
@@ -91,15 +97,14 @@ public class TypeWriter : MonoBehaviour
 
         if (i >= Dialogue[addstring].Length && addstring >= maxstrings)
         {
-            canactiveornot = false;
+           
             Text.GetComponent<Animator>().SetBool("texton", false);
              yield return new WaitForSeconds(delay);
             addstring = 0;
             
-            yield return new WaitForSeconds(1.5f);
-            maketextnoglitchasmuch = false;
+            yield return new WaitForSeconds(1.4f);
+            //maketextnoglitchasmuch = false;
             canactiveornot = true;
-            
             // GameObject.Find("subscript").GetComponent<textwriterstartscript>().textwriterstop = true;
             // gameObject.GetComponent<TypeWriter>().enabled = false;
         }
@@ -118,26 +123,8 @@ public class TypeWriter : MonoBehaviour
     
     void Update()
     {
-         if( maketextnoglitchasmuch== true)
-         {
-            canactiveornot = false;
-         }
-         
-        // temp stuff-----------------------------------------------------
-        if (addstring == 8)
-        {
-         Text.color = Random.ColorHSV() * 1f;
-        }
-        else
-        {
-            Text.color = new Vector4(255,255,255,255);
-        }
         // functions and stuff -----------------------------------------------        
          StartCoroutine(waituntllfinishWriter());
-       
-        
-        // background effect----------------------------------------------------
-         GameObject.Find("TypeWriterBackground").GetComponent<Image>().fillAmount = GameObject.Find("textwriter").GetComponent<ValueForAnimationTypeWriter>().fillinvalue;
     }
 
 
@@ -147,9 +134,8 @@ public class TypeWriter : MonoBehaviour
         {
           if (other.gameObject.CompareTag("Player"))
           {
-
-                //col.gameObject.GetComponent<TypeWriter>().enabled = true;
-                maketextnoglitchasmuch= true;
+    
+               
             if (Text.GetComponent<Animator>().GetBool("texton") == false)
             {
                 if(canactiveornot == true )
@@ -167,8 +153,8 @@ public class TypeWriter : MonoBehaviour
                 canactiveornot = false;
             }
           }
-
-
+    
+    
         }
     }
 

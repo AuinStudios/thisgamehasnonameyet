@@ -23,7 +23,6 @@ public class NewPlayer : MonoBehaviour
     public bool isgroundedboi;
     public bool sprinting;
     public headbop bop;
-   
     // input---------------------------
      public float x, z;
     // ui stamina and health --------------------
@@ -144,11 +143,13 @@ public class NewPlayer : MonoBehaviour
 
       
     }
+
   
-    // Enableing Dialogue in a spefic area --------------------------------------------------------------------------------------
- 
-    
+
     // walking detection add stuff ----------------------------------------------------------------------------------------------
+
+
+    
     public void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))

@@ -1,6 +1,9 @@
 # thisgamehasnonameyet
  transfur game
 
+
+15/10/2021)
+### (So today when i woke up i somehow did what i was sturggleing to do yesterday for 6 hours now i  fixed it and only in like 10 mins maybe i was just tired anyway thats all i did today i tried makeing it more optimized but it kept bugging it  so in the end ill just leave it like this)
 14/10/2021)
 ### (Ugh today i failed so hard just to fucking make the trigger not do the typewriter but it keeps starting twicec or 3rd times only thing i did today was bug fixing but i stll didnt fix it it is way less buggy but stll glitchies sometimes god im such a terrible developer)
 
