@@ -3967,7 +3967,7 @@ MonoBehaviour:
   nocharge: {fileID: 396018147}
   spawneffect: {fileID: 8407046875815354011, guid: 4d90d8694f8789147985358f99ae4786, type: 3}
   spawneffectpos: {fileID: 698408437}
-  enemy: {fileID: 0}
+  enemy: {fileID: 429394588}
   Damage: 0
   value: {fileID: 386020233}
   cooldownslider: {fileID: 380087434}

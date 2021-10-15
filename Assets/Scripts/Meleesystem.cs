@@ -60,7 +60,7 @@ public class Meleesystem : MonoBehaviour
 
             clickorhold += 0.35f * Time.deltaTime;
             // chargeing attack
-            if (clickorhold > 0.2f && cooldown == 0)
+            if (clickorhold > 0.1f && cooldown == 0)
             {
                 nocharge.GetComponent<CanvasGroup>().alpha = 1;
                 Chargebarbackground.GetComponent<CanvasGroup>().alpha = 1f;
@@ -75,7 +75,7 @@ public class Meleesystem : MonoBehaviour
             {
                 Damage = 10f;
             }
-            else if (clickorhold >= 0.2f && cooldown == 0)
+            else if (clickorhold >= 0.1f && cooldown == 0)
             {
                 Damage += Time.deltaTime * 12;
             }
@@ -120,7 +120,7 @@ public class Meleesystem : MonoBehaviour
         // plays the animation and enables hitbox whenever u let go of the mouse to attack and add cooldown
         else if ((Input.GetKeyUp(KeyCode.Mouse0) && cooldown == 0))
         {
-            if (clickorhold > 0.2f && cooldown == 0)
+            if (clickorhold > 0.1f && cooldown == 0)
             {
 
                 gameObject.GetComponent<Animator>().SetBool("Chargeing", false);
@@ -132,7 +132,7 @@ public class Meleesystem : MonoBehaviour
                 value.GetComponent<CanvasGroup>().alpha = 0;
                 Chargebarbackground.GetComponent<CanvasGroup>().alpha = 0f;
             }
-            else if (clickorhold < 0.2f && cooldown == 0)
+            else if (clickorhold < 0.1f && cooldown == 0)
             {
                 gameObject.GetComponent<Animator>().SetTrigger("Axestab");
                 enabletimerun = true;
@@ -142,13 +142,13 @@ public class Meleesystem : MonoBehaviour
             }
         }
         // timers to help make the damage values not go away instanly---------------------------------------------
-        if (timeruntllreset >= 0.5f && clickorhold <= 0.2f)
+        if (timeruntllreset >= 0.5f && clickorhold <= 0.1f)
         {
             clickorhold = 0;
             Damage = 0;
             enabletimerun = false;
         }
-        else if (timeruntllreset >= 0.8f && clickorhold >= 0.2f)
+        else if (timeruntllreset >= 0.8f && clickorhold >= 0.1f)
         {
             Damage = 0;
             clickorhold = 0;
