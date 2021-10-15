@@ -13,7 +13,7 @@ public class Meleesystem : MonoBehaviour
     public GameObject nocharge;
     public GameObject spawneffect;
     public Transform spawneffectpos;
-    public customsliderhealthui health;
+    public customsliderhealthui enemy;
     public float Damage;
     public Slider value;
     public Slider cooldownslider;
@@ -30,7 +30,7 @@ public class Meleesystem : MonoBehaviour
         
          if (col.gameObject.CompareTag("Enemy"))
          {
-            health.health -= Damage;
+            enemy.health -= Damage;
             Instantiate(spawneffect);
             
             //col.gameObject.GetComponent<Rigidbody>().AddForce(camtransform.forward * 20000);
@@ -60,7 +60,7 @@ public class Meleesystem : MonoBehaviour
 
             clickorhold += 0.35f * Time.deltaTime;
             // chargeing attack
-            if (clickorhold > 0.3f && cooldown == 0)
+            if (clickorhold > 0.2f && cooldown == 0)
             {
                 nocharge.GetComponent<CanvasGroup>().alpha = 1;
                 Chargebarbackground.GetComponent<CanvasGroup>().alpha = 1f;
@@ -75,7 +75,7 @@ public class Meleesystem : MonoBehaviour
             {
                 Damage = 10f;
             }
-            else if (clickorhold >= 0.3f && cooldown == 0)
+            else if (clickorhold >= 0.2f && cooldown == 0)
             {
                 Damage += Time.deltaTime * 12;
             }
@@ -120,7 +120,7 @@ public class Meleesystem : MonoBehaviour
         // plays the animation and enables hitbox whenever u let go of the mouse to attack and add cooldown
         else if ((Input.GetKeyUp(KeyCode.Mouse0) && cooldown == 0))
         {
-            if (clickorhold > 0.3f && cooldown == 0)
+            if (clickorhold > 0.2f && cooldown == 0)
             {
 
                 gameObject.GetComponent<Animator>().SetBool("Chargeing", false);
@@ -132,7 +132,7 @@ public class Meleesystem : MonoBehaviour
                 value.GetComponent<CanvasGroup>().alpha = 0;
                 Chargebarbackground.GetComponent<CanvasGroup>().alpha = 0f;
             }
-            else if (clickorhold < 0.3f && cooldown == 0)
+            else if (clickorhold < 0.2f && cooldown == 0)
             {
                 gameObject.GetComponent<Animator>().SetTrigger("Axestab");
                 enabletimerun = true;
@@ -142,13 +142,13 @@ public class Meleesystem : MonoBehaviour
             }
         }
         // timers to help make the damage values not go away instanly---------------------------------------------
-        if (timeruntllreset >= 0.5f && clickorhold <= 0.3f)
+        if (timeruntllreset >= 0.5f && clickorhold <= 0.2f)
         {
             clickorhold = 0;
             Damage = 0;
             enabletimerun = false;
         }
-        else if (timeruntllreset >= 0.8f && clickorhold >= 0.3f)
+        else if (timeruntllreset >= 0.8f && clickorhold >= 0.2f)
         {
             Damage = 0;
             clickorhold = 0;
