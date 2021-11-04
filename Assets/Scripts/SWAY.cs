@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class SWAY : MonoBehaviour
 {
-    private float x , y , xrotation , yrotation;
     public float sensitivity = 2f;
     public float rotationsenstivity = 3f;
+    public Vector3 xaxisleft , xaxisright , yup ,ydown;
+    public Quaternion xaxisrotationleft, xaxisrotationright, yuprotation, ydownrotation;
+    
+    private float x , y , xrotation , yrotation;
     private bool xstop;
     private bool  ystop;
     private bool xrotationstop;
     private bool yrotationstop;
-    public Vector3 xaxisleft , xaxisright , yup ,ydown;
-    public Quaternion xaxisrotationleft, xaxisrotationright, yuprotation, ydownrotation;
+
     void Update()
     {
          x -= sensitivity * Input.GetAxis("Mouse X") * Time.fixedDeltaTime;

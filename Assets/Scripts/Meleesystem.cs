@@ -24,6 +24,12 @@ public class Meleesystem : MonoBehaviour
     private float cooldown;
     private float clickorhold;
 
+    public Cameramove cameramove;
+    
+    private void Start()
+    {
+       cameramove = Camera.main.GetComponent<Cameramove>();
+    }
     
     public void OnTriggerEnter(Collider col)
     {
@@ -56,6 +62,9 @@ public class Meleesystem : MonoBehaviour
         // the main function -----------------------------------------------
         if (Input.GetKey(KeyCode.Mouse0) && cooldown == 0)
         {
+            // call script for CameraMove
+            cameramove.triggerDot = true;
+
             nocharge.GetComponent<CanvasGroup>().alpha = 0;
 
             clickorhold += 0.35f * Time.deltaTime;
@@ -84,6 +93,7 @@ public class Meleesystem : MonoBehaviour
                 Damage = 0;
             }
         }
+
         #region hiidestuff
         // if (enableattack == true)
         // {

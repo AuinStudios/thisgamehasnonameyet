@@ -29,8 +29,8 @@ public class Headpos : MonoBehaviour
 
     public void Update()
     {
-     
 
+       
         if (running.enabled && gameObject.CompareTag("MainCamera"))
         {
             pos = GameObject.Find("MainCam");

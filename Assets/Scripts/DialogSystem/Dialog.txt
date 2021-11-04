@@ -1,0 +1,30 @@
+[Bob]
+{
+[passive]
+{
+Hello there Vladi.
+}
+[attacked]
+{
+That hurt!
+}
+[dead]
+{
+Wow so heroic killing a cube...
+}
+}
+[Ken]
+{
+[passive]
+{
+Death to all niggas.
+}
+[attacked]
+{
+Why are you hitting me? Did i stole your bike?
+}
+[dead]
+{
+I always knew i was a weak nigga...
+}
+}

@@ -1,6 +1,8 @@
 # thisgamehasnonameyet
  transfur game
-
+___
+04/11/2021)
+### (I made a wandering ai to walk randomly on its own today and my first ai to ever make)
 ___
 15/10/2021)
 ### (So today when i woke up i somehow did what i was sturggleing to do yesterday for 6 hours now i  fixed it and only in like 10 mins maybe i was just tired anyway i fixed some bugs and  thats all i did today i tried makeing it more optimized but it kept bugging it  so in the end ill just leave it like this)
