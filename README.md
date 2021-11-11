@@ -1,6 +1,9 @@
 # thisgamehasnonameyet
  transfur game
 ___
+11/11/2021)
+### (made a  transfur puddle that pulls you in if u get to close  and torromow ill optimize its code abit and add more things like health maybe)
+___
 04/11/2021)
 ### (I made a wandering ai to walk randomly on its own today and my first ai to ever make)
 ___

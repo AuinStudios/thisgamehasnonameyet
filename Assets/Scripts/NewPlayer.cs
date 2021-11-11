@@ -10,7 +10,7 @@ public class NewPlayer : MonoBehaviour
     public GameObject cam;
     public Animator anim;
     public Transform orientation;
-   
+    public AudioSource walk , run;
     // floats ------------------------- 
     private float dash = 50000f;
     public float movespeed = 17500;
@@ -73,6 +73,10 @@ public class NewPlayer : MonoBehaviour
         {
             movespeed = 200000;
              maxspeed = 16;
+            if (!run.isPlaying)
+            {
+                run.Play();
+            }
             if(z != 0 || x != 0)
             {
              sprintime -= 2.5f *  Time.deltaTime;
@@ -86,15 +90,19 @@ public class NewPlayer : MonoBehaviour
             if(  z == 0 && x == 0)
             {
                 anim.SetBool("running", false);
+                
             }
             else
             {
               anim.SetBool("running", true);
+                walk.Stop();
+               
             }
             anim.SetBool("walking", false);
         }
         else if (isgroundedboi )
         {
+            run.Stop();
             anim.SetBool("running", false);
             movespeed = 100000;
             maxspeed = 8;
@@ -113,22 +121,27 @@ public class NewPlayer : MonoBehaviour
         if (x == 1 && !bop.walking)
         {
             anim.SetBool("walking", true);
+            walk.Play();
         }
         else if((x == -1 && !bop.walking))
         {
             anim.SetBool("walking", true);
+            walk.Play();
         }
         if(z == 1 && !bop.walking)
         {
             anim.SetBool("walking", true);
+            walk.Play();
         }
         else if(z == -1 && !bop.walking)
         {
             anim.SetBool("walking", true);
+            walk.Play();
         }
         else if (z == 0 && x ==  0 )
         {
             anim.SetBool("walking",false);
+            walk.Stop();
         }
 
         Playermovement();
@@ -144,12 +157,12 @@ public class NewPlayer : MonoBehaviour
       
     }
 
-  
+
 
     // walking detection add stuff ----------------------------------------------------------------------------------------------
 
 
-    
+
     public void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))

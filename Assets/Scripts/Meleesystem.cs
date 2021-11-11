@@ -21,7 +21,7 @@ public class Meleesystem : MonoBehaviour
     public Image cooldownbarbackground;
     private bool enabletimerun;
     private float timeruntllreset;
-    private float cooldown;
+    public float cooldown;
     private float clickorhold;
 
     public Cameramove cameramove;
