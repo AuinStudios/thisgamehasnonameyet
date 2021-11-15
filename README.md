@@ -1,6 +1,9 @@
 # thisgamehasnonameyet
  transfur game
 ___
+15/11/2021)
+### (so uh i made the puddle a  tiny barely noticeable better and i made the grabing thing smoother other then that i didnt do much cause i kept geting distracted on other stuff  if i ever get back im gonna start on doing the health  bar system)
+___
 11/11/2021)
 ### (made a  transfur puddle that pulls you in if u get to close  and torromow ill optimize its code abit and add more things like health maybe)
 ___

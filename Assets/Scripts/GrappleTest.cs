@@ -46,9 +46,7 @@ public class GrappleTest : MonoBehaviour
         }
         if(uhhh == true)
         {
-            Vector3 test = GameObject.Find("Player").GetComponent<Transform>().position - transform.position ;
-            GameObject.Find("Player").GetComponent<Rigidbody>().drag = 60f;
-            GameObject.Find("Player").GetComponent<Rigidbody>().AddForce(test * -250);
+            GameObject.Find("Player").GetComponent<Transform>().transform.position = Vector3.MoveTowards(GameObject.Find("Player").GetComponent<Transform>().transform.position, transform.position, 30 * Time.deltaTime);
         }
     }
 
