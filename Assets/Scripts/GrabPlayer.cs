@@ -4,16 +4,40 @@ using UnityEngine;
 
 public class GrabPlayer : MonoBehaviour
 {
-    public Transform Playerpos, gameobjectpos;
-    public float distance;
-   public bool hited = false;
+    // pos ----------------------------------------
+    private Transform Playerpos, gameobjectpos;
+    // bool -------------------------------------
+    private  bool hited = false;
+    // floats -------------------------------------
+    private float distance;
     private float cooldownofmonster = 10;
+    // vectors --------------------------------------
+     private Vector3 pos;
     // Update is called once per frame
+    public IEnumerator testt()
+    { 
+        for(int i = 0; i < 5; i++)
+        {
+            yield return new WaitForSeconds(0.5f);
+         gameobjectpos.position = new Vector3(gameobjectpos.position.x, Playerpos.position.y, gameobjectpos.position.z);
+        }
+    }
+    public void Awake()
+    {
+        gameobjectpos = this.transform.GetChild(0);
+        Playerpos = GameObject.Find("Player").GetComponent<Transform>();
+    }
+    public void Start()
+    { 
+        pos  = new Vector3(transform.position.x, -1, transform.position.z);
+        StartCoroutine(testt());
+    }
     void Update()
     {
         cooldownofmonster += Time.deltaTime;
         distance =   Vector3.Distance(gameobjectpos.position, Playerpos.position);
-
+       
+      
        if( cooldownofmonster >= 10)
        {
            hited = false;
@@ -22,7 +46,7 @@ public class GrabPlayer : MonoBehaviour
 
         if (distance < 10 && hited == false )
         {
-         gameObject.GetComponent<LineRenderer>().SetPosition(0, transform.position);
+           gameObject.GetComponent<LineRenderer>().SetPosition(0, pos);
            gameObject.GetComponent<LineRenderer>().SetPosition(1, Vector3.Lerp(gameObject.GetComponent<LineRenderer>().GetPosition(1) , Playerpos.position , 10 * Time.deltaTime));
             
             Playerpos.position = Vector3.MoveTowards(Playerpos.position, gameobjectpos.position, 5 * Time.deltaTime);
@@ -45,8 +69,8 @@ public class GrabPlayer : MonoBehaviour
         }
           if(hited == true)
           {
-            gameObject.GetComponent<LineRenderer>().SetPosition(0, transform.position);
-            gameObject.GetComponent<LineRenderer>().SetPosition(1, Vector3.Lerp(gameObject.GetComponent<LineRenderer>().GetPosition(1), transform.position, 3 * Time.deltaTime));
+            gameObject.GetComponent<LineRenderer>().SetPosition(0, pos );
+            gameObject.GetComponent<LineRenderer>().SetPosition(1, Vector3.Lerp(gameObject.GetComponent<LineRenderer>().GetPosition(1), pos, 3 * Time.deltaTime));
           }
     }
 }
