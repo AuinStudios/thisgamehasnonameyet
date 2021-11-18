@@ -16,9 +16,8 @@ public class Meleesystem : MonoBehaviour
      private bool enabletimerun;
     // ui + sliders -------------------------
     public customsliderhealthui enemy;
-    public Slider SliderValue;
-    public Image cooldownbarbackground;
-  
+    private Slider Slider;
+
     // floats -------------------------------
     public float Damage;
     private float timeruntllreset;
@@ -33,45 +32,52 @@ public class Meleesystem : MonoBehaviour
     }
     #endregion
     #region hiidestuff
-        // if (enableattack == true)
-        // {
-        //
-        //
-        //     gameObject.GetComponent<BoxCollider>().enabled = true;
-        //
-        //
-        //    // RaycastHit hit;
-        //    // if (Physics.Raycast(camtransform.position, camtransform.TransformDirection(Vector3.forward), out hit, 10) )
-        //    // {
-        //    //     
-        //    //     if(hit.collider.gameObject.CompareTag("Enemy"))
-        //    //     {
-        //    //     Debug.Log("killednemey");
-        //    //     }
-        //    //     else
-        //    //     {
-        //    //         Debug.Log("wasnt");
-        //    //     }
-        //    // }
-        //    // else
-        //    // {
-        //    //     Debug.Log("m");
-        //    //
-        //    // }
-        // }
-        // else if (enableattack == false)
-        // {
-        // gameObject.GetComponent<BoxCollider>().enabled = false;
-        // 
-        // }
-        #endregion
+    // if (enableattack == true)
+    // {
+    //
+    //
+    //     gameObject.GetComponent<BoxCollider>().enabled = true;
+    //
+    //
+    //    // RaycastHit hit;
+    //    // if (Physics.Raycast(camtransform.position, camtransform.TransformDirection(Vector3.forward), out hit, 10) )
+    //    // {
+    //    //     
+    //    //     if(hit.collider.gameObject.CompareTag("Enemy"))
+    //    //     {
+    //    //     Debug.Log("killednemey");
+    //    //     }
+    //    //     else
+    //    //     {
+    //    //         Debug.Log("wasnt");
+    //    //     }
+    //    // }
+    //    // else
+    //    // {
+    //    //     Debug.Log("m");
+    //    //
+    //    // }
+    // }
+    // else if (enableattack == false)
+    // {
+    // gameObject.GetComponent<BoxCollider>().enabled = false;
+    // 
+    // }
+    #endregion
     // most of the script ----------------------------------
+    private void Awake()
+    {
+        Slider = GameObject.Find("Meleeui").GetComponent<Slider>();
+    }
     public void OnTriggerEnter(Collider col)
     {
         
          if (col.gameObject.CompareTag("Enemy"))
          {
-            enemy.health -= Damage;
+            enemy.health -= Damage; 
+            // set the spawn effect position to the pos ------------------------
+            spawneffect.transform.position = spawneffectpos.position;
+            // spawn it -----------------------------------------------------
             Instantiate(spawneffect);
             
             //col.gameObject.GetComponent<Rigidbody>().AddForce(camtransform.forward * 20000);
@@ -80,8 +86,7 @@ public class Meleesystem : MonoBehaviour
     }
     void Update()
     {
-      // set the spawn effect position to the pos ------------------------
-        spawneffect.transform.position = spawneffectpos.position;
+   
         //clamps values
         cooldown = Mathf.Clamp(cooldown, 0, 5);
         Damage = Mathf.Clamp(Damage, 0, 30);
@@ -96,12 +101,8 @@ public class Meleesystem : MonoBehaviour
             // chargeing attack
             if (clickorhold > 0.1f && cooldown == 0)
             {
-                   SliderValue.maxValue = 30;
-                SliderValue.value = Damage;
-
-                SliderValue.GetComponent<CanvasGroup>().alpha = 0.5f;
-                cooldownbarbackground.GetComponent<CanvasGroup>().alpha = 1f;
-        
+                   Slider.maxValue = 30;
+                Slider.value = Damage;
                 gameObject.GetComponent<Animator>().SetBool("Chargeing", true);
             }
 
@@ -131,8 +132,7 @@ public class Meleesystem : MonoBehaviour
                 gameObject.GetComponent<Animator>().SetBool("Chargeing", false);
                 enabletimerun = true;
                 cooldown = 5;
-                SliderValue.GetComponent<CanvasGroup>().alpha = 0.5f;
-                cooldownbarbackground.GetComponent<CanvasGroup>().alpha = 1f;
+             
                 
             }
             else if (clickorhold < 0.1f && cooldown == 0)
@@ -170,8 +170,8 @@ public class Meleesystem : MonoBehaviour
         if (cooldown != 0)
         {
             cooldown -= Time.deltaTime; 
-            SliderValue.maxValue = 5;
-           SliderValue.value = cooldown;
+            Slider.maxValue = 5;
+           Slider.value = cooldown;
         }
     }
 

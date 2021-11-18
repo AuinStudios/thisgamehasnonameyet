@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+ using UnityEngine.UI;
 
 public class GrabPlayer : MonoBehaviour
 {
@@ -11,10 +12,11 @@ public class GrabPlayer : MonoBehaviour
     // floats -------------------------------------
     private float distance;
     private float cooldownofmonster = 10;
+    private float cooldownofstepingonpuddle = 5;
     // vectors --------------------------------------
      private Vector3 pos;
     // Update is called once per frame
-    public IEnumerator testt()
+    private  IEnumerator setposforgrab()
     { 
         for(int i = 0; i < 5; i++)
         {
@@ -22,21 +24,23 @@ public class GrabPlayer : MonoBehaviour
          gameobjectpos.position = new Vector3(gameobjectpos.position.x, Playerpos.position.y, gameobjectpos.position.z);
         }
     }
-    public void Awake()
+   
+    private void Awake()
     {
         gameobjectpos = this.transform.GetChild(0);
         Playerpos = GameObject.Find("Player").GetComponent<Transform>();
     }
-    public void Start()
+    private void Start()
     { 
         pos  = new Vector3(transform.position.x, -1, transform.position.z);
-        StartCoroutine(testt());
+        StartCoroutine(setposforgrab());
     }
     void Update()
     {
         cooldownofmonster += Time.deltaTime;
         distance =   Vector3.Distance(gameobjectpos.position, Playerpos.position);
-       
+
+        cooldownofstepingonpuddle += Time.deltaTime;
       
        if( cooldownofmonster >= 10)
        {
@@ -48,7 +52,8 @@ public class GrabPlayer : MonoBehaviour
         {
            gameObject.GetComponent<LineRenderer>().SetPosition(0, pos);
            gameObject.GetComponent<LineRenderer>().SetPosition(1, Vector3.Lerp(gameObject.GetComponent<LineRenderer>().GetPosition(1) , Playerpos.position , 10 * Time.deltaTime));
-            
+            Playerpos.GetComponent<NewPlayer>().health -= 0.1f ;
+
             Playerpos.position = Vector3.MoveTowards(Playerpos.position, gameobjectpos.position, 5 * Time.deltaTime);
            Playerpos.GetComponent<NewPlayer>().movespeed = 0;
 
@@ -59,14 +64,15 @@ public class GrabPlayer : MonoBehaviour
            }
 
         }
-        else if (distance < 4)
+        if( distance  < 4.5f && cooldownofstepingonpuddle >= 4)
         {
-            // slowly lose hp
+            Playerpos.GetComponent<NewPlayer>().health -= 30;
+            cooldownofstepingonpuddle = 0;
         }
-        else if(distance < 1.5f)
-        {
-            // die instanly
-        }
+     
+   
+         
+         
           if(hited == true)
           {
             gameObject.GetComponent<LineRenderer>().SetPosition(0, pos );

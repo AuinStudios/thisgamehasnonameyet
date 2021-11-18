@@ -22,6 +22,7 @@ public class TypeWriter : MonoBehaviour
     private int i = 0;
     private string current = "";
     private int addstring;
+    private static bool hideui = true;
     private static bool canactiveornot = true;
     private static int MakeTriggerNotMutlple = 1;
 
@@ -70,7 +71,7 @@ public class TypeWriter : MonoBehaviour
     public IEnumerator startfunction()
     {
         canactiveornot = false;
-        
+        hideui = false;
         yield return new WaitForSeconds(0.5f);
         
         Text.GetComponent<Animator>().SetBool("texton", true);
@@ -90,7 +91,8 @@ public class TypeWriter : MonoBehaviour
             yield return new WaitForSeconds(delay);
             
             addstring = 0;
-            
+            yield return new WaitForSeconds(2f);
+            hideui = true;
             yield return new WaitForSeconds(1.4f);
             
             //maketextnoglitchasmuch = false;
@@ -115,6 +117,14 @@ public class TypeWriter : MonoBehaviour
     {
         // functions and stuff -----------------------------------------------        
         StartCoroutine(waituntllfinishWriter());
+        if(hideui == true)
+        {
+            GameObject.Find("Main Uis").GetComponent<CanvasGroup>().alpha += Time.deltaTime;
+        }
+        else
+        {
+            GameObject.Find("Main Uis").GetComponent<CanvasGroup>().alpha -= Time.deltaTime;
+        }
     }
 
 
