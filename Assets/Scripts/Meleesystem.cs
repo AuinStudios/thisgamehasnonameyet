@@ -1,6 +1,4 @@
 ﻿#region Doeverythingformeunitylol
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -86,7 +84,6 @@ public class Meleesystem : MonoBehaviour
     }
     void Update()
     {
-   
         //clamps values
         cooldown = Mathf.Clamp(cooldown, 0, 5);
         Damage = Mathf.Clamp(Damage, 0, 30);

@@ -69,9 +69,6 @@ public class GrabPlayer : MonoBehaviour
             Playerpos.GetComponent<NewPlayer>().health -= 30;
             cooldownofstepingonpuddle = 0;
         }
-     
-   
-         
          
           if(hited == true)
           {

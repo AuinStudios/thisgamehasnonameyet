@@ -17,14 +17,16 @@ public class NewPlayer : MonoBehaviour
     private  float sensitivity = 50f;
     private  float sensMultiplier = 1f;
     private  float sprintime = 100f;
+    private float sounddelayvalue = 0.2f;
     // bools---------------------------
+    private bool enablesoundelay = true;
     private bool isgroundedboi;
     private bool sprinting;
     private headbop bop;
     // input---------------------------
      private float x, z;
     // sounds -------------------------
-     public AudioSource walk , run;
+     public AudioSource sound;
     // ui stamina and health --------------------
     private Slider StaminaValue;
     private TextMeshProUGUI StaminaText;
@@ -58,13 +60,13 @@ public class NewPlayer : MonoBehaviour
         }
 
     }
-    
+    // movement function ---------------------------------------------------------------------------------------
     public void  Playermovement()
     {
         rig.AddForce(orientation.forward * x * movespeed * Time.deltaTime );
         rig.AddForce(orientation.right * z * movespeed * Time.deltaTime );
     }
-  
+    // sprinting function  --------------------------------------------------------------------------------------
     public void sprint()
     {
         StaminaValue.value = sprintime;
@@ -82,100 +84,98 @@ public class NewPlayer : MonoBehaviour
             movespeed = 200000;
              maxspeed = 16;
               transform.GetChild(0).transform.GetComponent<Animator>().SetBool("walking", false);
-            if (!run.isPlaying)
-            {
-                run.Play();
-            }
+            sounddelayvalue = 0.05f;
             if(z != 0 || x != 0)
             {
              sprintime -= 2.5f *  Time.deltaTime;
             }
-            
-            if(z == 0 || x == 0)
-            {
-                sprintime += Time.deltaTime;
-            }
-              
+
             if(  z == 0 && x == 0)
             {
                 transform.GetChild(0).transform.GetComponent<Animator>().SetBool("running", false);
-                
+                sprintime += Time.deltaTime;
             }
             else
             {
               transform.GetChild(0).transform.GetComponent<Animator>().SetBool("running", true);
-                walk.Stop();
-               
             }
            
         }
-        else if (isgroundedboi )
+        else 
         {
-            run.Stop();
+           
             transform.GetChild(0).transform.GetComponent<Animator>().SetBool("running", false);
             movespeed = 100000;
             maxspeed = 8;
-          
+            sounddelayvalue = 0.2f;
             sprintime += Time.deltaTime;
         }
     }
- 
+    // sound delay loop -----------------------------------------------------------------------------------------------
+    public IEnumerator soundelay()
+    {
+        enablesoundelay = false;
+        yield return new WaitForSeconds(sounddelayvalue);
+        sound.Play();
+        enablesoundelay = true;
+    }
+    //  main functions --------------------------------------------------------------------------------------------------------------------
     void Update()
     {
         // lerping for health ui -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        GameObject.Find("hp").GetComponent<Slider>().value = Mathf.Lerp(GameObject.Find("hp").GetComponent<Slider>().value , health , 3 * Time.deltaTime);
-        GameObject.Find("hp").transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(Color.red, Color.green, GameObject.Find("hp").GetComponent<Slider>().value / GameObject.Find("hp").GetComponent<Slider>().maxValue);    
+        GameObject.Find("hp").GetComponent<Slider>().value = Mathf.Lerp(GameObject.Find("hp").GetComponent<Slider>().value, health, 3 * Time.deltaTime);
+        GameObject.Find("hp").transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(Color.red, Color.green, GameObject.Find("hp").GetComponent<Slider>().value / GameObject.Find("hp").GetComponent<Slider>().maxValue);
         // sprint clamp-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        sprintime = Mathf.Clamp((float)sprintime, 0, 100 );
+        sprintime = Mathf.Clamp((float)sprintime, 0, 100);
         //inputs -----------------------------------------------------------------------------------
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
         orientation.Rotate(Vector3.up * mouseX);
         z = Input.GetAxisRaw("Horizontal");
         x = Input.GetAxisRaw("Vertical");
-        // animation for headbop --------------------------------------------------------------------
-        if (x == 1 && !bop.walking)
+
+        // Sound Walk Input ---------------------------------------------------------------------------------------------
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S))
+        {
+
+            if (enablesoundelay == true && !sound.isPlaying)
+            {
+                StartCoroutine(soundelay());
+            }
+        }
+
+        // animation for headbop -----------------------------------------------------------------------------------------
+
+        if (x == 1 && !bop.walking || x == -1 && !bop.walking || z == 1 && !bop.walking || z == -1 && !bop.walking)
         {
             transform.GetChild(0).transform.GetComponent<Animator>().SetBool("walking", true);
-            walk.Play();
+         
         }
-        else if((x == -1 && !bop.walking))
-        {
-            transform.GetChild(0).transform.GetComponent<Animator>().SetBool("walking", true);
-            walk.Play();
-        }
-        if(z == 1 && !bop.walking)
-        {
-            transform.GetChild(0).transform.GetComponent<Animator>().SetBool("walking", true);
-            walk.Play();
-        }
-        else if(z == -1 && !bop.walking)
-        {
-            transform.GetChild(0).transform.GetComponent<Animator>().SetBool("walking", true);
-            walk.Play();
-        }
-        else if (z == 0 && x ==  0 )
+        if (z == 0 && x ==  0 )
         {
             transform.GetChild(0).transform.GetComponent<Animator>().SetBool("walking",false);
-            walk.Stop();
+            StopCoroutine(soundelay());
         }
         // heal and movement force and sprinting ----------------------------------------------
+
         Playermovement();
+
         sprint();
+
         if( health  < 100)
         {
             health += 0.5f * Time.deltaTime;
         }
+
     }
 
-
-
     // walking detection ----------------------------------------------------------------------------------------------
+
     public void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
             isgroundedboi = true;
-
         }
     }
 
@@ -184,10 +184,6 @@ public class NewPlayer : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             isgroundedboi = false;
-
         }
-   
-         
-
     }
 }

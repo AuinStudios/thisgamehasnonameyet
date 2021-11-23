@@ -5,10 +5,11 @@ using UnityEngine;
 public class Headpos : MonoBehaviour
 {
     private GameObject pos;
-    public headbop running;
+    private headbop running;
 
     public void Awake()
     {
+        running = GameObject.Find("Player").transform.GetChild(0).GetComponent<headbop>();
          if (gameObject.CompareTag("MainCamera"))
          {
                pos = GameObject.Find("Camera");

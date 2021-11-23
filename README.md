@@ -1,5 +1,10 @@
 # thisgamehasnonameyet
  transfur game
+23/11/2021
+### ( made a sound loop delay function cause unity didnt have it so i made one and replaced the current walking and running sounds with beter ones)
+___
+??/11/2021)
+### (forgot to add this but made an ai that follows u and can semi path find towards u stll in progress)
 ___
 18/11/2021)
 ### (textured the axe added health  optimized some codes abit also puddle damages  u when it grapples and when u step on it )
