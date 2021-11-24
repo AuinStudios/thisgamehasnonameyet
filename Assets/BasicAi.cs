@@ -16,7 +16,7 @@ public class BasicAi : MonoBehaviour
         if(Physics.Raycast(transform.GetChild(0).position , transform.GetChild(0).transform.TransformDirection(Vector3.forward ), out hit, range))
         {
           
-            if ( hit.collider && !hit.transform.gameObject.CompareTag("Player") && right == true)
+            if ( hit.collider && !hit.transform.gameObject.CompareTag("Player") )
             {
                  gameObject.GetComponent<Rigidbody>().AddForce(transform.GetChild(0).transform.TransformDirection(Vector3.right) * 35);
                 
@@ -28,16 +28,16 @@ public class BasicAi : MonoBehaviour
             gameObject.GetComponent<Rigidbody>().AddForce(( player.position - transform.position ) *  speed* Time.deltaTime);
             Debug.DrawRay(transform.GetChild(0).position, transform.GetChild(0).forward  *range, Color.green);
         }
-        if (Physics.Raycast(transform.GetChild(1).position, transform.GetChild(0).transform.TransformDirection(Vector3.right), out hit, 10))
-        {
-            right = false;
-            gameObject.GetComponent<Rigidbody>().AddForce(transform.GetChild(1).transform.TransformDirection(Vector3.right) * -35);
-        }
-        else
-        {
-           
-            right = true;
-        }
+        //if (Physics.Raycast(transform.GetChild(1).position, transform.GetChild(0).transform.TransformDirection(Vector3.right), out hit, 10))
+        //{
+        //    right = false;
+        //    gameObject.GetComponent<Rigidbody>().AddForce(transform.GetChild(1).transform.TransformDirection(Vector3.right) * -35);
+        //}
+        //else
+        //{
+        //   
+        //    right = true;
+        //}
     }
 }
 

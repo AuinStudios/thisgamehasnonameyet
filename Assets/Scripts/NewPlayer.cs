@@ -17,7 +17,7 @@ public class NewPlayer : MonoBehaviour
     private  float sensitivity = 50f;
     private  float sensMultiplier = 1f;
     private  float sprintime = 100f;
-    private float sounddelayvalue = 0.2f;
+    private float sounddelayvalue = 0.3f;
     // bools---------------------------
     private bool enablesoundelay = true;
     private bool isgroundedboi;
@@ -107,7 +107,7 @@ public class NewPlayer : MonoBehaviour
             transform.GetChild(0).transform.GetComponent<Animator>().SetBool("running", false);
             movespeed = 100000;
             maxspeed = 8;
-            sounddelayvalue = 0.2f;
+            sounddelayvalue = 0.3f;
             sprintime += Time.deltaTime;
         }
     }
