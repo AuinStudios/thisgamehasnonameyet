@@ -1,5 +1,8 @@
 # thisgamehasnonameyet
  transfur game
+24/11/2021
+### (Improved the sway system    made the graphicis abit better with post processing  added a grid texture to the platform didnt do much else cause i spended alot of time trying to improve the graphicis)
+___
 23/11/2021
 ### ( made a sound loop delay function cause unity didnt have it so i made one and replaced the current walking and running sounds with beter ones)
 ___

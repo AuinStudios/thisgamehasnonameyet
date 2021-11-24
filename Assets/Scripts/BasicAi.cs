@@ -7,7 +7,6 @@ public class BasicAi : MonoBehaviour
     public Transform player;
     public float speed= 50;
     public float range;
-    private bool right = true;
     private void Update()
     {
         transform.GetChild(0).LookAt(player.position);
