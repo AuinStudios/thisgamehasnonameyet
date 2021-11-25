@@ -28,6 +28,7 @@ public class Aitest : MonoBehaviour
         direction = transform.TransformDirection(Quaternion.AngleAxis(random, new Vector3(0, 1, 0)) * new Vector3(0,0, raycastrange));
         if (Physics.Raycast(transform.position, direction, out hit, raycastrange))
         {
+                
             Debug.DrawRay(transform.position, direction * hit.distance, Color.red);
                 delay = 0;
             cooldown = 0;

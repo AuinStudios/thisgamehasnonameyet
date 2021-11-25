@@ -47,7 +47,7 @@ public class GrabPlayer : MonoBehaviour
            hited = false;
             cooldownofmonster = 0;
        }
-
+      
         if (distance < 10 && hited == false )
         {
            gameObject.GetComponent<LineRenderer>().SetPosition(0, pos);

@@ -1,21 +1,21 @@
 ﻿#region Doeverythingformeunitylol
 using UnityEngine;
 using UnityEngine.UI;
-
-
-
 public class Meleesystem : MonoBehaviour
 {
+   
+    public AudioSource swing;
+    public AudioClip hitt;
     // pos + gameobjects ---------------------------
     public Transform camtransform;
     public GameObject spawneffect;
     public Transform spawneffectpos;
     // bool ----------------------------------------
      private bool enabletimerun;
+    private bool spawneffectdelay;
     // ui + sliders -------------------------
     public customsliderhealthui enemy;
     private Slider Slider;
-
     // floats -------------------------------
     public float Damage;
     private float timeruntllreset;
@@ -26,7 +26,9 @@ public class Meleesystem : MonoBehaviour
     public Cameramove cameramove;
     private void Start()
     {
-       cameramove = Camera.main.GetComponent<Cameramove>();
+
+         
+          cameramove = Camera.main.GetComponent<Cameramove>();
     }
     #endregion
     #region hiidestuff
@@ -69,21 +71,32 @@ public class Meleesystem : MonoBehaviour
     }
     public void OnTriggerEnter(Collider col)
     {
-        
+      
          if (col.gameObject.CompareTag("Enemy"))
          {
-            enemy.health -= Damage; 
-            // set the spawn effect position to the pos ------------------------
-            spawneffect.transform.position = spawneffectpos.position;
+            enemy.health -= Damage;
             // spawn it -----------------------------------------------------
-            Instantiate(spawneffect);
-            
+
+
+            spawneffectdelay = true;
             //col.gameObject.GetComponent<Rigidbody>().AddForce(camtransform.forward * 20000);
          }
-     
+        
+         if ( col.gameObject && !col.gameObject.CompareTag("Player"))
+         {
+           swing.PlayOneShot(hitt);
+         }
     }
+   
     void Update()
     {
+            RaycastHit hit;
+            if(Physics.Raycast( transform.GetChild(1).position , transform.GetChild(1).transform.TransformDirection(Vector3.up) , out hit , 2f) && spawneffectdelay == true)
+            {
+            spawneffect.GetComponent<ParticleSystem>().trigger.SetCollider(0, GameObject.Find("Ground").transform);
+             Instantiate(spawneffect ,hit.point, spawneffect.transform.rotation = Quaternion.FromToRotation(Vector3.forward , hit.normal));
+            spawneffectdelay = false;
+            }
         //clamps values
         cooldown = Mathf.Clamp(cooldown, 0, 5);
         Damage = Mathf.Clamp(Damage, 0, 30);
@@ -122,18 +135,20 @@ public class Meleesystem : MonoBehaviour
         // plays the animation and enables hitbox whenever u let go of the mouse to attack and add cooldown
         else if ((Input.GetKeyUp(KeyCode.Mouse0) && cooldown == 0))
         {
-          
+            
             if (clickorhold > 0.1f && cooldown == 0)
             {
              
                 gameObject.GetComponent<Animator>().SetBool("Chargeing", false);
                 enabletimerun = true;
-                cooldown = 5;
-             
-                
+                cooldown = 5; 
+
+                swing.PlayDelayed(0.2f);
+
             }
             else if (clickorhold < 0.1f && cooldown == 0)
             {
+                swing.Play();
                 gameObject.GetComponent<Animator>().SetTrigger("Axestab");
                 enabletimerun = true;
                 cooldown = 2;

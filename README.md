@@ -1,5 +1,9 @@
 # thisgamehasnonameyet
  transfur game
+25/11/2021
+### (addded more sound effects  tested around with hit.normal  messsed around with pratical system learnt scriptableobjects abit 
+    and will improve on torromow)
+___
 24/11/2021
 ### (Improved the sway system    made the graphicis abit better with post processing  added a grid texture to the platform didnt do much else cause i spended alot of time trying to improve the graphicis)
 ___
