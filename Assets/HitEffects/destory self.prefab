@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8407046875815354011}
-  m_LocalRotation: {x: -0.000000041436888, y: -0.7071069, z: 0, w: 0.70710665}
+  m_LocalRotation: {x: -0.54887986, y: 0.5167904, z: 0, w: 0.6570074}
   m_LocalPosition: {x: -36.326, y: 0.48403764, z: 11.697846}
   m_LocalScale: {x: 0.84892195, y: 0.84892195, z: 0.84892195}
   m_Children: []
@@ -602,7 +602,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 4
+    maxNumParticles: 6
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -3858,7 +3858,7 @@ ParticleSystem:
     outside: 0
     enter: 2
     exit: 0
-    radiusScale: 0.8
+    radiusScale: 1.2
   SubModule:
     serializedVersion: 2
     enabled: 0
@@ -4888,3 +4888,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goo: {fileID: 300206593689202857, guid: e29d6c9b117a30d4eb75686cbace714b, type: 3}
+  storage: {fileID: 11400000, guid: 4ec8fecd34620ab4bb68cc3d1439260f, type: 2}

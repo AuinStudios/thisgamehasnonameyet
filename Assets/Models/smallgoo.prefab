@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3712470066854117132}
   - component: {fileID: 1468631506116987846}
   - component: {fileID: 2283503283482814684}
+  - component: {fileID: 327028952144855460}
   m_Layer: 0
   m_Name: smallgoo
   m_TagString: goo
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1108269112978795027}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: 2.7375965, y: -0.3, z: 22.21685}
-  m_LocalScale: {x: 0.3184496, y: 0.3184496, z: 0.3184496}
+  m_LocalScale: {x: 0.23, y: 0.23, z: 0.23}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -96,3 +97,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: {fileID: 11400000, guid: 4ec8fecd34620ab4bb68cc3d1439260f, type: 2}
   bigoop: {fileID: 972103684688235820, guid: 9d7e867a7d0a10a45a72d60e7771558e, type: 3}
+  objects: []
+  hits: []
+--- !u!135 &327028952144855460
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108269112978795027}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.9997937
+  m_Center: {x: 0.0008943082, y: 0, z: 0}

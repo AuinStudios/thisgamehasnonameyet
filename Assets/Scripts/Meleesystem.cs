@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Meleesystem : MonoBehaviour
 {
-   
+    public ParticleSystem max;
     public AudioSource swing;
     public AudioClip hitt;
     // pos + gameobjects ---------------------------
@@ -17,6 +17,7 @@ public class Meleesystem : MonoBehaviour
     public customsliderhealthui enemy;
     private Slider Slider;
     // floats -------------------------------
+    private float sphereradius = 0.5f, sphererange = 2f;
     public float Damage;
     private float timeruntllreset;
     public float cooldown;
@@ -91,7 +92,7 @@ public class Meleesystem : MonoBehaviour
     void Update()
     {
             RaycastHit hit;
-            if(Physics.Raycast( transform.GetChild(1).position , transform.GetChild(1).transform.TransformDirection(Vector3.up) , out hit , 2f) && spawneffectdelay == true)
+            if(Physics.SphereCast( transform.GetChild(1).position , sphereradius , transform.GetChild(1).up, out hit , sphererange) && spawneffectdelay == true)
             {
             spawneffect.GetComponent<ParticleSystem>().trigger.SetCollider(0, GameObject.Find("Ground").transform);
              Instantiate(spawneffect ,hit.point, spawneffect.transform.rotation = Quaternion.FromToRotation(Vector3.forward , hit.normal));
@@ -123,7 +124,7 @@ public class Meleesystem : MonoBehaviour
             }
             else if (clickorhold >= 0.1f && cooldown == 0)
             {
-                Damage += Time.deltaTime * 12;
+                Damage += Time.deltaTime * 13;
             }
             else
             {
@@ -141,17 +142,21 @@ public class Meleesystem : MonoBehaviour
              
                 gameObject.GetComponent<Animator>().SetBool("Chargeing", false);
                 enabletimerun = true;
-                cooldown = 5; 
-
+                cooldown = 5;
+                sphererange = 3;
+                sphereradius = 1;
                 swing.PlayDelayed(0.2f);
-
+                max.maxParticles = 6;
             }
             else if (clickorhold < 0.1f && cooldown == 0)
             {
                 swing.Play();
                 gameObject.GetComponent<Animator>().SetTrigger("Axestab");
                 enabletimerun = true;
-                cooldown = 2;
+                cooldown = 3.5f;
+                sphererange = 2;
+                sphereradius = 0.5f;
+                max.maxParticles = 2;
             }
         }
                
@@ -186,7 +191,10 @@ public class Meleesystem : MonoBehaviour
            Slider.value = cooldown;
         }
     }
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.GetChild(1).position, 0.5f);
+    }
 
 }
 #endregion

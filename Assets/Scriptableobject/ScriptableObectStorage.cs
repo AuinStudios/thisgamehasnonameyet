@@ -4,5 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/DistancesScriptableObject", order = 1)]
 public class ScriptableObectStorage : ScriptableObject
 {
-  public  float distances = 0;
+    // public Collider[] hits;
+    public int count = 0;
+    public float namechanger = 0;
 }
