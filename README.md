@@ -1,5 +1,9 @@
 # thisgamehasnonameyet
  transfur game
+
+04/12/2021
+### ( i was sick so i was away andd only thing i did today was make the title of my  studio called AUIN STUDIOS nothing much else)
+
 26/11/2021
 ### (i couldnt do it yesterday cause i was busy but today i learnt more about foreach and lists  and abit more of scriptableobjects  and i made a thing that if to many little puddles are close together useing foreach sphereoverlap they will move towards the last one that spawned in and will fuse togehter to make a big puddle that   trys to kill yo  u)
 
