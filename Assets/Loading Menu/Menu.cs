@@ -1,33 +1,136 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
-
+    // bools -----------------------------------------
     private bool lerpoutofscene = false;
     private bool settingslerpin = false;
-    public void play()
+    private bool ComeBack = false, SubComeBack = false;
+    private bool canclickbuttens = false;
+    // floats -----------------------------------------
+    private float ButtenCooldown = 6;
+    // lists ------------------------------------------
+    public List<Vector3> save;
+    public List<Vector3> savesettingspos;
+
+    public void Start()
     {
-        SceneManager.LoadSceneAsync(2);
-    }
-    public void quit()
-    {
-        Application.Quit();
-    }
-    public IEnumerator Settings()
-    {
-       
-        lerpoutofscene = true;
-        yield return new WaitForSeconds(4f);
+        foreach (Transform i in GameObject.Find("Menu").transform)
+        {
+            save.Add(i.localPosition);
+        }
         
+        foreach (Transform i in GameObject.Find("SettingsOptions").transform)
+        {
+            savesettingspos.Add(i.localPosition);
+        }
+        GameObject.Find("SettingsOptions").SetActive(false);
+    } 
+    private void LateUpdate()
+    {
+
+        ButtenCooldown += 1 * Time.deltaTime;
+       
+        if (ButtenCooldown >= 6)
+        {
+            canclickbuttens = true;
+        }
+        else if(ButtenCooldown <= 6)
+        {
+            canclickbuttens = false;
+        }
+        StartCoroutine(delay());
+        StartCoroutine(settingsdelay());
+    }
+
+    private void setings()
+    {
+        if (canclickbuttens == true)
+        {
+          StartCoroutine(Settings());
+           foreach(Transform i in GameObject.Find("Menu").transform)
+           {
+                i.GetComponent<CanHover>().bol = false;
+            
+           }
+            ButtenCooldown = 0;
+        }
+    }
+
+    private void Back()
+    {
+        if(canclickbuttens == true)
+        {
+          StartCoroutine(backtomenu());
+            ButtenCooldown = 0;
+        }
+        
+    }
+    
+    private void play()
+    {
+        if (canclickbuttens == true)
+        {
+            foreach (Transform i in GameObject.Find("Menu").transform)
+            {
+                i.GetComponent<CanHover>().bol = false;
+
+            }
+            SceneManager.LoadSceneAsync(2);
+            ButtenCooldown = 0;
+        }
+            
+    }
+
+    private void quit()
+    {
+        if (canclickbuttens == true)
+        {
+            foreach (Transform i in GameObject.Find("Menu").transform)
+            {
+                i.GetComponent<CanHover>().bol = false;
+
+            }
+            Application.Quit();
+            ButtenCooldown = 0;
+        }
+      
+    }
+       
+     
+    private IEnumerator backtomenu()
+    {
+         settingslerpin = false;
+        SubComeBack = true;
+        yield return new WaitForSeconds(4.2f);
+        SubComeBack = false;
+        GameObject.Find("Canvas").transform.GetChild(1).transform.gameObject.SetActive(true);
+        GameObject.Find("Canvas").transform.GetChild(0).gameObject.SetActive(false);
+        ComeBack = true;
+        foreach (Transform i in GameObject.Find("Menu").transform)
+        {
+            i.GetComponent<CanHover>().enabled = true;
+            i.GetComponent<CanHover>().bol = false;
+        }
+    }
+    private IEnumerator Settings()
+    {
+        lerpoutofscene = true;
+        yield return new WaitForSeconds(2f);
+        lerpoutofscene = false;
+        foreach (Transform i in GameObject.Find("Menu").transform)
+        {
+            i.GetComponent<CanHover>().enabled = false;
+        }
         GameObject.Find("Canvas").transform.GetChild(0).gameObject.SetActive(true);
         settingslerpin = true;
-        GameObject.Find("Settings").SetActive(false);
+        GameObject.Find("Menu").SetActive(false);
     }
-    public IEnumerator delay()
+    private IEnumerator delay()
     {
         if (lerpoutofscene == true)
         {
@@ -36,15 +139,38 @@ public class Menu : MonoBehaviour
                 if(i.name != "Menu")
                 {
                  Vector3 y = new Vector3(i.transform.localPosition.x, 1000, i.transform.localPosition.z);
-                i.localPosition = Vector3.Lerp(i.transform.localPosition, y, 0.3f * Time.deltaTime);
+                i.localPosition = Vector3.Lerp(i.transform.localPosition, y, 0.6f * Time.deltaTime);
                 }
                 yield return new WaitForSeconds(0.4f);
             }
            
         }
+        if (SubComeBack == true)
+        {
+            int B = 0;
+            foreach(Transform i in GameObject.Find("SettingsOptions").transform)
+            {
+                i.localPosition = Vector3.Lerp(i.localPosition, savesettingspos[B], 1f* Time.deltaTime);
+                B++;
+                yield return new WaitForSeconds(0.6f);
+            }
+        }
+        if(ComeBack == true)
+        {
+            int T = 0;
+            foreach (Transform i in GameObject.Find("Menu").transform)
+            {
 
+                i.localPosition = Vector3.Lerp(i.localPosition , save[T] , 2f *Time.deltaTime);
+                T++;
+                yield return new WaitForSeconds(0.4f);
+            }
+            yield return new WaitForSeconds(4);
+            ComeBack = false;
+        }
     }
-    public IEnumerator settingsdelay()
+    
+    private IEnumerator settingsdelay()
     {
         if( settingslerpin == true )
         {
@@ -59,25 +185,6 @@ public class Menu : MonoBehaviour
                 yield return new WaitForSeconds(0.6f);
             }
         }
-    }
-  
-    public void setings()
-    {
-
-        StartCoroutine(Settings());
-        foreach(Transform i in GameObject.Find("Menu").transform)
-        {
-            i.GetComponent<CanHover>().enabled = false;
-            Color t = i.GetComponent<Image>().color;
-            t.a = 0;
-            i.GetComponent<Image>().color = t;
-        }
-
-
-    }
-    private void LateUpdate()
-    {
-        StartCoroutine(delay());
-        StartCoroutine(settingsdelay());
+        
     }
 }

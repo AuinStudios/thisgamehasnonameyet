@@ -1,6 +1,9 @@
 # thisgamehasnonameyet
  transfur game
 
+09/12/2021
+### (more progress on the menu)
+___
 07/12/2021
 ### ( so today and yesterday i been makeing the menu of the game so far its  not done but looks pretty neat so far)
 ___
