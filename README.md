@@ -1,6 +1,9 @@
 # thisgamehasnonameyet
  transfur game
 
+10/12/2021
+### (made the ui smoother changed abit of the menu text to have shadows  made a panel swap system to change between settings  and made hover effect for the  changeing panel boxes)
+___
 09/12/2021
 ### (more progress on the menu)
 ___

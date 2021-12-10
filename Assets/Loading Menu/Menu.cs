@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     // bools -----------------------------------------
@@ -17,7 +15,7 @@ public class Menu : MonoBehaviour
     public List<Vector3> save;
     public List<Vector3> savesettingspos;
 
-    public void Start()
+    private void Start()
     {
         foreach (Transform i in GameObject.Find("Menu").transform)
         {
@@ -65,7 +63,7 @@ public class Menu : MonoBehaviour
     {
         if(canclickbuttens == true)
         {
-          StartCoroutine(backtomenu());
+            StartCoroutine(backtomenu());
             ButtenCooldown = 0;
         }
         
@@ -100,8 +98,7 @@ public class Menu : MonoBehaviour
         }
       
     }
-       
-     
+
     private IEnumerator backtomenu()
     {
          settingslerpin = false;
@@ -111,21 +108,12 @@ public class Menu : MonoBehaviour
         GameObject.Find("Canvas").transform.GetChild(1).transform.gameObject.SetActive(true);
         GameObject.Find("Canvas").transform.GetChild(0).gameObject.SetActive(false);
         ComeBack = true;
-        foreach (Transform i in GameObject.Find("Menu").transform)
-        {
-            i.GetComponent<CanHover>().enabled = true;
-            i.GetComponent<CanHover>().bol = false;
-        }
     }
     private IEnumerator Settings()
     {
         lerpoutofscene = true;
         yield return new WaitForSeconds(2f);
         lerpoutofscene = false;
-        foreach (Transform i in GameObject.Find("Menu").transform)
-        {
-            i.GetComponent<CanHover>().enabled = false;
-        }
         GameObject.Find("Canvas").transform.GetChild(0).gameObject.SetActive(true);
         settingslerpin = true;
         GameObject.Find("Menu").SetActive(false);
