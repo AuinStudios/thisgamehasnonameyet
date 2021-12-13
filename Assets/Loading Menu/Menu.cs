@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     // bools -----------------------------------------
@@ -9,14 +10,20 @@ public class Menu : MonoBehaviour
     private bool settingslerpin = false;
     private bool ComeBack = false, SubComeBack = false;
     private bool canclickbuttens = false;
+    public GameObject test;
     // floats -----------------------------------------
     private float ButtenCooldown = 6;
+    private float howmanytimes;
     // lists ------------------------------------------
     public List<Vector3> save;
     public List<Vector3> savesettingspos;
 
     private void Start()
     {
+        HoldVariables data =   SaveSystem.load();
+        GameObject.Find("sensitivity slider").transform.GetComponent<Slider>().value = data.sens;
+        GameObject.Find("Fov Slider").transform.GetComponent<Slider>().value = data.fov;
+       
         foreach (Transform i in GameObject.Find("Menu").transform)
         {
             save.Add(i.localPosition);
@@ -30,7 +37,7 @@ public class Menu : MonoBehaviour
     } 
     private void LateUpdate()
     {
-
+     
         ButtenCooldown += 1 * Time.deltaTime;
        
         if (ButtenCooldown >= 6)
@@ -63,6 +70,7 @@ public class Menu : MonoBehaviour
     {
         if(canclickbuttens == true)
         {
+            SaveSystem.Savesystem();
             StartCoroutine(backtomenu());
             ButtenCooldown = 0;
         }
@@ -78,6 +86,8 @@ public class Menu : MonoBehaviour
                 i.GetComponent<CanHover>().bol = false;
 
             }
+
+            
             SceneManager.LoadSceneAsync(2);
             ButtenCooldown = 0;
         }
@@ -93,6 +103,7 @@ public class Menu : MonoBehaviour
                 i.GetComponent<CanHover>().bol = false;
 
             }
+
             Application.Quit();
             ButtenCooldown = 0;
         }

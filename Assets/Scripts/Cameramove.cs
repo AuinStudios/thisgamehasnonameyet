@@ -14,7 +14,6 @@ public class Cameramove : MonoBehaviour
     public float raycastrange;
     [Header("Debug")]
     public int runCount = 0;
-
     public bool triggerDot = false;
     public bool closeToAnEnemy = false;
     public List<Transform> enemies = new List<Transform>();
@@ -24,7 +23,9 @@ public class Cameramove : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
+        HoldVariables data  = SaveSystem.load();
+        Camera.main.fieldOfView = data.fov;
+        sensitivity = data.sens;
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -81,15 +82,6 @@ public class Cameramove : MonoBehaviour
             indicator.GetComponent<Image>().color = new Vector4(255, 255, 255, 255);
 
             triggerDot = false;
-        }
-
-        if (Time.timeScale == 0)
-        {
-            sensitivity = 0;
-        }
-        if (Time.timeScale == 1 )
-        {
-            sensitivity = 50;
         }
     }
 }

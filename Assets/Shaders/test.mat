@@ -10,7 +10,7 @@ Material:
   m_Name: test
   m_Shader: {fileID: -6465566751694194690, guid: 5ba8505e42a27194b8ef2fc007fc7c5c, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -56,6 +56,9 @@ Material:
     - Boolean_AD723C75: 0
     - Boolean_CD1343F8: 0
     - Vector1_1AB8C596: 0.6
+    - Vector1_70D5A869: 0
+    - Vector1_89A23BC7: 0
+    - Vector1_BE03B2EF: 0
     - Vector1_EB385BA9: 0.05
     - _AlphaClip: 0
     - _Blend: 0
@@ -83,6 +86,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_2AF6704B: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

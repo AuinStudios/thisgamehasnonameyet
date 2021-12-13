@@ -32,6 +32,8 @@ public class NewPlayer : MonoBehaviour
     private TextMeshProUGUI StaminaText;
     public void Awake()
     {
+      HoldVariables dATA =  SaveSystem.load();
+        sensitivity = dATA.sens;
         orientation = transform.GetChild(2).transform;
         rig = this.transform.GetComponent<Rigidbody>();
         StaminaValue = GameObject.Find("Staminabar").GetComponent<Slider>();
