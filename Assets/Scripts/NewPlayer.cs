@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
 public class NewPlayer : MonoBehaviour
 {
+    // Transition start ------------------------
+    private GameObject transition;
     // transform and physics stuff ------------
     private Rigidbody rig;
     private Transform orientation;
@@ -32,13 +33,37 @@ public class NewPlayer : MonoBehaviour
     private TextMeshProUGUI StaminaText;
     public void Awake()
     {
-      HoldVariables dATA =  SaveSystem.load();
-        sensitivity = dATA.sens;
+        HoldVariables DATA =  SaveSystem.load();
+        AudioListener.volume = DATA.MasterVolume;
+        sensitivity = DATA.sens;
+        QualitySettings.SetQualityLevel(DATA.graphicisvalue);
+        Color brightness_adjust = new Color(DATA.brightness, DATA.brightness, DATA.brightness);
+        RenderSettings.ambientLight = brightness_adjust ;
         orientation = transform.GetChild(2).transform;
         rig = this.transform.GetComponent<Rigidbody>();
         StaminaValue = GameObject.Find("Staminabar").GetComponent<Slider>();
         StaminaText = GameObject.Find("Staminabar").transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
         bop = this.transform.GetChild(0).GetComponent<headbop>();
+        transition = GameObject.Find("Start Transition");
+    }
+
+    public void Start()
+    {
+        StartCoroutine(Starttransition());
+    }
+    private IEnumerator Starttransition()
+    {
+        WaitForFixedUpdate wait = new WaitForFixedUpdate();
+        while(transition.transform.GetChild(0).localPosition.x >= -1300f || transition.transform.GetChild(0).localPosition.x <= 1400f)
+        {
+            Vector2 firstboxpos = new Vector2(-1431f, -903f);
+            transition.transform.GetChild(0).localPosition = Vector2.Lerp(transition.transform.GetChild(0).localPosition, firstboxpos, 2f * Time.fixedDeltaTime);
+
+
+            Vector2 secoundboxpos = new Vector2(1523f, 809f);
+            transition.transform.GetChild(1).localPosition = Vector2.Lerp(transition.transform.GetChild(1).localPosition, secoundboxpos, 2f * Time.fixedDeltaTime);
+            yield return wait;
+        }
     }
     void FixedUpdate()
     {
