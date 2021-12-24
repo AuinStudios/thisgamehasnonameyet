@@ -31,41 +31,45 @@ public class NewPlayer : MonoBehaviour
     // ui stamina and health --------------------
     private Slider StaminaValue;
     private TextMeshProUGUI StaminaText;
-    public void Awake()
+    private  void Awake()
     {
-        HoldVariables DATA =  SaveSystem.load();
+        HoldVariables DATA = SaveSystem.load();
         AudioListener.volume = DATA.MasterVolume;
         sensitivity = DATA.sens;
         QualitySettings.SetQualityLevel(DATA.graphicisvalue);
         Color brightness_adjust = new Color(DATA.brightness, DATA.brightness, DATA.brightness);
-        RenderSettings.ambientLight = brightness_adjust ;
+        RenderSettings.ambientLight = brightness_adjust;
         orientation = transform.GetChild(2).transform;
         rig = this.transform.GetComponent<Rigidbody>();
         StaminaValue = GameObject.Find("Staminabar").GetComponent<Slider>();
         StaminaText = GameObject.Find("Staminabar").transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
         bop = this.transform.GetChild(0).GetComponent<headbop>();
-        transition = GameObject.Find("Start Transition");
+        transition = GameObject.Find("End transition");
+        transition.transform.GetChild(0).transform.localEulerAngles = new Vector3(DATA.rot[0], DATA.rot[1], DATA.rot[2]);
     }
 
-    public void Start()
+    private  void Start()
     {
         StartCoroutine(Starttransition());
     }
     private IEnumerator Starttransition()
     {
         WaitForFixedUpdate wait = new WaitForFixedUpdate();
-        while(transition.transform.GetChild(0).localPosition.x >= -1300f || transition.transform.GetChild(0).localPosition.x <= 1400f)
+        while(transition.transform.GetChild(1).localPosition.x >= -1300f || transition.transform.GetChild(2).localPosition.x <= 1400f)
         {
-            Vector2 firstboxpos = new Vector2(-1431f, -903f);
-            transition.transform.GetChild(0).localPosition = Vector2.Lerp(transition.transform.GetChild(0).localPosition, firstboxpos, 2f * Time.fixedDeltaTime);
+            Vector2 logoimage = new Vector2(1448f, 1187f);
+            transition.transform.GetChild(0).localPosition = Vector2.Lerp(transition.transform.GetChild(0).localPosition, logoimage, 2f * Time.fixedDeltaTime);
+
+            Vector2 firstboxpos = new Vector2(-1457f, -1278f);
+            transition.transform.GetChild(1).localPosition = Vector2.Lerp(transition.transform.GetChild(1).localPosition, firstboxpos, 2f * Time.fixedDeltaTime);
 
 
-            Vector2 secoundboxpos = new Vector2(1523f, 809f);
-            transition.transform.GetChild(1).localPosition = Vector2.Lerp(transition.transform.GetChild(1).localPosition, secoundboxpos, 2f * Time.fixedDeltaTime);
+            Vector2 secoundboxpos = new Vector2(1523f, 1162f);
+            transition.transform.GetChild(2).localPosition = Vector2.Lerp(transition.transform.GetChild(2).localPosition, secoundboxpos, 2f * Time.fixedDeltaTime);
             yield return wait;
         }
     }
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Vector3 xzVel = new Vector3(rig.velocity.x, 0, rig.velocity.z);
         Vector3 yVel = new Vector3(0, rig.velocity.y, 0);
@@ -88,13 +92,13 @@ public class NewPlayer : MonoBehaviour
 
     }
     // movement function ---------------------------------------------------------------------------------------
-    public void  Playermovement()
+    private  void  Playermovement()
     {
         rig.AddForce(orientation.forward * x * movespeed * Time.deltaTime );
         rig.AddForce(orientation.right * z * movespeed * Time.deltaTime );
     }
     // sprinting function  --------------------------------------------------------------------------------------
-    public void sprint()
+    private void sprint()
     {
         StaminaValue.value = sprintime;
         StaminaText.text = Mathf.Clamp((int)sprintime, 0, int.MaxValue).ToString();
@@ -139,7 +143,7 @@ public class NewPlayer : MonoBehaviour
         }
     }
     // sound delay loop -----------------------------------------------------------------------------------------------
-    public IEnumerator soundelay()
+    private IEnumerator soundelay()
     {
         enablesoundelay = false;
         yield return new WaitForSeconds(sounddelayvalue);
@@ -147,7 +151,7 @@ public class NewPlayer : MonoBehaviour
         enablesoundelay = true;
     }
     //  main functions --------------------------------------------------------------------------------------------------------------------
-    void Update()
+   private void Update()
     {
         // lerping for health ui -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         GameObject.Find("hp").GetComponent<Slider>().value = Mathf.Lerp(GameObject.Find("hp").GetComponent<Slider>().value, health, 3 * Time.deltaTime);
@@ -198,7 +202,7 @@ public class NewPlayer : MonoBehaviour
 
     // walking detection ----------------------------------------------------------------------------------------------
 
-    public void OnTriggerStay(Collider other)
+    private  void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
@@ -206,7 +210,7 @@ public class NewPlayer : MonoBehaviour
         }
     }
 
-    public void OnTriggerExit(Collider other)
+    private  void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {

@@ -159,7 +159,7 @@ Camera:
   m_GameObject: {fileID: 36054591}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 4
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -186,11 +186,11 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!4 &36054594
@@ -219,9 +219,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
+  m_RenderShadows: 0
+  m_RequiresDepthTextureOption: 0
+  m_RequiresOpaqueTextureOption: 0
   m_CameraType: 0
   m_Cameras: []
   m_RendererIndex: -1
@@ -234,7 +234,7 @@ MonoBehaviour:
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
-  m_ClearDepth: 1
+  m_ClearDepth: 0
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
@@ -249,7 +249,6 @@ GameObject:
   - component: {fileID: 423223213}
   - component: {fileID: 423223216}
   - component: {fileID: 423223215}
-  - component: {fileID: 423223214}
   - component: {fileID: 423223217}
   - component: {fileID: 423223218}
   m_Layer: 5
@@ -278,19 +277,6 @@ RectTransform:
   m_AnchoredPosition: {x: -17.6, y: -1.708}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &423223214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423223212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 002a55817a6e4ac429e73b7bbe470348, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.1
 --- !u!114 &423223215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,6 +367,7 @@ GameObject:
   - component: {fileID: 637387600}
   - component: {fileID: 637387599}
   - component: {fileID: 637387598}
+  - component: {fileID: 637387602}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -468,6 +455,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &637387602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637387597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d4626c8e6357d48a02f3e18d74e112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &511575543870331139
 RectTransform:
   m_ObjectHideFlags: 0
@@ -613,7 +612,6 @@ GameObject:
   - component: {fileID: 6052756482452437550}
   - component: {fileID: 3470722673179270743}
   - component: {fileID: 771238928089344206}
-  - component: {fileID: 9184369774974678666}
   - component: {fileID: 9184369774974678667}
   m_Layer: 5
   m_Name: TITLE
@@ -622,18 +620,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &9184369774974678666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9184369774974678665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c718fdc29055e74fb656f5b2fc19f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &9184369774974678667
 Animator:
   serializedVersion: 3

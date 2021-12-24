@@ -1,6 +1,9 @@
 # thisgamehasnonameyet
  transfur game
 
+24/12/2021
+### (remade the transiton effect  and the logo  spins when its loading also tweaked abit of the melee system code to be alittle more efficent and also  made blocking  which reduces  damage by  a 3rd of it )
+___
 21/12/2021
 ### (added saveing  and loading transition effect  graphicis settings master volume senstivity fov and brightness and etc)
 ___

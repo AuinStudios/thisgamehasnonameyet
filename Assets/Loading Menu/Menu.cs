@@ -11,6 +11,7 @@ public class Menu : MonoBehaviour
     private bool settingslerpin = false;
     private bool ComeBack = false, SubComeBack = false;
     private bool canclickbuttens = false;
+    public float damp;
     // floats -----------------------------------------
     private float ButtenCooldown = 6;
    public int graphicisvalue = 2;
@@ -28,15 +29,6 @@ public class Menu : MonoBehaviour
             sliders.Add(i);
       
         }
-        HoldVariables data =   SaveSystem.load();
-        
-        sliders[0].transform.GetChild(0).transform.GetComponent<Slider>().value = data.sens;
-        sliders[0].transform.GetChild(1).transform.GetComponent<Slider>().value = data.fov;
-        sliders[0].transform.GetChild(2).transform.GetComponent<Slider>().value = data.brightness;
-        sliders[2].transform.GetChild(0).transform.GetComponent<Slider>().value = data.MasterVolume;
-        graphicisvalue = data.graphicisvalue;
-        sliders[1].transform.GetChild(0).transform.GetComponent<TextMeshProUGUI>().text = GraphicisTiersStrings[data.graphicisvalue];
-       
         foreach (Transform i in GameObject.Find("Menu").transform)
         {
             save.Add(i.localPosition);
@@ -46,6 +38,15 @@ public class Menu : MonoBehaviour
         {
             savesettingspos.Add(i.localPosition);
         }
+        HoldVariables data =   SaveSystem.load();
+        
+        sliders[0].transform.GetChild(0).transform.GetComponent<Slider>().value = data.sens;
+        sliders[0].transform.GetChild(1).transform.GetComponent<Slider>().value = data.fov;
+        sliders[0].transform.GetChild(2).transform.GetComponent<Slider>().value = data.brightness;
+        sliders[2].transform.GetChild(0).transform.GetComponent<Slider>().value = data.MasterVolume;
+        graphicisvalue = data.graphicisvalue;
+        sliders[1].transform.GetChild(0).transform.GetComponent<TextMeshProUGUI>().text = GraphicisTiersStrings[data.graphicisvalue];
+        
 
         sliderischanged();
         transiton = GameObject.Find("Transition");
@@ -54,7 +55,7 @@ public class Menu : MonoBehaviour
     private void LateUpdate()
     {
         ButtenCooldown += 1 * Time.deltaTime;
-       
+                  
         if (ButtenCooldown >= 6)
         {
             canclickbuttens = true;
@@ -124,6 +125,7 @@ public class Menu : MonoBehaviour
             }
             StartCoroutine(Transition());
             ButtenCooldown = 0;
+            SaveSystem.Savesystem();
         }
             
     }
@@ -147,14 +149,29 @@ public class Menu : MonoBehaviour
     public IEnumerator Transition()
     {
         WaitForFixedUpdate nocrash = new WaitForFixedUpdate();
-        while (transiton.transform.GetChild(0).localPosition.x <= 0 && transiton.transform.GetChild(1).localPosition.x >= 100)
+        WaitForSeconds abitdelay = new WaitForSeconds(0.2f);
+        while (transiton.transform.GetChild(1).localPosition.x <= 50f && transiton.transform.GetChild(2).localPosition.x >= 39)
         {
-              transiton.transform.GetChild(0).transform.position = Vector2.Lerp(transiton.transform.GetChild(0).transform.position, GameObject.Find("Canvas").transform.position, 3 * Time.fixedDeltaTime);
+            Vector2 imagelogo = new Vector2(-28f, 40);
+            transiton.transform.GetChild(0).transform.localPosition = Vector2.Lerp(transiton.transform.GetChild(0).transform.localPosition, imagelogo, 2.2f * Time.deltaTime);
+            Vector2 firstranstionimagepos = new Vector2(51f, 17f);
             
-               transiton.transform.GetChild(1).transform.position = Vector2.Lerp(transiton.transform.GetChild(1).transform.position, GameObject.Find("Canvas").transform.position, 2.2f * Time.fixedDeltaTime);
+              transiton.transform.GetChild(1).transform.localPosition = Vector2.Lerp(transiton.transform.GetChild(1).transform.localPosition, firstranstionimagepos, 3f * Time.deltaTime);
+           
+            Vector2 secoundtransitionimagepos = new Vector2(40.04361f, 5.493075f);
+
+               transiton.transform.GetChild(2).transform.localPosition = Vector2.Lerp(transiton.transform.GetChild(2).transform.localPosition, secoundtransitionimagepos, 2.2f* Time.deltaTime);
             yield return nocrash;
         }
-        SceneManager.LoadSceneAsync(2);
+         AsyncOperation operation = SceneManager.LoadSceneAsync(2);
+         yield return abitdelay;
+         while (!operation.isDone )
+         {
+           transiton.transform.GetChild(0).Rotate(0, 0, 1);  
+              SaveSystem.Savesystem();
+            yield return nocrash;
+         } 
+      
     }
     public IEnumerator graphicisNumeratorUp()
      {

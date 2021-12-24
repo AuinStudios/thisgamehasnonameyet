@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c26d238a43c5254587f3d8d57b0bab2, type: 3}
   m_Name: script
   m_EditorClassIdentifier: 
+  isblocking: 0
+  Damage: 10
   count: 4
   namechanger: 1192

@@ -3,18 +3,17 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Meleesystem : MonoBehaviour
 {
-    public ParticleSystem max;
+    private ParticleSystem max;
     public AudioSource swing;
     public AudioClip hitt;
     // pos + gameobjects ---------------------------
-    public Transform camtransform;
     public GameObject spawneffect;
-    public Transform spawneffectpos;
+    private Transform Spherecastpos;
+     public ScriptableObectStorage playerhp;
     // bool ----------------------------------------
      private bool enabletimerun;
     private bool spawneffectdelay;
     // ui + sliders -------------------------
-    public customsliderhealthui enemy;
     private Slider Slider;
     // floats -------------------------------
     private float sphereradius = 0.5f, sphererange = 2f;
@@ -24,12 +23,11 @@ public class Meleesystem : MonoBehaviour
     private float clickorhold;
     // leftoverthings ---------------------------------
     #region andreasthing left for now
-    public Cameramove cameramove;
+    private Cameramove cameramove;
     private void Start()
     {
-
-         
-          cameramove = Camera.main.GetComponent<Cameramove>();
+      cameramove = Camera.main.GetComponent<Cameramove>();
+        max = spawneffect.GetComponent<ParticleSystem>();
     }
     #endregion
     #region hiidestuff
@@ -69,21 +67,20 @@ public class Meleesystem : MonoBehaviour
     private void Awake()
     {
         Slider = GameObject.Find("Meleeui").GetComponent<Slider>();
+        Spherecastpos = gameObject.transform.GetChild(0).transform;
     }
     public void OnTriggerEnter(Collider col)
     {
       
          if (col.gameObject.CompareTag("Enemy"))
          {
-            enemy.health -= Damage;
+            col.gameObject.GetComponent<customsliderhealthui>().health -= Damage;
             // spawn it -----------------------------------------------------
-
-
             spawneffectdelay = true;
             //col.gameObject.GetComponent<Rigidbody>().AddForce(camtransform.forward * 20000);
          }
         
-         if ( col.gameObject && !col.gameObject.CompareTag("Player"))
+         if ( col.gameObject && !col.gameObject.CompareTag("Player") && cooldown !=0)
          {
            swing.PlayOneShot(hitt);
          }
@@ -91,19 +88,19 @@ public class Meleesystem : MonoBehaviour
    
     void Update()
     {
-            RaycastHit hit;
-            if(Physics.SphereCast( transform.GetChild(1).position , sphereradius , transform.GetChild(1).up, out hit , sphererange) && spawneffectdelay == true)
-            {
-            spawneffect.GetComponent<ParticleSystem>().trigger.SetCollider(0, GameObject.Find("Ground").transform);
-             Instantiate(spawneffect ,hit.point, spawneffect.transform.rotation = Quaternion.FromToRotation(Vector3.forward , hit.normal));
-            spawneffectdelay = false;
-            }
+        RaycastHit hit;
+        if(Physics.SphereCast( Spherecastpos.position, sphereradius , Spherecastpos.up, out hit , sphererange) && spawneffectdelay == true)
+        {
+        max.trigger.SetCollider(0, GameObject.Find("Ground").transform);
+         Instantiate(spawneffect ,hit.point, spawneffect.transform.rotation = Quaternion.FromToRotation(Vector3.forward , hit.normal));
+        spawneffectdelay = false;
+        }
         //clamps values
         cooldown = Mathf.Clamp(cooldown, 0, 5);
         Damage = Mathf.Clamp(Damage, 0, 30);
         clickorhold = Mathf.Clamp(clickorhold, 0, 10);
         // the main function -----------------------------------------------
-        if (Input.GetKey(KeyCode.Mouse0) && cooldown == 0)
+        if (Input.GetKey(KeyCode.Mouse0)  && !Input.GetKey(KeyCode.Mouse1)&& cooldown == 0)
         {
             // call script for CameraMove
             cameramove.triggerDot = true;
@@ -134,7 +131,7 @@ public class Meleesystem : MonoBehaviour
 
        
         // plays the animation and enables hitbox whenever u let go of the mouse to attack and add cooldown
-        else if ((Input.GetKeyUp(KeyCode.Mouse0) && cooldown == 0))
+        else if ((Input.GetKeyUp(KeyCode.Mouse0) && !Input.GetKey(KeyCode.Mouse1)&& cooldown == 0))
         {
             
             if (clickorhold > 0.1f && cooldown == 0)
@@ -159,7 +156,22 @@ public class Meleesystem : MonoBehaviour
                 max.maxParticles = 2;
             }
         }
-               
+        if (Input.GetKey(KeyCode.Mouse1) && cooldown == 0)
+        {
+           gameObject.GetComponent<Animator>().SetBool("block", true);
+            playerhp.isblocking = true;
+        } 
+        else if(Input.GetKeyUp(KeyCode.Mouse1) && cooldown == 0)
+        {
+            gameObject.GetComponent<Animator>().SetBool("block",false);
+            playerhp.isblocking = false;
+            enabletimerun = true;
+            cooldown = 1.3f;
+        }
+
+
+
+
         // timers to help make the damage values not go away instanly---------------------------------------------
         if (timeruntllreset >= 0.5f && clickorhold <= 0.1f)
         {
@@ -191,10 +203,10 @@ public class Meleesystem : MonoBehaviour
            Slider.value = cooldown;
         }
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.GetChild(1).position, 0.5f);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(transform.GetChild(1).position, 0.5f);
+    //}
 
 }
 #endregion

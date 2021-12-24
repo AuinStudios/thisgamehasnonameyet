@@ -10,6 +10,7 @@ public class GrabPlayer : MonoBehaviour
     // bool -------------------------------------
     private  bool hited = false;
     // floats -------------------------------------
+    public ScriptableObectStorage damage;
     private float distance;
     private float cooldownofmonster = 10;
     private float cooldownofstepingonpuddle = 5;
@@ -52,12 +53,11 @@ public class GrabPlayer : MonoBehaviour
         {
            gameObject.GetComponent<LineRenderer>().SetPosition(0, pos);
            gameObject.GetComponent<LineRenderer>().SetPosition(1, Vector3.Lerp(gameObject.GetComponent<LineRenderer>().GetPosition(1) , Playerpos.position , 10 * Time.deltaTime));
-            Playerpos.GetComponent<NewPlayer>().health -= 0.1f ;
 
             Playerpos.position = Vector3.MoveTowards(Playerpos.position, gameobjectpos.position, 5 * Time.deltaTime);
            Playerpos.GetComponent<NewPlayer>().movespeed = 0;
 
-           if (Input.GetKeyDown(KeyCode.Mouse0) && GameObject.Find("WeaponsHolder").GetComponent<Meleesystem>().cooldown == 0)
+           if (Input.GetKeyDown(KeyCode.Mouse0) && GameObject.Find("WeaponsHolder").GetComponent<Meleesystem>().cooldown <= 0.1f)
            {
                hited = true; 
              Playerpos.GetComponent<NewPlayer>().movespeed = 100000;
@@ -66,8 +66,17 @@ public class GrabPlayer : MonoBehaviour
         }
         if( distance  < 4.5f && cooldownofstepingonpuddle >= 4)
         {
-            Playerpos.GetComponent<NewPlayer>().health -= 30;
+            if(damage.isblocking == true)
+            {
+                damage.Damage = 10;
+            }
+            else
+            {
+                damage.Damage = 30;
+            }
+            Playerpos.GetComponent<NewPlayer>().health -= damage.Damage;
             cooldownofstepingonpuddle = 0;
+           
         }
          
           if(hited == true)

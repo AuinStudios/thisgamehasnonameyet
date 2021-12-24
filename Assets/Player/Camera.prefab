@@ -28,7 +28,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6550638552388202652}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6550638550865801416
 GameObject:
@@ -60,36 +60,6 @@ Transform:
   - {fileID: 6550638551722027013}
   m_Father: {fileID: 6550638552246065858}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6550638551257203439
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6550638551257203438}
-  m_Layer: 2
-  m_Name: effecetpos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6550638551257203438
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6550638551257203439}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.33, z: -0.12}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6550638552388202652}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6550638551440689508
 GameObject:
@@ -667,7 +637,6 @@ Transform:
   m_LocalPosition: {x: 0.799, y: -0.791, z: 1.127}
   m_LocalScale: {x: 0.6966027, y: 0.6966027, z: 0.6966027}
   m_Children:
-  - {fileID: 6550638551257203438}
   - {fileID: 6550638550445667863}
   - {fileID: 8575668664788796658}
   m_Father: {fileID: 6550638552246065858}
@@ -707,13 +676,10 @@ MonoBehaviour:
   max: {fileID: 8407046875815354009, guid: 4d90d8694f8789147985358f99ae4786, type: 3}
   swing: {fileID: 6550638552388202640}
   hitt: {fileID: 8300000, guid: a9005fb5ed78c8d4580354fad13a8b1a, type: 3}
-  camtransform: {fileID: 6550638552246065858}
   spawneffect: {fileID: 8407046875815354011, guid: 4d90d8694f8789147985358f99ae4786, type: 3}
-  spawneffectpos: {fileID: 6550638551257203438}
   enemy: {fileID: 0}
   Damage: 0
   cooldown: 0
-  cameramove: {fileID: 0}
 --- !u!65 &6550638552388202641
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -854,7 +820,7 @@ Transform:
   m_LocalScale: {x: 0.5983697, y: 0.5983697, z: 0.5983697}
   m_Children: []
   m_Father: {fileID: 6550638552388202652}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4660450062321601367
 MeshFilter:
