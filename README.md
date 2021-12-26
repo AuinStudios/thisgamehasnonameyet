@@ -1,6 +1,9 @@
 # thisgamehasnonameyet
  transfur game
 
+25/12/2021
+### (some bug fixes made the keybinds its really janky right now so torromow ill smooth it)
+___
 24/12/2021
 ### (remade the transiton effect  and the logo  spins when its loading also tweaked abit of the melee system code to be alittle more efficent and also  made blocking  which reduces  damage by  a 3rd of it )
 ___
