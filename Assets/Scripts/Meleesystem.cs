@@ -6,6 +6,7 @@ public class Meleesystem : MonoBehaviour
     private ParticleSystem max;
     public AudioSource swing;
     public AudioClip hitt;
+    private KeyCode[] keybinds;
     // pos + gameobjects ---------------------------
     public GameObject spawneffect;
     private Transform Spherecastpos;
@@ -23,9 +24,14 @@ public class Meleesystem : MonoBehaviour
     private float clickorhold;
     // leftoverthings ---------------------------------
     #region andreasthing left for now
+    
     private Cameramove cameramove;
     private void Start()
     {
+        HoldVariables  data = SaveSystem.load();
+        keybinds = new KeyCode[2];
+        keybinds[0] = data.keys[0];
+        keybinds[1] = data.keys[1];
       cameramove = Camera.main.GetComponent<Cameramove>();
         max = spawneffect.GetComponent<ParticleSystem>();
     }
@@ -66,6 +72,8 @@ public class Meleesystem : MonoBehaviour
     // most of the script ----------------------------------
     private void Awake()
     {
+      
+       
         Slider = GameObject.Find("Meleeui").GetComponent<Slider>();
         Spherecastpos = gameObject.transform.GetChild(0).transform;
     }
@@ -100,7 +108,7 @@ public class Meleesystem : MonoBehaviour
         Damage = Mathf.Clamp(Damage, 0, 30);
         clickorhold = Mathf.Clamp(clickorhold, 0, 10);
         // the main function -----------------------------------------------
-        if (Input.GetKey(KeyCode.Mouse0)  && !Input.GetKey(KeyCode.Mouse1)&& cooldown == 0)
+        if (Input.GetKey(keybinds[0])  && !Input.GetKey(keybinds[1])&& cooldown == 0)
         {
             // call script for CameraMove
             cameramove.triggerDot = true;
@@ -131,7 +139,7 @@ public class Meleesystem : MonoBehaviour
 
        
         // plays the animation and enables hitbox whenever u let go of the mouse to attack and add cooldown
-        else if ((Input.GetKeyUp(KeyCode.Mouse0) && !Input.GetKey(KeyCode.Mouse1)&& cooldown == 0))
+        else if ((Input.GetKeyUp(keybinds[0]) && !Input.GetKey(keybinds[1])&& cooldown == 0))
         {
             
             if (clickorhold > 0.1f && cooldown == 0)
@@ -156,12 +164,12 @@ public class Meleesystem : MonoBehaviour
                 max.maxParticles = 2;
             }
         }
-        if (Input.GetKey(KeyCode.Mouse1) && cooldown == 0)
+        if (Input.GetKey(keybinds[1]) && cooldown == 0)
         {
            gameObject.GetComponent<Animator>().SetBool("block", true);
             playerhp.isblocking = true;
         } 
-        else if(Input.GetKeyUp(KeyCode.Mouse1) && cooldown == 0)
+        else if(Input.GetKeyUp(keybinds[1]) && cooldown == 0)
         {
             gameObject.GetComponent<Animator>().SetBool("block",false);
             playerhp.isblocking = false;

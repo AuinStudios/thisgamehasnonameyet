@@ -26,6 +26,7 @@ public class NewPlayer : MonoBehaviour
     private headbop bop;
     // input---------------------------
      private float x, z;
+    private KeyCode[] keybinds;
     // sounds -------------------------
      public AudioSource sound;
     // ui stamina and health --------------------
@@ -46,6 +47,11 @@ public class NewPlayer : MonoBehaviour
         bop = this.transform.GetChild(0).GetComponent<headbop>();
         transition = GameObject.Find("End transition");
         transition.transform.GetChild(0).transform.localEulerAngles = new Vector3(DATA.rot[0], DATA.rot[1], DATA.rot[2]);
+        keybinds = new KeyCode[4];
+        keybinds[0] = DATA.keys[2];
+        keybinds[1] = DATA.keys[3];
+        keybinds[2] = DATA.keys[4];
+        keybinds[3] = DATA.keys[5];
     }
 
     private  void Start()
@@ -166,7 +172,7 @@ public class NewPlayer : MonoBehaviour
 
         // Sound Walk Input ---------------------------------------------------------------------------------------------
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S))
+        if (Input.GetKey(keybinds[0]) || Input.GetKey(keybinds[3]) || Input.GetKey(keybinds[2]) || Input.GetKey(keybinds[1]))
         {
 
             if (enablesoundelay == true && !sound.isPlaying)

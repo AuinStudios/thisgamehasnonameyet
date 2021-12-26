@@ -4,26 +4,39 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
+using System;
 public class Menu : MonoBehaviour
 {
+    // graphraycast to take gameobject information--
+    private GraphicRaycaster graph;
+    private PointerEventData data;
+    private EventSystem eventsystem;
+    // ints -----------------------------------------
+     private int savekeyindex; 
+    public int graphicisvalue = 2;
     // bools -----------------------------------------
     private bool lerpoutofscene = false;
     private bool settingslerpin = false;
     private bool ComeBack = false, SubComeBack = false;
     private bool canclickbuttens = false;
-    public float damp;
+    public bool isbindingbutten = true;
     // floats -----------------------------------------
     private float ButtenCooldown = 6;
-   public int graphicisvalue = 2;
+    private Vector3 scaleupandownsave;
     // lists ------------------------------------------
     private string[] GraphicisTiersStrings = { "Low", "Medium", "High" };
-    public List<Vector3> save;
-    public List<Vector3> savesettingspos;
-    public List<Transform> sliders;
+    [SerializeField] private List<Vector3> savemenupos;
+    [SerializeField] private List<Vector3> savesettingspos;
+    [SerializeField] private List<Transform> sliders;
+    public KeyCode[] savekey;
     // gameobjects -------------------------------------
     private GameObject transiton;
     private void Start()
     {
+        graph = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
+        eventsystem= GameObject.Find("EventSystem").GetComponent<EventSystem>();
+       
         foreach (Transform i in GameObject.Find("SettingsPanel").transform)
         {
             sliders.Add(i);
@@ -31,13 +44,14 @@ public class Menu : MonoBehaviour
         }
         foreach (Transform i in GameObject.Find("Menu").transform)
         {
-            save.Add(i.localPosition);
+           savemenupos.Add(i.localPosition);
         }
        // save.Reverse();
         foreach (Transform i in GameObject.Find("SettingsOptions").transform)
         {
             savesettingspos.Add(i.localPosition);
-        }
+        } 
+      
         HoldVariables data =   SaveSystem.load();
         
         sliders[0].transform.GetChild(0).transform.GetComponent<Slider>().value = data.sens;
@@ -46,19 +60,27 @@ public class Menu : MonoBehaviour
         sliders[2].transform.GetChild(0).transform.GetComponent<Slider>().value = data.MasterVolume;
         graphicisvalue = data.graphicisvalue;
         sliders[1].transform.GetChild(0).transform.GetComponent<TextMeshProUGUI>().text = GraphicisTiersStrings[data.graphicisvalue];
-        
-
+        // savekey[] = data.keys[0];
+        savekey = new KeyCode[6];
+        savekey = data.keys;
         sliderischanged();
         transiton = GameObject.Find("Transition");
         GameObject.Find("SettingsOptions").SetActive(false);
+        for (int i = 0; i < 6; i++)
+        {
+            
+            sliders[3].GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.keys[i].ToString();
+           
+        }
     } 
     private void LateUpdate()
     {
         ButtenCooldown += 1 * Time.deltaTime;
-                  
+      
         if (ButtenCooldown >= 6)
         {
             canclickbuttens = true;
+            isbindingbutten = true;
         }
         else if(ButtenCooldown <= 6)
         {
@@ -122,10 +144,11 @@ public class Menu : MonoBehaviour
             {
                 i.GetComponent<CanHover>().bol = false;
 
-            }
+            } 
+            SaveSystem.Savesystem();
             StartCoroutine(Transition());
             ButtenCooldown = 0;
-            SaveSystem.Savesystem();
+          
         }
             
     }
@@ -145,7 +168,98 @@ public class Menu : MonoBehaviour
         }
       
     }
+    public void selectletter()
+    {
+        if( isbindingbutten == true &&  canclickbuttens == true)
+        {
+          StartCoroutine(selectlettercoroutine());
+        }
+    }
+    public IEnumerator selectlettercoroutine()
+    {
+        
+          isbindingbutten = false;
+        
+        data = new PointerEventData(eventsystem); 
+        //Set the Pointer Event Position to that of the mouse position
+        data.position = Input.mousePosition;
+          //Create a list of Raycast Results
+        List<RaycastResult> results = new List<RaycastResult>();
 
+        //Raycast using the Graphics Raycaster and mouse click position
+        graph.Raycast(data, results);
+        WaitForFixedUpdate wait = new WaitForFixedUpdate(); 
+       
+        foreach(RaycastResult result in results)
+        {
+           
+               scaleupandownsave = result.gameObject.transform.localScale;
+            Vector2 a = result.gameObject.transform.localScale;
+            Vector2 minus =  a / 1.15f;
+            
+            
+           // towardsize -= minus;
+            if(result.gameObject.layer == 5)
+            {
+                 EventSystem.current.SetSelectedGameObject(result.gameObject);
+               while(EventSystem.current.currentSelectedGameObject == result.gameObject)
+               {
+               
+                  result.gameObject.transform.localScale = Vector2.Lerp(result.gameObject.transform.localScale, minus, 3.2f * Time.fixedDeltaTime);
+
+                 if (Input.anyKey)
+                 {
+                  
+                    EventSystem.current.SetSelectedGameObject(null);
+                    break;
+                 }
+                 yield return wait;
+               }
+            }
+         
+        }
+        
+     ButtenCooldown = 3; 
+        
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject.layer == 5)
+            {
+                
+               
+                HoldVariables d = SaveSystem.load();
+               
+                foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
+                {
+                    for(int ii = 0; ii < 1; ii++)
+                    {
+                     if (Input.GetKeyDown(kcode))
+                     {
+                         savekeyindex = result.gameObject.transform.GetSiblingIndex();
+                        savekey[savekeyindex] = kcode;
+                        result.gameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = kcode.ToString();
+                         isbindingbutten = true;
+                         int i = 0;
+                         while( i < 80)
+                         {
+                            result.gameObject.transform.localScale = Vector2.Lerp(result.gameObject.transform.localScale, scaleupandownsave, 3.5f * Time.fixedDeltaTime);
+                            i++;
+                        
+                            yield return wait;
+                         }
+
+                    
+                     }
+                     
+                    }
+                   
+                }
+
+            }
+        }
+        
+      
+    }
     public IEnumerator Transition()
     {
         WaitForFixedUpdate nocrash = new WaitForFixedUpdate();
@@ -233,25 +347,27 @@ public class Menu : MonoBehaviour
     {
          settingslerpin = false;
         SubComeBack = true;
-        yield return new WaitForSeconds(4.2f);
+        WaitForSeconds waitpls = new WaitForSeconds(4.2f);
+        yield return waitpls;
         SubComeBack = false;
         GameObject.Find("Canvas").transform.GetChild(1).transform.gameObject.SetActive(true);
         GameObject.Find("Canvas").transform.GetChild(0).gameObject.SetActive(false);
         GameObject.Find("Menu").transform.GetChild(2).transform.SetAsFirstSibling() ;
         GameObject.Find("Menu").transform.GetChild(1).transform.SetAsLastSibling();
         ComeBack = true;
-        yield return new WaitForSeconds(2.5f);
+        WaitForSeconds waitpls2 = new WaitForSeconds(2.5f);
+        yield return waitpls2;
         foreach(Transform i in GameObject.Find("Menu").transform)
         {
            i.SetSiblingIndex(default);
         }
-       
 
     }
     private IEnumerator Settings()
     {
         lerpoutofscene = true;
-        yield return new WaitForSeconds(2f);
+        WaitForSeconds delaysettings = new WaitForSeconds(2f);
+        yield return delaysettings;
         lerpoutofscene = false;
         GameObject.Find("Canvas").transform.GetChild(0).gameObject.SetActive(true);
         settingslerpin = true;
@@ -263,9 +379,10 @@ public class Menu : MonoBehaviour
         if( settingslerpin == true )
         {
             //  ui effect ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            
+            WaitForSeconds waituntllmainoptionsdone = new WaitForSeconds(0.4f);
             GameObject.Find("SettingsOptions").transform.GetChild(4).position = Vector2.Lerp(GameObject.Find("SettingsOptions").transform.GetChild(4).position, GameObject.Find("Canvas").transform.position, 2.2f * Time.fixedDeltaTime );
-            yield return new WaitForSeconds(0.4f);
+            yield return waituntllmainoptionsdone;
+            WaitForSeconds waitfornextpanel = new WaitForSeconds(0.6f);
             foreach(Transform t  in GameObject.Find("SettingsOptions").transform)
             {
                
@@ -276,7 +393,7 @@ public class Menu : MonoBehaviour
                     t.localPosition = Vector2.Lerp(t.localPosition, r, 2f * Time.fixedDeltaTime);
                 }
 
-                yield return new WaitForSeconds(0.6f);
+                yield return waitfornextpanel;
                 
             }
             settingslerpin = false;
@@ -284,18 +401,20 @@ public class Menu : MonoBehaviour
 
         if (SubComeBack == true)
         {
+            WaitForSeconds wait = new WaitForSeconds(0.6f);
             int B = 0;
             foreach(Transform i in GameObject.Find("SettingsOptions").transform)
             {
                 i.localPosition = Vector2.Lerp(i.localPosition, savesettingspos[B], 1f* Time.fixedDeltaTime);
                 B++;
-                yield return new WaitForSeconds(0.6f);
+                yield return wait ;
             }
             SubComeBack = false;
         }
 
         if (lerpoutofscene == true)
         {
+            WaitForSeconds wait = new WaitForSeconds(0.4f);
             foreach (Transform i in GameObject.Find("Menu").transform)
             {
                 if(i.name != "Menu")
@@ -303,20 +422,21 @@ public class Menu : MonoBehaviour
                  Vector2 y = new Vector2(i.transform.localPosition.x, 1000);
                 i.localPosition = Vector2.Lerp(i.transform.localPosition, y, 0.6f * Time.deltaTime);
                 }
-                yield return new WaitForSeconds(0.4f);
+                yield return wait;
             }
             lerpoutofscene = false;
         }
        
         if(ComeBack == true)
         {
+            WaitForSeconds wait = new WaitForSeconds(0.4f);
             int T = 2;
             foreach (Transform i in GameObject.Find("Menu").transform)
             {
                 ButtenCooldown = 5;
-                i.localPosition = Vector2.Lerp(i.localPosition , save[T] , 2f *Time.deltaTime);
+                i.localPosition = Vector2.Lerp(i.localPosition , savemenupos[T] , 2f *Time.deltaTime);
                 T--;
-                yield return new WaitForSeconds(0.4f);
+                yield return wait;
             }
                 ComeBack = false;
         }

@@ -12,8 +12,12 @@ public class HoldVariables
     public int graphicisvalue;
     public float MasterVolume;
     public float[] rot;
+    public KeyCode[] keys;
     public HoldVariables()
     {
+       keys = new KeyCode[6];
+       keys = Camera.main.GetComponent<Menu>().savekey;
+      
         rot = new float[3];
         rot[0] = GameObject.Find("Canvas").transform.GetChild(2).transform.GetChild(0).transform.localEulerAngles.x;
         rot[1] = GameObject.Find("Canvas").transform.GetChild(2).transform.GetChild(0).transform.localEulerAngles.y;

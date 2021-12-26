@@ -20,6 +20,7 @@ public class CanHover : MonoBehaviour
 
         if (EventSystem.current.firstSelectedGameObject == gameObject)
         {
+         
             EventSystem.current.SetSelectedGameObject(gameObject);
         }
     }
@@ -30,10 +31,10 @@ public class CanHover : MonoBehaviour
     public void clickedon()
     {
         EventSystem.current.firstSelectedGameObject = gameObject;
-        if (EventSystem.current.alreadySelecting != gameObject && gameObject.CompareTag("Select"))
-        {
-            EventSystem.current.SetSelectedGameObject(gameObject);
-        }
+        //if (EventSystem.current.alreadySelecting != gameObject && gameObject.CompareTag("Select"))
+        //{
+        //    EventSystem.current.SetSelectedGameObject(gameObject);
+        //}
     }
     public void exit()
     {
@@ -41,7 +42,6 @@ public class CanHover : MonoBehaviour
     }
     public void Update()
     {
-
      
         if(gameObject.transform.parent.name == "Menu")
         { 
@@ -84,24 +84,27 @@ public class CanHover : MonoBehaviour
         }
         else
         {
-            if (EventSystem.current.currentSelectedGameObject == gameObject || EventSystem.current.firstSelectedGameObject == gameObject)
+            if ( EventSystem.current.firstSelectedGameObject == gameObject)
             {
+                
                 GameObject.Find("SettingsPanel").transform.GetChild(transformchildindex).gameObject.SetActive(true);
                 Vector2 widthchange = new Vector2(1.625655f, 1.0029804f);
                 gameObject.GetComponent<Image>().rectTransform.localScale = Vector2.Lerp(gameObject.GetComponent<Image>().rectTransform.localScale, widthchange, 3f * Time.deltaTime);
+             
             }
             else
             {
+              
                 GameObject.Find("SettingsPanel").transform.GetChild(transformchildindex).gameObject.SetActive(false);
 
             }
 
-            if (bol == true && gameObject.GetComponent<Image>().rectTransform.localScale.x < 1.3f && EventSystem.current.currentSelectedGameObject != gameObject)
+            if (bol == true && gameObject.GetComponent<Image>().rectTransform.localScale.x < 1.3f && EventSystem.current.firstSelectedGameObject != gameObject)
             {
                 Vector2 widthchange = new Vector2(1.425655f, 0.9029804f);
                 gameObject.GetComponent<Image>().rectTransform.localScale = Vector2.Lerp(gameObject.GetComponent<Image>().rectTransform.localScale, widthchange, 3f * Time.deltaTime);
             }
-            else if (bol == false  && gameObject.GetComponent<Image>().rectTransform.localScale.x > 1.2f &&   EventSystem.current.currentSelectedGameObject != gameObject)
+            else if (bol == false  && gameObject.GetComponent<Image>().rectTransform.localScale.x > 1.2f &&   EventSystem.current.firstSelectedGameObject != gameObject)
             {
                 Vector2 widthchange = new Vector2(1.188046f, 0.7524836f);
                 gameObject.GetComponent<Image>().rectTransform.localScale = Vector2.Lerp(gameObject.GetComponent<Image>().rectTransform.localScale, widthchange, 3.5f * Time.deltaTime);
