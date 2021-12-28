@@ -6,7 +6,7 @@ public class Meleesystem : MonoBehaviour
     private ParticleSystem max;
     public AudioSource swing;
     public AudioClip hitt;
-    private KeyCode[] keybinds;
+    public KeyCode[] keybinds;
     // pos + gameobjects ---------------------------
     public GameObject spawneffect;
     private Transform Spherecastpos;

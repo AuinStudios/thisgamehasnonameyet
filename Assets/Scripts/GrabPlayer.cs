@@ -16,6 +16,8 @@ public class GrabPlayer : MonoBehaviour
     private float cooldownofstepingonpuddle = 5;
     // vectors --------------------------------------
      private Vector3 pos;
+    // meleee system -------------------------------
+    private Meleesystem keybind;
     // Update is called once per frame
     private  IEnumerator setposforgrab()
     { 
@@ -28,8 +30,10 @@ public class GrabPlayer : MonoBehaviour
    
     private void Awake()
     {
+        keybind = GameObject.Find("WeaponsHolder").GetComponent<Meleesystem>();
         gameobjectpos = this.transform.GetChild(0);
         Playerpos = GameObject.Find("Player").GetComponent<Transform>();
+        
     }
     private void Start()
     { 
@@ -57,7 +61,7 @@ public class GrabPlayer : MonoBehaviour
             Playerpos.position = Vector3.MoveTowards(Playerpos.position, gameobjectpos.position, 5 * Time.deltaTime);
            Playerpos.GetComponent<NewPlayer>().movespeed = 0;
 
-           if (Input.GetKeyDown(KeyCode.Mouse0) && GameObject.Find("WeaponsHolder").GetComponent<Meleesystem>().cooldown <= 0.1f)
+           if (Input.GetKeyDown(keybind.keybinds[0]) && keybind.cooldown <= 0.1f)
            {
                hited = true; 
              Playerpos.GetComponent<NewPlayer>().movespeed = 100000;

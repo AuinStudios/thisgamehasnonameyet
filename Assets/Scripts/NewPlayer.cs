@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 public class NewPlayer : MonoBehaviour
 {
+    // animator ---------------------------------
+    private Animator anim;
     // Transition start ------------------------
     private GameObject transition;
     // transform and physics stuff ------------
@@ -47,11 +49,13 @@ public class NewPlayer : MonoBehaviour
         bop = this.transform.GetChild(0).GetComponent<headbop>();
         transition = GameObject.Find("End transition");
         transition.transform.GetChild(0).transform.localEulerAngles = new Vector3(DATA.rot[0], DATA.rot[1], DATA.rot[2]);
-        keybinds = new KeyCode[4];
-        keybinds[0] = DATA.keys[2];
-        keybinds[1] = DATA.keys[3];
-        keybinds[2] = DATA.keys[4];
-        keybinds[3] = DATA.keys[5];
+        keybinds = new KeyCode[5];
+        keybinds[4] = DATA.keys[2];
+        keybinds[0] = DATA.keys[3];
+        keybinds[1] = DATA.keys[4];
+        keybinds[2] = DATA.keys[5];
+        keybinds[3] = DATA.keys[6];
+        anim = transform.GetChild(0).transform.GetComponent<Animator>();
     }
 
     private  void Start()
@@ -116,11 +120,11 @@ public class NewPlayer : MonoBehaviour
         {
             sprinting = false;
         }
-        if (Input.GetKey(KeyCode.LeftShift) && sprinting == true  && isgroundedboi )
+        if (Input.GetKey(keybinds[4]) && sprinting == true  && isgroundedboi )
         {
             movespeed = 200000;
              maxspeed = 16;
-              transform.GetChild(0).transform.GetComponent<Animator>().SetBool("walking", false);
+             anim.SetBool("walking", false);
             sounddelayvalue = 0.05f;
             if(z != 0 || x != 0)
             {
@@ -129,19 +133,19 @@ public class NewPlayer : MonoBehaviour
 
             if(  z == 0 && x == 0)
             {
-                transform.GetChild(0).transform.GetComponent<Animator>().SetBool("running", false);
+               anim.SetBool("running", false);
                 sprintime += Time.deltaTime;
             }
             else
             {
-              transform.GetChild(0).transform.GetComponent<Animator>().SetBool("running", true);
+              anim.SetBool("running", true);
             }
            
         }
         else 
         {
            
-            transform.GetChild(0).transform.GetComponent<Animator>().SetBool("running", false);
+            anim.SetBool("running", false);
             movespeed = 100000;
             maxspeed = 8;
             sounddelayvalue = 0.3f;
@@ -167,9 +171,31 @@ public class NewPlayer : MonoBehaviour
         //inputs -----------------------------------------------------------------------------------
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
         orientation.Rotate(Vector3.up * mouseX);
-        z = Input.GetAxisRaw("Horizontal");
-        x = Input.GetAxisRaw("Vertical");
-
+        
+        if (Input.GetKey(keybinds[0]))
+        {
+             x = 1;
+        }
+        else if (Input.GetKey(keybinds[1]))
+        {
+            x = -1;
+        }
+        else
+        {
+            x = 0;
+        }
+        if( Input.GetKey(keybinds[2]))
+        {
+            z = -1;
+        }
+        else if (Input.GetKey(keybinds[3]))
+        {
+            z = 1;
+        }
+        else
+        {
+            z = 0;
+        }
         // Sound Walk Input ---------------------------------------------------------------------------------------------
 
         if (Input.GetKey(keybinds[0]) || Input.GetKey(keybinds[3]) || Input.GetKey(keybinds[2]) || Input.GetKey(keybinds[1]))
@@ -183,14 +209,14 @@ public class NewPlayer : MonoBehaviour
 
         // animation for headbop -----------------------------------------------------------------------------------------
 
-        if (x == 1 && !bop.walking || x == -1 && !bop.walking || z == 1 && !bop.walking || z == -1 && !bop.walking)
+        if (x == 1  || x == -1 || z == 1 || z == -1)
         {
-            transform.GetChild(0).transform.GetComponent<Animator>().SetBool("walking", true);
+            anim.SetBool("walking", true);
          
         }
         if (z == 0 && x ==  0 )
         {
-            transform.GetChild(0).transform.GetComponent<Animator>().SetBool("walking",false);
+            anim.SetBool("walking",false);
             StopCoroutine(soundelay());
         }
         // heal and movement force and sprinting ----------------------------------------------

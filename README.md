@@ -1,6 +1,11 @@
 # thisgamehasnonameyet
  transfur game
 
+28/12/2021
+### ( made the keybinds not janky and glitchy anymore  and  a temporay background  for the menu not rlly that good and some tiny bug fixes)
+___
+
+
 25/12/2021
 ### (some bug fixes made the keybinds its really janky right now so torromow ill smooth it)
 ___

@@ -20,7 +20,7 @@ public class Menu : MonoBehaviour
     private bool settingslerpin = false;
     private bool ComeBack = false, SubComeBack = false;
     private bool canclickbuttens = false;
-    public bool isbindingbutten = true;
+    private bool isbindingbutten = true;
     // floats -----------------------------------------
     private float ButtenCooldown = 6;
     private Vector3 scaleupandownsave;
@@ -60,17 +60,14 @@ public class Menu : MonoBehaviour
         sliders[2].transform.GetChild(0).transform.GetComponent<Slider>().value = data.MasterVolume;
         graphicisvalue = data.graphicisvalue;
         sliders[1].transform.GetChild(0).transform.GetComponent<TextMeshProUGUI>().text = GraphicisTiersStrings[data.graphicisvalue];
-        // savekey[] = data.keys[0];
-        savekey = new KeyCode[6];
+        savekey = new KeyCode[7];
         savekey = data.keys;
         sliderischanged();
         transiton = GameObject.Find("Transition");
         GameObject.Find("SettingsOptions").SetActive(false);
-        for (int i = 0; i < 6; i++)
-        {
-            
-            sliders[3].GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.keys[i].ToString();
-           
+        for (int i = 0; i < 7; i++)
+        {  
+            sliders[3].GetChild(0).GetChild(0).GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.keys[i].ToString();
         }
     } 
     private void LateUpdate()
@@ -80,7 +77,7 @@ public class Menu : MonoBehaviour
         if (ButtenCooldown >= 6)
         {
             canclickbuttens = true;
-            isbindingbutten = true;
+         
         }
         else if(ButtenCooldown <= 6)
         {
@@ -170,16 +167,14 @@ public class Menu : MonoBehaviour
     }
     public void selectletter()
     {
-        if( isbindingbutten == true &&  canclickbuttens == true)
+        if( isbindingbutten == true )
         {
           StartCoroutine(selectlettercoroutine());
         }
     }
     public IEnumerator selectlettercoroutine()
-    {
-        
+    { 
           isbindingbutten = false;
-        
         data = new PointerEventData(eventsystem); 
         //Set the Pointer Event Position to that of the mouse position
         data.position = Input.mousePosition;
@@ -188,76 +183,66 @@ public class Menu : MonoBehaviour
 
         //Raycast using the Graphics Raycaster and mouse click position
         graph.Raycast(data, results);
-        WaitForFixedUpdate wait = new WaitForFixedUpdate(); 
-       
-        foreach(RaycastResult result in results)
-        {
-           
-               scaleupandownsave = result.gameObject.transform.localScale;
-            Vector2 a = result.gameObject.transform.localScale;
-            Vector2 minus =  a / 1.15f;
-            
-            
-           // towardsize -= minus;
-            if(result.gameObject.layer == 5)
-            {
-                 EventSystem.current.SetSelectedGameObject(result.gameObject);
-               while(EventSystem.current.currentSelectedGameObject == result.gameObject)
-               {
-               
-                  result.gameObject.transform.localScale = Vector2.Lerp(result.gameObject.transform.localScale, minus, 3.2f * Time.fixedDeltaTime);
+        WaitForFixedUpdate wait = new WaitForFixedUpdate();
 
-                 if (Input.anyKey)
-                 {
-                  
-                    EventSystem.current.SetSelectedGameObject(null);
-                    break;
-                 }
-                 yield return wait;
-               }
-            }
-         
-        }
-        
-     ButtenCooldown = 3; 
-        
         foreach (RaycastResult result in results)
         {
+
+
             if (result.gameObject.layer == 5)
             {
-                
-               
-                HoldVariables d = SaveSystem.load();
-               
-                foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
+                scaleupandownsave = result.gameObject.transform.localScale;
+            
+               Vector2 a = result.gameObject.transform.localScale;
+                Vector2 minus = new Vector2(0.01f, 0.01f);
+                 a -= minus;
+                EventSystem.current.SetSelectedGameObject(result.gameObject);
+                while (EventSystem.current.currentSelectedGameObject == result.gameObject)
                 {
-                    for(int ii = 0; ii < 1; ii++)
-                    {
-                     if (Input.GetKeyDown(kcode))
-                     {
-                         savekeyindex = result.gameObject.transform.GetSiblingIndex();
-                        savekey[savekeyindex] = kcode;
-                        result.gameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = kcode.ToString();
-                         isbindingbutten = true;
-                         int i = 0;
-                         while( i < 80)
-                         {
-                            result.gameObject.transform.localScale = Vector2.Lerp(result.gameObject.transform.localScale, scaleupandownsave, 3.5f * Time.fixedDeltaTime);
-                            i++;
-                        
-                            yield return wait;
-                         }
 
-                    
-                     }
-                     
+                    result.gameObject.transform.localScale = Vector2.Lerp(result.gameObject.transform.localScale, a, 3.2f * Time.fixedDeltaTime);
+
+                    if (Input.anyKeyDown)
+                    {
+                        a += minus;
+                        EventSystem.current.SetSelectedGameObject(null);
+                        continue;
                     }
-                   
+
+                    yield return wait;
                 }
 
-            }
-        }
-        
+                HoldVariables d = SaveSystem.load();
+                WaitForSeconds waitmore = new WaitForSeconds(0.5f);
+                foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
+                {
+                    for (int ii = 0; ii < 1; ii++)
+                    {
+                        if (Input.GetKeyDown(kcode))
+                        {
+                            savekeyindex = result.gameObject.transform.GetSiblingIndex();
+                            savekey[savekeyindex] = kcode;
+                            result.gameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = kcode.ToString();
+                            int i = 0;
+                            while (i < 50)
+                            {
+                                result.gameObject.transform.localScale = Vector2.Lerp(result.gameObject.transform.localScale, scaleupandownsave, 3.5f * Time.fixedDeltaTime);
+                                i++;
+
+                                yield return wait;
+                            }
+                            result.gameObject.transform.localScale = scaleupandownsave;
+                             isbindingbutten = true;
+
+                        }
+
+                    }
+
+                }
+
+            }  
+
+        }  
       
     }
     public IEnumerator Transition()

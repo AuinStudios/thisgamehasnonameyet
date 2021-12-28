@@ -5,7 +5,7 @@ using UnityEngine;
 public class headbop : MonoBehaviour
 {
 
-    public bool walking;
+    //public bool walking;
    
    // public Transform oriRotation;
    // public Transform camRot;

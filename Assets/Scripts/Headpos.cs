@@ -5,11 +5,9 @@ using UnityEngine;
 public class Headpos : MonoBehaviour
 {
     private GameObject pos;
-    private headbop running;
-
     public void Awake()
     {
-        running = GameObject.Find("Player").transform.GetChild(0).GetComponent<headbop>();
+      
          if (gameObject.CompareTag("MainCamera"))
          {
                pos = GameObject.Find("Camera");
@@ -32,7 +30,7 @@ public class Headpos : MonoBehaviour
     {
 
        
-        if (running.enabled && gameObject.CompareTag("MainCamera"))
+        if ( gameObject.CompareTag("MainCamera"))
         {
             pos = GameObject.Find("MainCam");
         }
@@ -40,7 +38,7 @@ public class Headpos : MonoBehaviour
         {
             pos = GameObject.Find("Head");
         }
-        else if (!running.enabled && gameObject.CompareTag("MainCamera"))
+        else if ( gameObject.CompareTag("MainCamera"))
         {
             pos = GameObject.Find("Camera");
         }

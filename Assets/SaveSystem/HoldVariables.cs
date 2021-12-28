@@ -15,7 +15,7 @@ public class HoldVariables
     public KeyCode[] keys;
     public HoldVariables()
     {
-       keys = new KeyCode[6];
+       keys = new KeyCode[7];
        keys = Camera.main.GetComponent<Menu>().savekey;
       
         rot = new float[3];
