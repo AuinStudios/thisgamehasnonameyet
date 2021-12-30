@@ -517,7 +517,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 567
+    m_Bits: 1591
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -673,11 +673,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 384446d975794c64c964c19474553aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max: {fileID: 8407046875815354009, guid: 4d90d8694f8789147985358f99ae4786, type: 3}
   swing: {fileID: 6550638552388202640}
   hitt: {fileID: 8300000, guid: a9005fb5ed78c8d4580354fad13a8b1a, type: 3}
+  keybinds: 
   spawneffect: {fileID: 8407046875815354011, guid: 4d90d8694f8789147985358f99ae4786, type: 3}
-  enemy: {fileID: 0}
+  playerhp: {fileID: 11400000, guid: 4ec8fecd34620ab4bb68cc3d1439260f, type: 2}
   Damage: 0
   cooldown: 0
 --- !u!65 &6550638552388202641

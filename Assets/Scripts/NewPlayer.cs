@@ -21,6 +21,8 @@ public class NewPlayer : MonoBehaviour
     private  float sensMultiplier = 1f;
     private  float sprintime = 100f;
     private float sounddelayvalue = 0.3f;
+    // ints ---------------------------
+    private int clearancelevel = 1;
     // bools---------------------------
     private bool enablesoundelay = true;
     private bool isgroundedboi;
@@ -172,11 +174,11 @@ public class NewPlayer : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
         orientation.Rotate(Vector3.up * mouseX);
         
-        if (Input.GetKey(keybinds[0]))
+        if (Input.GetKey(keybinds[0]) && movespeed != 0)
         {
              x = 1;
         }
-        else if (Input.GetKey(keybinds[1]))
+        else if (Input.GetKey(keybinds[1]) && movespeed != 0)
         {
             x = -1;
         }
@@ -184,11 +186,11 @@ public class NewPlayer : MonoBehaviour
         {
             x = 0;
         }
-        if( Input.GetKey(keybinds[2]))
+        if( Input.GetKey(keybinds[2]) && movespeed != 0 )
         {
             z = -1;
         }
-        else if (Input.GetKey(keybinds[3]))
+        else if (Input.GetKey(keybinds[3]) && movespeed != 0)
         {
             z = 1;
         }
@@ -196,23 +198,16 @@ public class NewPlayer : MonoBehaviour
         {
             z = 0;
         }
-        // Sound Walk Input ---------------------------------------------------------------------------------------------
-
-        if (Input.GetKey(keybinds[0]) || Input.GetKey(keybinds[3]) || Input.GetKey(keybinds[2]) || Input.GetKey(keybinds[1]))
-        {
-
-            if (enablesoundelay == true && !sound.isPlaying)
-            {
-                StartCoroutine(soundelay());
-            }
-        }
 
         // animation for headbop -----------------------------------------------------------------------------------------
 
         if (x == 1  || x == -1 || z == 1 || z == -1)
         {
             anim.SetBool("walking", true);
-         
+            if (enablesoundelay == true && !sound.isPlaying)
+            {
+                StartCoroutine(soundelay());
+            }
         }
         if (z == 0 && x ==  0 )
         {

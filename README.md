@@ -1,11 +1,13 @@
 # thisgamehasnonameyet
  transfur game
 
+
+29/12/2021
+### (Made doors that open and close and learnt how lerps actually work   like being a  progress bar instead of just adding a  value and torromow i might make a clearance level for the doors like u need level 2 to open a level 2 door )
+___
 28/12/2021
 ### ( made the keybinds not janky and glitchy anymore  and  a temporay background  for the menu not rlly that good and some tiny bug fixes)
 ___
-
-
 25/12/2021
 ### (some bug fixes made the keybinds its really janky right now so torromow ill smooth it)
 ___
