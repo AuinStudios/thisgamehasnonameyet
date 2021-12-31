@@ -19,6 +19,8 @@ public class Cameramove : MonoBehaviour
     public List<Transform> enemies = new List<Transform>();
     public Transform player;
     private Transform whatdidithit;
+    private Collider[] col;
+    
     public void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -34,6 +36,8 @@ public class Cameramove : MonoBehaviour
         {
           int i = 0;
         float t = 0;
+            List<GameObject> game =  new List<GameObject>();
+            Vector3 size = new Vector3(whatdidithit.lossyScale.x * 7, whatdidithit.lossyScale.y, whatdidithit.lossyScale.z) ;
         WaitForFixedUpdate wait = new WaitForFixedUpdate();
         WaitForSeconds waitsecs = new WaitForSeconds(0.4f);
         Vector3 originalpos = (whatdidithit.localPosition);
@@ -41,32 +45,58 @@ public class Cameramove : MonoBehaviour
         while (i < 100)
         {
             t += 0.1f *Time.deltaTime;
-                Debug.Log(t);
+
             whatdidithit.localPosition = Vector3.Lerp(whatdidithit.localPosition, topos, t / 1 );
             i++;
+            col = Physics.OverlapBox(whatdidithit.position + whatdidithit.TransformDirection(new Vector3(0 , -3 , 0)), whatdidithit.lossyScale , whatdidithit.rotation);
             yield return wait;
         }
         yield return waitsecs;
         t = 0;
-           
-        while (i < 200)
+      foreach(Collider hit in col)
+      {
+        if (hit.gameObject.CompareTag("Player")&& game.Count == 0)
         {
-
+           game.Add(hit.gameObject);
+        }
+      }
+        while (i < 200  )
+        { 
             t +=  0.1f * Time.deltaTime;
-                Debug.Log(t);
-                whatdidithit.localPosition = Vector3.Lerp(whatdidithit.localPosition, originalpos, t / 1);
-            i++;
+          if(game.Count > 0 )
+          {
+              col = Physics.OverlapBox(whatdidithit.position + whatdidithit.TransformDirection(new Vector3(0, -3, 0)), size, whatdidithit.rotation);
+              game.Clear();
+              foreach (Collider hit in col)
+              {
+                  if (hit.gameObject.CompareTag("Player") && game.Count == 0)
+                  {
+                      game.Add(hit.gameObject);
+                  }
+              }
+              t = 0;
+              cooldownfordoors = 5f;
+          }
+          
+          if(game.Count == 0)
+          {
+                  whatdidithit.localPosition = Vector3.Lerp(whatdidithit.localPosition, originalpos, t / 1);
+              i++;
+          }
             yield return wait;
         }
         whatdidithit.localPosition = originalpos;
         }
        
     }
+
+    
+  
     public void Update()
     {
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
-
+       
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -80, 80);
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);

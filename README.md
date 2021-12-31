@@ -1,6 +1,9 @@
 # thisgamehasnonameyet
  transfur game
-
+31/12/2021
+### (Made the door to detect if the player is under it and stops it from moving and if u go alittle away from the door the door will move again
+but if ur not right under the door then  it wont do that)
+___
 
 29/12/2021
 ### (Made doors that open and close and learnt how lerps actually work   like being a  progress bar instead of just adding a  value and torromow i might make a clearance level for the doors like u need level 2 to open a level 2 door )
