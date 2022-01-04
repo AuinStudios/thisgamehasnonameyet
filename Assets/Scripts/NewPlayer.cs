@@ -21,8 +21,6 @@ public class NewPlayer : MonoBehaviour
     private  float sensMultiplier = 1f;
     private  float sprintime = 100f;
     private float sounddelayvalue = 0.3f;
-    // ints ---------------------------
-    private int clearancelevel = 1;
     // bools---------------------------
     private bool enablesoundelay = true;
     private bool isgroundedboi;

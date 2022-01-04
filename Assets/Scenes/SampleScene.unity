@@ -1053,7 +1053,7 @@ GameObject:
   - component: {fileID: 498346331}
   - component: {fileID: 498346330}
   m_Layer: 2
-  m_Name: Door
+  m_Name: Door1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1497,14 +1497,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579271981}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.6678877, y: 1.7061071, z: 20.331047}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: -6.6678877, y: 1.7061071, z: 27.37}
   m_LocalScale: {x: 0.65292, y: 0.65292, z: 0.65292}
   m_Children:
   - {fileID: 498346333}
   m_Father: {fileID: 0}
   m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!135 &579271983
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2706,7 +2706,7 @@ GameObject:
   - component: {fileID: 1400328451}
   - component: {fileID: 1400328450}
   m_Layer: 10
-  m_Name: Door Scanner (1)
+  m_Name: Door Scanner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2782,7 +2782,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400328449}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.6678877, y: 1.7061071, z: 15.04}
+  m_LocalPosition: {x: -6.6678877, y: 1.7061071, z: 22.14}
   m_LocalScale: {x: 0.65292, y: 0.65292, z: 0.65292}
   m_Children:
   - {fileID: 1804792876}
@@ -3265,7 +3265,7 @@ GameObject:
   - component: {fileID: 1804792878}
   - component: {fileID: 1804792877}
   m_Layer: 2
-  m_Name: Door
+  m_Name: Door0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4015,10 +4015,6 @@ PrefabInstance:
       value: Camera
       objectReference: {fileID: 0}
     - target: {fileID: 6550638552246065868, guid: b343065c3e7a999479279b70243c251d, type: 3}
-      propertyPath: Doors.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6550638552246065868, guid: b343065c3e7a999479279b70243c251d, type: 3}
       propertyPath: indicator
       value: 
       objectReference: {fileID: 1248298746}
@@ -4030,14 +4026,6 @@ PrefabInstance:
       propertyPath: enemies.Array.data[1]
       value: 
       objectReference: {fileID: 608090785}
-    - target: {fileID: 6550638552246065868, guid: b343065c3e7a999479279b70243c251d, type: 3}
-      propertyPath: Doors.Array.data[0]
-      value: 
-      objectReference: {fileID: 579271982}
-    - target: {fileID: 6550638552246065868, guid: b343065c3e7a999479279b70243c251d, type: 3}
-      propertyPath: Doors.Array.data[1]
-      value: 
-      objectReference: {fileID: 1400328453}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b343065c3e7a999479279b70243c251d, type: 3}
 --- !u!224 &6788480475788407373 stripped

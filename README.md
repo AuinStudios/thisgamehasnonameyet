@@ -1,5 +1,8 @@
 # thisgamehasnonameyet
  transfur game
+03/01/2022
+### (improved the door detection by alot and  made it so u can activite mutltple doors now instead of only one per time and made a clerance level  system  up to 9)
+___
 31/12/2021
 ### (Made the door to detect if the player is under it and stops it from moving and if u go alittle away from the door the door will move again
 but if ur not right under the door then  it wont do that)
