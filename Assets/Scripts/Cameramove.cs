@@ -17,10 +17,10 @@ public class Cameramove : MonoBehaviour
     public  bool triggerDot = false;
     private bool closeToAnEnemy = false;
     public List<Transform> enemies = new List<Transform>();
-    public Transform player;
+    private Transform player;
     private Transform whatdidithit;
     private Collider[] col;
-    
+   
     public void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -34,9 +34,10 @@ public class Cameramove : MonoBehaviour
     {
         for(int g = 0; g < 1; g++)
         {
+         float FixLerpTimer = 0;
           int i = 0;
         float t = 0;
-            List<GameObject> game =  new List<GameObject>();
+            GameObject  game =  new GameObject();
             Vector3 size = new Vector3(whatdidithit.lossyScale.x * 7, whatdidithit.lossyScale.y, whatdidithit.lossyScale.z) ;
         WaitForFixedUpdate wait = new WaitForFixedUpdate();
         WaitForSeconds waitsecs = new WaitForSeconds(0.4f);
@@ -48,43 +49,54 @@ public class Cameramove : MonoBehaviour
 
             whatdidithit.localPosition = Vector3.Lerp(whatdidithit.localPosition, topos, t / 1 );
             i++;
-            col = Physics.OverlapBox(whatdidithit.position + whatdidithit.TransformDirection(new Vector3(0 , -3 , 0)), whatdidithit.lossyScale , whatdidithit.rotation);
+            col = Physics.OverlapBox(whatdidithit.position + whatdidithit.TransformDirection(new Vector3(0 , -3 , 0)), size , whatdidithit.rotation);
             yield return wait;
         }
         yield return waitsecs;
         t = 0;
-      foreach(Collider hit in col)
-      {
-        if (hit.gameObject.CompareTag("Player")&& game.Count == 0)
-        {
-           game.Add(hit.gameObject);
-        }
-      }
-        while (i < 200  )
+         foreach(Collider hit in col)
+         {
+           if (hit.gameObject.CompareTag("Player"))
+           {
+           game = hit.gameObject;
+           }
+         }
+
+        while (cooldownfordoors != 0 )
         { 
-            t +=  0.1f * Time.deltaTime;
-          if(game.Count > 0 )
+     
+          if(cooldownfordoors >= 4.5f )
           {
-              col = Physics.OverlapBox(whatdidithit.position + whatdidithit.TransformDirection(new Vector3(0, -3, 0)), size, whatdidithit.rotation);
-              game.Clear();
-              foreach (Collider hit in col)
-              {
-                  if (hit.gameObject.CompareTag("Player") && game.Count == 0)
-                  {
-                      game.Add(hit.gameObject);
-                  }
-              }
-              t = 0;
-              cooldownfordoors = 5f;
+               col = Physics.OverlapBox(whatdidithit.position + whatdidithit.TransformDirection(new Vector3(0, -3, 0)), size, whatdidithit.rotation);   
+              
+            foreach (Collider hit in col)
+            {
+             if (hit.gameObject.CompareTag("Player"))
+             {
+                      cooldownfordoors = 5f;
+                      t = 0;
+                      FixLerpTimer += 0.3f * Time.deltaTime;
+                game = hit.gameObject;
+                      whatdidithit.localPosition = Vector3.Lerp(whatdidithit.localPosition, topos, FixLerpTimer / 1);
+             }
+             else
+             {
+                 game = null;
+             }
+            }
           }
-          
-          if(game.Count == 0)
+          if(game == null)
           {
-                  whatdidithit.localPosition = Vector3.Lerp(whatdidithit.localPosition, originalpos, t / 1);
-              i++;
+                    FixLerpTimer = 0;
+             t += 0.1f * Time.deltaTime;
+             whatdidithit.localPosition = Vector3.Lerp(whatdidithit.localPosition, originalpos, t / 1);
+             
+
           }
+           
             yield return wait;
         }
+
         whatdidithit.localPosition = originalpos;
         }
        
