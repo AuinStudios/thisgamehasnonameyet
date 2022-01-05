@@ -1,5 +1,9 @@
 # thisgamehasnonameyet
  transfur game
+
+05/01/2022
+### (Fixed a major door bug where if u opened more then 2 doors it would break because i made it so the array cleared the item each time it finished now i just made it so after  2-5 secs after not using doors  it clears the array )
+___
 03/01/2022
 ### (improved the door detection by alot and  made it so u can activite mutltple doors now instead of only one per time and made a clerance level  system  up to 9)
 ___
