@@ -9,32 +9,36 @@ public class NewPlayer : MonoBehaviour
     private Animator anim;
     // Transition start ------------------------
     private GameObject transition;
-    // transform and physics stuff ------------
+    // transforms and rigidbody------------
     private Rigidbody rig;
     private Transform orientation;
+    public Transform CameraRot;
     // floats ---------------------------------
-    public float health = 100;
-    public  float movespeed = 17500;
-    private  float maxVertSpeed = 200;
-    private  float maxspeed = 300f;
-    private  float sensitivity = 50f;
-    private  float sensMultiplier = 1f;
-    private  float sprintime = 100f;
-    private float sounddelayvalue = 0.3f;
+    public float health = 100f;
+    public float movespeed = 17500f;
+    private float maxVertSpeed = 200f;
+    private float maxspeed = 300f;
+    private float sensitivity = 50f;
+    private float sensMultiplier = 1f;
+    private float sprintime = 100f;
+    private float SoundDelayValue = 0.3f;
     // bools---------------------------
     private bool enablesoundelay = true;
     private bool isgroundedboi;
     private bool sprinting;
-    private headbop bop;
+    private bool CanLerpHealth;
     // input---------------------------
-     private float x, z;
+    private float x, z;
     private KeyCode[] keybinds;
     // sounds -------------------------
-     public AudioSource sound;
+    public AudioSource sound;
     // ui stamina and health --------------------
+    private Slider HealthValue;
     private Slider StaminaValue;
+    private Image HealthColor;
     private TextMeshProUGUI StaminaText;
-    private  void Awake()
+
+    private void Awake()
     {
         HoldVariables DATA = SaveSystem.load();
         AudioListener.volume = DATA.MasterVolume;
@@ -45,8 +49,7 @@ public class NewPlayer : MonoBehaviour
         orientation = transform.GetChild(2).transform;
         rig = this.transform.GetComponent<Rigidbody>();
         StaminaValue = GameObject.Find("Staminabar").GetComponent<Slider>();
-        StaminaText = GameObject.Find("Staminabar").transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
-        bop = this.transform.GetChild(0).GetComponent<headbop>();
+        StaminaText = StaminaValue.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
         transition = GameObject.Find("End transition");
         transition.transform.GetChild(0).transform.localEulerAngles = new Vector3(DATA.rot[0], DATA.rot[1], DATA.rot[2]);
         keybinds = new KeyCode[5];
@@ -56,16 +59,16 @@ public class NewPlayer : MonoBehaviour
         keybinds[2] = DATA.keys[5];
         keybinds[3] = DATA.keys[6];
         anim = transform.GetChild(0).transform.GetComponent<Animator>();
-    }
-
-    private  void Start()
-    {
+        HealthValue = GameObject.Find("hp").GetComponent<Slider>();
+        HealthColor = HealthValue.transform.GetChild(0).GetComponent<Image>();
+        CanLerpHealth = true;
         StartCoroutine(Starttransition());
     }
+
     private IEnumerator Starttransition()
     {
         WaitForFixedUpdate wait = new WaitForFixedUpdate();
-        while(transition.transform.GetChild(1).localPosition.x >= -1300f || transition.transform.GetChild(2).localPosition.x <= 1400f)
+        while (transition.transform.GetChild(1).localPosition.x >= -1300f || transition.transform.GetChild(2).localPosition.x <= 1400f)
         {
             Vector2 logoimage = new Vector2(1448f, 1187f);
             transition.transform.GetChild(0).localPosition = Vector2.Lerp(transition.transform.GetChild(0).localPosition, logoimage, 2f * Time.fixedDeltaTime);
@@ -78,6 +81,7 @@ public class NewPlayer : MonoBehaviour
             transition.transform.GetChild(2).localPosition = Vector2.Lerp(transition.transform.GetChild(2).localPosition, secoundboxpos, 2f * Time.fixedDeltaTime);
             yield return wait;
         }
+        CanLerpHealth = false;
     }
     private void FixedUpdate()
     {
@@ -101,80 +105,80 @@ public class NewPlayer : MonoBehaviour
         }
 
     }
-    // movement function ---------------------------------------------------------------------------------------
-    private  void  Playermovement()
-    {
-        rig.AddForce(orientation.forward * x * movespeed * Time.deltaTime );
-        rig.AddForce(orientation.right * z * movespeed * Time.deltaTime );
-    }
     // sprinting function  --------------------------------------------------------------------------------------
     private void sprint()
     {
-        StaminaValue.value = sprintime;
-        StaminaText.text = Mathf.Clamp((int)sprintime, 0, int.MaxValue).ToString();
         if (sprintime >= 25)
         {
             sprinting = true;
         }
-        if(sprintime == 0)
+        if (sprintime == 0)
         {
             sprinting = false;
         }
-        if (Input.GetKey(keybinds[4]) && sprinting == true  && isgroundedboi )
+        if (Input.GetKey(keybinds[4]) && sprinting == true && isgroundedboi)
         {
+            StaminaValue.value = sprintime;
+            StaminaText.text = Mathf.Clamp((int)sprintime, 0, int.MaxValue).ToString();
             movespeed = 200000;
-             maxspeed = 16;
-             anim.SetBool("walking", false);
-            sounddelayvalue = 0.05f;
-            if(z != 0 || x != 0)
+            maxspeed = 16;
+            anim.SetBool("walking", false);
+            SoundDelayValue = 0.05f;
+            if (z != 0 || x != 0)
             {
-             sprintime -= 2.5f *  Time.deltaTime;
+                sprintime -= 2.5f * Time.deltaTime;
             }
 
-            if(  z == 0 && x == 0)
+            if (z == 0 && x == 0)
             {
-               anim.SetBool("running", false);
+                anim.SetBool("running", false);
                 sprintime += Time.deltaTime;
             }
             else
             {
-              anim.SetBool("running", true);
+                anim.SetBool("running", true);
             }
-           
+
         }
-        else 
+        else if (sprintime <= 100)
         {
-           
+
             anim.SetBool("running", false);
             movespeed = 100000;
             maxspeed = 8;
-            sounddelayvalue = 0.3f;
+            SoundDelayValue = 0.3f;
             sprintime += Time.deltaTime;
         }
     }
     // sound delay loop -----------------------------------------------------------------------------------------------
     private IEnumerator soundelay()
     {
+        WaitForSeconds waitforsound = new WaitForSeconds(SoundDelayValue);
         enablesoundelay = false;
-        yield return new WaitForSeconds(sounddelayvalue);
+        yield return waitforsound;
         sound.Play();
         enablesoundelay = true;
     }
-    //  main functions --------------------------------------------------------------------------------------------------------------------
-   private void Update()
-    {
-        // lerping for health ui -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        GameObject.Find("hp").GetComponent<Slider>().value = Mathf.Lerp(GameObject.Find("hp").GetComponent<Slider>().value, health, 3 * Time.deltaTime);
-        GameObject.Find("hp").transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(Color.red, Color.green, GameObject.Find("hp").GetComponent<Slider>().value / GameObject.Find("hp").GetComponent<Slider>().maxValue);
-        // sprint clamp-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        sprintime = Mathf.Clamp((float)sprintime, 0, 100);
-        //inputs -----------------------------------------------------------------------------------
-        float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
-        orientation.Rotate(Vector3.up * mouseX);
+    //  main functions ---------------------------------------------------------------------------------
+    private void Update()
+    {   
         
+        // lerping for health ui -----------------------------------------------------------------------
+        if (CanLerpHealth == true)
+        {
+            HealthValue.value = Mathf.Lerp(HealthValue.value, health, 3 * Time.deltaTime);
+            HealthColor.color = Color.Lerp(Color.red, Color.green, HealthValue.value / HealthValue.maxValue);
+        }
+
+        //inputs -----------------------------------------------------------------------------------
+        if (Input.GetAxis("Mouse X") != 0)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
+            orientation.Rotate(Vector3.up * mouseX);
+        }
         if (Input.GetKey(keybinds[0]) && movespeed != 0)
         {
-             x = 1;
+            x = 1;
         }
         else if (Input.GetKey(keybinds[1]) && movespeed != 0)
         {
@@ -184,7 +188,7 @@ public class NewPlayer : MonoBehaviour
         {
             x = 0;
         }
-        if( Input.GetKey(keybinds[2]) && movespeed != 0 )
+        if (Input.GetKey(keybinds[2]) && movespeed != 0)
         {
             z = -1;
         }
@@ -199,35 +203,42 @@ public class NewPlayer : MonoBehaviour
 
         // animation for headbop -----------------------------------------------------------------------------------------
 
-        if (x == 1  || x == -1 || z == 1 || z == -1)
+        if (x == 1 || x == -1 || z == 1 || z == -1)
         {
             anim.SetBool("walking", true);
+
             if (enablesoundelay == true && !sound.isPlaying)
             {
                 StartCoroutine(soundelay());
             }
+
+            rig.AddForce(orientation.forward * x * movespeed * Time.deltaTime);
+            rig.AddForce(orientation.right * z * movespeed * Time.deltaTime);
         }
-        if (z == 0 && x ==  0 )
+        else
         {
-            anim.SetBool("walking",false);
+            anim.SetBool("walking", false);
             StopCoroutine(soundelay());
         }
         // heal and movement force and sprinting ----------------------------------------------
-
-        Playermovement();
-
         sprint();
 
-        if( health  < 100)
+        if (health < 100)
         {
             health += 0.5f * Time.deltaTime;
+            CanLerpHealth = true;
+            Debug.Log("a");
+        }
+        else
+        {
+            CanLerpHealth = false;
         }
 
     }
 
     // walking detection ----------------------------------------------------------------------------------------------
 
-    private  void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
@@ -235,7 +246,7 @@ public class NewPlayer : MonoBehaviour
         }
     }
 
-    private  void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {

@@ -1,6 +1,9 @@
 # thisgamehasnonameyet
  transfur game
 
+06/01/2022
+### (Today i didnt do much i just went in all of the codes and   got rid of the getcompoments on updates i did to all of my scripst expect the menu  cause im kinda tired)
+___
 05/01/2022
 ### (Fixed a major door bug where if u opened more then 2 doors it would break because i made it so the array cleared the item each time it finished now i just made it so after  2-5 secs after not using doors  it clears the array )
 ___

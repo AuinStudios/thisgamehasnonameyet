@@ -23,7 +23,7 @@ public class HoldVariables
         rot[1] = GameObject.Find("Canvas").transform.GetChild(2).transform.GetChild(0).transform.localEulerAngles.y;
         rot[2] = GameObject.Find("Canvas").transform.GetChild(2).transform.GetChild(0).transform.localEulerAngles.z;
         MasterVolume = GameObject.Find("Canvas").transform.GetChild(0).transform.GetChild(4).GetChild(2).GetChild(0).transform.GetComponent<Slider>().value;
-        graphicisvalue = GameObject.Find("Main Camera").transform.GetComponent<Menu>().graphicisvalue;
+        graphicisvalue = GameObject.Find("Main Camera").transform.GetComponent<Menu>().GraphicisValue;
         brightness = GameObject.Find("Canvas").transform.GetChild(0).transform.GetChild(4).GetChild(0).GetChild(2).transform.GetComponent<Slider>().value;
         sens = GameObject.Find("Canvas").transform.GetChild(0).transform.GetChild(4).GetChild(0).GetChild(0).transform.GetComponent<Slider>().value;
         fov = GameObject.Find("Canvas").transform.GetChild(0).transform.GetChild(4).GetChild(0).GetChild(1).transform.GetComponent<Slider>().value;

@@ -26,24 +26,24 @@ public class Headpos : MonoBehaviour
         transform.position = pos.transform.position;
     }
 
-    public void Update()
-    {
-
-       
-        if ( gameObject.CompareTag("MainCamera"))
-        {
-            pos = GameObject.Find("MainCam");
-        }
-        else if(!gameObject.CompareTag("MainCamera"))
-        {
-            pos = GameObject.Find("Head");
-        }
-        else if ( gameObject.CompareTag("MainCamera"))
-        {
-            pos = GameObject.Find("Camera");
-        }
-
-       
-    } 
+  //  public void Update()
+  //  {
+  //
+  //     
+  //      if ( gameObject.CompareTag("MainCamera"))
+  //      {
+  //          pos = GameObject.Find("MainCam");
+  //      }
+  //      else if(!gameObject.CompareTag("MainCamera"))
+  //      {
+  //          pos = GameObject.Find("Head");
+  //      }
+  //      else if ( gameObject.CompareTag("MainCamera"))
+  //      {
+  //          pos = GameObject.Find("Camera");
+  //      }
+  //
+  //     
+  //  } 
   
 }
