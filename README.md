@@ -1,6 +1,9 @@
 # thisgamehasnonameyet
  transfur game
-
+02/02/2022
+### (i redid the menus hover code and the one to click to change tabs its been a month since i last devlloped i took a break so thats why 
+   but i made the code not use alot of getcompoments and instead of update it does it in an inemurator )
+___
 06/01/2022
 ### (Today i didnt do much i just went in all of the codes and   got rid of the getcompoments on updates i did to all of my scripst expect the menu  cause im kinda tired)
 ___

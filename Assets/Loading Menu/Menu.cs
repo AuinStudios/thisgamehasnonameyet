@@ -8,6 +8,15 @@ using UnityEngine.EventSystems;
 using System;
 public class Menu : MonoBehaviour
 {
+    // Vectors ----------------------------------
+    Vector2 ClickedSettingsPanels = new Vector2(1.573442f, 1f);
+    Vector2 OGSizeSettingsPanels = new Vector2(1.188046f, 0.7524836f);
+    Vector2 HoveredSizeSettingsPanels = new Vector2(1.283442f, 0.8524836f);
+    Vector2 WidthOFMenu = new Vector2(160f, 30f);
+    Vector2 WidthOFMenuSmall = new Vector2(0f, 30f);
+    private Vector3 scaleupandownsave;
+    // UI -----------------------------------------
+    public List<Image> ObjectList;
     // graphraycast to take gameobject information--
     private GraphicRaycaster graph;
     private PointerEventData data;
@@ -15,28 +24,39 @@ public class Menu : MonoBehaviour
     // ints -----------------------------------------
     private int savekeyindex;
     public int GraphicisValue = 2;
+    public int IndexChild;
     // bools -----------------------------------------
     private bool lerpoutofscene = false;
     private bool settingsLerpIn = false;
     private bool ComeBack = false, SubComeBack = false;
     private bool canclickbuttens = false;
     private bool isbindingbutten = true;
+    private bool IShovering = false;
+    private bool CanClickPanel = false;
     // floats -----------------------------------------
     private float ButtenCooldown = 6;
-    private Vector3 scaleupandownsave;
     // lists ------------------------------------------
     private string[] GraphicisTiersStrings = { "Low", "Medium", "High" };
     [SerializeField] private List<Vector3> savemenupos;
     [SerializeField] private List<Vector3> savesettingspos;
     [SerializeField] private List<Transform> sliders;
     public KeyCode[] savekey;
-    // gameobjects -------------------------------------
+    // gameobjects ------------------------------------- 
     private GameObject transiton;
+    private GameObject SettingsPanels;
+    private GameObject RaycasterHolder;
+    public GameObject PreviousRaycasterHolder;
+    // Ienumerator   ------------------------------------
+    WaitForFixedUpdate wait;
     private void Start()
     {
+        wait = new WaitForFixedUpdate();
         graph = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
         eventsystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
-
+        SettingsPanels = GameObject.Find("SettingsPanel");
+        transiton = GameObject.Find("Transition");
+        RaycasterHolder = EventSystem.current.firstSelectedGameObject;
+        RaycasterHolder.transform.localScale = ClickedSettingsPanels;
         foreach (Transform i in GameObject.Find("SettingsPanel").transform)
         {
             sliders.Add(i);
@@ -50,6 +70,7 @@ public class Menu : MonoBehaviour
         foreach (Transform i in GameObject.Find("SettingsOptions").transform)
         {
             savesettingspos.Add(i.localPosition);
+
         }
 
         HoldVariables data = SaveSystem.load();
@@ -63,12 +84,34 @@ public class Menu : MonoBehaviour
         savekey = new KeyCode[7];
         savekey = data.keys;
         sliderischanged();
-        transiton = GameObject.Find("Transition");
-        GameObject.Find("SettingsOptions").SetActive(false);
+
+
+        foreach (Transform GAM in GameObject.Find("Menu").transform)
+        {
+            ObjectList.Add(GAM.GetChild(0).GetComponent<Image>());
+        }
+        foreach (Transform GAM in GameObject.Find("SettingsOptions").transform)
+        {
+            if (GAM.name != "SettingsPanel")
+            {
+                ObjectList.Add(GAM.GetComponent<Image>());
+                if (GAM.gameObject != EventSystem.current.firstSelectedGameObject)
+                {
+                    SettingsPanels.transform.GetChild(GAM.transform.GetSiblingIndex()).gameObject.SetActive(false);
+                }
+                else
+                {
+                    SettingsPanels.transform.GetChild(EventSystem.current.firstSelectedGameObject.transform.GetSiblingIndex()).gameObject.SetActive(true);
+                }
+            }
+        }
+        
         for (int i = 0; i < 7; i++)
         {
             sliders[3].GetChild(0).GetChild(0).GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.keys[i].ToString();
         }
+
+        GameObject.Find("SettingsOptions").SetActive(false);
     }
     private void LateUpdate()
     {
@@ -100,12 +143,10 @@ public class Menu : MonoBehaviour
 
     public void graphicisUp()
     {
-        StopCoroutine(graphicisNumeratorUp());
         StartCoroutine(graphicisNumeratorUp());
     }
     public void graphicisDown()
     {
-        StopCoroutine(graphicisNumeratorDown());
         StartCoroutine(graphicisNumeratorDown());
     }
     private void setings()
@@ -113,12 +154,17 @@ public class Menu : MonoBehaviour
         if (canclickbuttens == true)
         {
             StartCoroutine(Settings());
-            foreach (Transform i in GameObject.Find("Menu").transform)
-            {
-                i.GetComponent<CanHover>().bol = false;
-
-            }
+            IShovering = false;
+            int bb = IndexChild;
+            IndexChild = -1;
+            StartCoroutine(IsHoveringOverGameobject(bb, false));
+            //foreach (Transform i in GameObject.Find("Menu").transform)
+            //{
+            //    i.GetComponent<CanHover>().bol = false;
+            //
+            //}
             ButtenCooldown = 0;
+            
         }
     }
 
@@ -137,15 +183,13 @@ public class Menu : MonoBehaviour
     {
         if (canclickbuttens == true)
         {
-            foreach (Transform i in GameObject.Find("Menu").transform)
-            {
-                i.GetComponent<CanHover>().bol = false;
-
-            }
+            IShovering = false;
+            int bb = IndexChild;
+            IndexChild = -1;
+            StartCoroutine(IsHoveringOverGameobject(bb, false));
             SaveSystem.Savesystem();
             StartCoroutine(Transition());
             ButtenCooldown = 0;
-
         }
 
     }
@@ -154,11 +198,10 @@ public class Menu : MonoBehaviour
     {
         if (canclickbuttens == true)
         {
-            foreach (Transform i in GameObject.Find("Menu").transform)
-            {
-                i.GetComponent<CanHover>().bol = false;
-
-            }
+            IShovering = false;
+            int bb = IndexChild;
+            IndexChild = -1;
+            StartCoroutine(IsHoveringOverGameobject(bb, false));
 
             Application.Quit();
             ButtenCooldown = 0;
@@ -173,6 +216,139 @@ public class Menu : MonoBehaviour
             StartCoroutine(selectlettercoroutine());
         }
     }
+
+
+    public void ClickUiSettings()
+    {
+        if(ObjectList.ToArray()[IndexChild].gameObject != RaycasterHolder)
+        {
+         StartCoroutine(ClickedUiSettings());
+        }
+        
+    }
+    public void HoverOverUi()
+    {
+        IShovering = true;
+        int bb = IndexChild;
+        //  StopCoroutine(IsHoveringOverGameobject());
+        StartCoroutine(IsHoveringOverGameobject(bb, true));
+    }
+
+    public void HoverOffUi()
+    {
+        IShovering = false;
+        // StopCoroutine(IsHoveringOverGameobject());
+        int bb = IndexChild;
+        IndexChild = -1;
+        StartCoroutine(IsHoveringOverGameobject(bb, true));
+
+    }
+
+
+    public IEnumerator ClickedUiSettings( )
+    {
+        SettingsPanels.transform.GetChild(RaycasterHolder.gameObject.transform.GetSiblingIndex()).gameObject.SetActive(false);
+       
+        GameObject previos = RaycasterHolder;
+        List<RaycastResult> results = new List<RaycastResult>();
+         
+        data = new PointerEventData(eventsystem);
+        data.position = Input.mousePosition;
+        graph.Raycast(data, results);
+        RaycasterHolder = results.ToArray()[0].gameObject;
+        
+
+        SettingsPanels.transform.GetChild(RaycasterHolder.transform.GetSiblingIndex()).gameObject.SetActive(true);
+
+        while (RaycasterHolder == results.ToArray()[0].gameObject)
+        {
+            float t = 0;
+            t += 3.5f * Time.deltaTime;
+            RaycasterHolder.transform.localScale = Vector2.Lerp(RaycasterHolder.transform.localScale, ClickedSettingsPanels, t / 1f);
+            if(RaycasterHolder.transform.localScale.x >= 1.2f)
+            {
+               float tt = 0f;
+               tt += 3.5f * Time.deltaTime;
+                previos.transform.localScale = Vector2.Lerp(previos.transform.localScale, OGSizeSettingsPanels, tt / 1f);
+            }
+            yield return wait;
+        }
+    }
+
+    public IEnumerator IsHoveringOverGameobject(int g, bool IsInMenu)
+    {
+
+        if (IShovering == true && IsInMenu == true)
+        {
+
+            List<RaycastResult> results = new List<RaycastResult>();
+
+            data = new PointerEventData(eventsystem);
+            data.position = Input.mousePosition;
+            graph.Raycast(data, results);
+
+            foreach (RaycastResult result in results)
+            {
+                if (result.gameObject.transform.parent == SettingsPanels.transform.parent)
+                {
+
+                    IndexChild = result.gameObject.transform.GetSiblingIndex() + 3;
+                    int localindexchild = IndexChild;
+
+                    while (localindexchild == IndexChild && result.gameObject != RaycasterHolder)
+                    {
+                        result.gameObject.transform.localScale = Vector2.Lerp(result.gameObject.transform.localScale, HoveredSizeSettingsPanels, 3 * Time.deltaTime);
+
+                        yield return wait;
+                    }
+
+
+                }
+                else
+                {
+                    IndexChild = result.gameObject.transform.GetSiblingIndex();
+                    Color col = ObjectList.ToArray()[IndexChild].color;
+                    int index = IndexChild;
+                    while (index == IndexChild)
+                    {
+                        ObjectList.ToArray()[index].rectTransform.sizeDelta = Vector2.Lerp(ObjectList.ToArray()[index].rectTransform.sizeDelta, WidthOFMenu, 2 * Time.deltaTime);
+                        col.a = Mathf.Lerp(col.a, 0.5f, 2f * Time.deltaTime);
+                        ObjectList.ToArray()[index].color = col;
+                        yield return wait;
+
+                    }
+                }
+
+            }
+        }
+        else
+        {
+            if (ObjectList.ToArray()[g].transform.parent == SettingsPanels.transform.parent)
+            {
+                while (IndexChild != g && ObjectList.ToArray()[g].gameObject != RaycasterHolder)
+                {
+                    ObjectList.ToArray()[g].transform.localScale = Vector2.Lerp(ObjectList.ToArray()[g].transform.localScale, OGSizeSettingsPanels, 3 * Time.deltaTime);
+                    yield return wait;
+                }
+                //Obj.ToArray()[g].rectTransform.sizeDelta = OGSizePanels;
+            }
+            else
+            {
+                Color col = ObjectList.ToArray()[g].color;
+                while (IndexChild != g && ObjectList.ToArray()[g].rectTransform.sizeDelta.x >= 2)
+                {
+                    ObjectList.ToArray()[g].rectTransform.sizeDelta = Vector2.Lerp(ObjectList.ToArray()[g].rectTransform.sizeDelta, WidthOFMenuSmall, 2.5f * Time.deltaTime);
+                    col.a = Mathf.Lerp(col.a, 0f, 2f * Time.deltaTime);
+                    ObjectList.ToArray()[g].color = col;
+                    yield return wait;
+                }
+
+                // Obj.ToArray()[g].color = col;
+                // Obj.ToArray()[g].rectTransform.sizeDelta = WidthOFMenuSmall;
+            }
+        }
+
+    }
     public IEnumerator selectlettercoroutine()
     {
         isbindingbutten = false;
@@ -181,10 +357,8 @@ public class Menu : MonoBehaviour
         data.position = Input.mousePosition;
         //Create a list of Raycast Results
         List<RaycastResult> results = new List<RaycastResult>();
-
         //Raycast using the Graphics Raycaster and mouse click position
         graph.Raycast(data, results);
-        WaitForFixedUpdate wait = new WaitForFixedUpdate();
 
         foreach (RaycastResult result in results)
         {
@@ -246,7 +420,6 @@ public class Menu : MonoBehaviour
     }
     public IEnumerator Transition()
     {
-        WaitForFixedUpdate nocrash = new WaitForFixedUpdate();
         WaitForSeconds abitdelay = new WaitForSeconds(0.2f);
         while (transiton.transform.GetChild(1).localPosition.x <= 50f && transiton.transform.GetChild(2).localPosition.x >= 39)
         {
@@ -259,7 +432,7 @@ public class Menu : MonoBehaviour
             Vector2 secoundtransitionimagepos = new Vector2(40.04361f, 5.493075f);
 
             transiton.transform.GetChild(2).transform.localPosition = Vector2.Lerp(transiton.transform.GetChild(2).transform.localPosition, secoundtransitionimagepos, 2.2f * Time.deltaTime);
-            yield return nocrash;
+            yield return wait;
         }
         AsyncOperation operation = SceneManager.LoadSceneAsync(2);
         yield return abitdelay;
@@ -267,7 +440,7 @@ public class Menu : MonoBehaviour
         {
             transiton.transform.GetChild(0).Rotate(0, 0, 1);
             SaveSystem.Savesystem();
-            yield return nocrash;
+            yield return wait;
         }
 
     }

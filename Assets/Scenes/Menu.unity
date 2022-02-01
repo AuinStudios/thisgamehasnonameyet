@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 121178181}
   - component: {fileID: 121178183}
   - component: {fileID: 121178182}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Keybind Settings Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,7 +449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -866,7 +866,7 @@ GameObject:
   - component: {fileID: 236892655}
   - component: {fileID: 236892657}
   - component: {fileID: 236892656}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Sound Settings Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -906,7 +906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6446,7 +6446,6 @@ GameObject:
   - component: {fileID: 384912633}
   - component: {fileID: 384912632}
   - component: {fileID: 384912634}
-  - component: {fileID: 384912631}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -6475,19 +6474,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -26}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &384912631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 384912629}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48f89ee9c40149242abbfc62e3a2c59d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bol: 0
 --- !u!114 &384912632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6543,9 +6529,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 384912631}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: hover
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOverUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6559,9 +6545,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 384912631}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: exit
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOffUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6700,7 +6686,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0.4100275}
   m_SizeDelta: {x: 20, y: -6.820055}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6965,10 +6951,9 @@ GameObject:
   - component: {fileID: 467151940}
   - component: {fileID: 467151939}
   - component: {fileID: 467151942}
-  - component: {fileID: 467151941}
   m_Layer: 5
   m_Name: Camera Select
-  m_TagString: Select
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7031,19 +7016,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 467151937}
   m_CullTransparentMesh: 0
---- !u!114 &467151941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 467151937}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48f89ee9c40149242abbfc62e3a2c59d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bol: 0
 --- !u!114 &467151942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7061,9 +7033,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 467151941}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: hover
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOverUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7077,9 +7049,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 467151941}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: exit
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOffUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7093,9 +7065,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 467151941}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: clickedon
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: ClickUiSettings
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7329,10 +7301,9 @@ GameObject:
   - component: {fileID: 542630324}
   - component: {fileID: 542630323}
   - component: {fileID: 542630326}
-  - component: {fileID: 542630325}
   m_Layer: 5
   m_Name: Sound Select
-  m_TagString: Select
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7395,19 +7366,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 542630321}
   m_CullTransparentMesh: 0
---- !u!114 &542630325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 542630321}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48f89ee9c40149242abbfc62e3a2c59d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bol: 0
 --- !u!114 &542630326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7425,9 +7383,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 542630325}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: hover
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOverUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7441,9 +7399,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 542630325}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: exit
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOffUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7457,9 +7415,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 542630325}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: clickedon
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: ClickUiSettings
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7663,10 +7621,9 @@ GameObject:
   - component: {fileID: 653684571}
   - component: {fileID: 653684570}
   - component: {fileID: 653684573}
-  - component: {fileID: 653684572}
   m_Layer: 5
   m_Name: Graphics Select
-  m_TagString: Select
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7729,19 +7686,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653684568}
   m_CullTransparentMesh: 0
---- !u!114 &653684572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653684568}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48f89ee9c40149242abbfc62e3a2c59d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bol: 0
 --- !u!114 &653684573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7759,9 +7703,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 653684572}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: hover
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOverUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7775,9 +7719,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 653684572}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: exit
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOffUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7791,9 +7735,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 653684572}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: clickedon
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: ClickUiSettings
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -8237,7 +8181,6 @@ GameObject:
   - component: {fileID: 743426331}
   - component: {fileID: 743426330}
   - component: {fileID: 743426332}
-  - component: {fileID: 743426329}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -8266,19 +8209,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -213}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &743426329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743426327}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48f89ee9c40149242abbfc62e3a2c59d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bol: 0
 --- !u!114 &743426330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8334,9 +8264,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 743426329}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: hover
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOverUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -8350,9 +8280,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 743426329}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: exit
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOffUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -8390,10 +8320,9 @@ GameObject:
   - component: {fileID: 772728077}
   - component: {fileID: 772728076}
   - component: {fileID: 772728079}
-  - component: {fileID: 772728078}
   m_Layer: 5
   m_Name: KeyBinds Select
-  m_TagString: Select
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8456,19 +8385,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 772728074}
   m_CullTransparentMesh: 0
---- !u!114 &772728078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 772728074}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48f89ee9c40149242abbfc62e3a2c59d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bol: 0
 --- !u!114 &772728079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8486,9 +8402,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 772728078}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: hover
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOverUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -8502,9 +8418,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 772728078}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: exit
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOffUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -8518,9 +8434,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 772728078}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: clickedon
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: ClickUiSettings
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -8733,8 +8649,8 @@ RectTransform:
   m_Father: {fileID: 1708678409}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.21052632, y: 0}
-  m_AnchorMax: {x: 0.21052632, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0.4100275}
   m_SizeDelta: {x: 20, y: -6.820055}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8831,7 +8747,7 @@ GameObject:
   - component: {fileID: 892618074}
   - component: {fileID: 892618073}
   m_Layer: 5
-  m_Name: GFX
+  m_Name: PLAYGFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8844,7 +8760,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892618071}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8853,8 +8769,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 0, y: -0.000024795532}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &892618073
 MonoBehaviour:
@@ -8944,7 +8860,6 @@ GameObject:
   - component: {fileID: 913848406}
   - component: {fileID: 913848405}
   - component: {fileID: 913848407}
-  - component: {fileID: 913848404}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -8973,19 +8888,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -118}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &913848404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 913848402}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48f89ee9c40149242abbfc62e3a2c59d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bol: 0
 --- !u!114 &913848405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9041,9 +8943,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 913848404}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: hover
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOverUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -9057,9 +8959,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 913848404}
-          m_TargetAssemblyTypeName: CanHover, Assembly-CSharp
-          m_MethodName: exit
+        - m_Target: {fileID: 1884615365}
+          m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+          m_MethodName: HoverOffUi
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -10699,8 +10601,8 @@ RectTransform:
   m_Father: {fileID: 1778789678}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.42857146, y: 0}
-  m_AnchorMax: {x: 0.42857146, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0.4100275}
   m_SizeDelta: {x: 20, y: -6.820055}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10829,7 +10731,7 @@ GameObject:
   - component: {fileID: 1327426058}
   - component: {fileID: 1327426057}
   m_Layer: 5
-  m_Name: GFX
+  m_Name: SettingsGFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10844,15 +10746,15 @@ RectTransform:
   m_GameObject: {fileID: 1327426055}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9974982, y: 0.9974982, z: 0.9974982}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 913848403}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 0, y: -0}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1327426057
 MonoBehaviour:
@@ -12007,7 +11909,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  m_BlockingObjects: 3
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -12087,7 +11989,7 @@ GameObject:
   - component: {fileID: 1599440696}
   - component: {fileID: 1599440698}
   - component: {fileID: 1599440697}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Graphicis Settings Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12127,7 +12029,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -12225,7 +12127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1664153987
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13061,7 +12963,7 @@ GameObject:
   - component: {fileID: 1812925825}
   - component: {fileID: 1812925824}
   m_Layer: 5
-  m_Name: GFX
+  m_Name: QUITGFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13076,15 +12978,15 @@ RectTransform:
   m_GameObject: {fileID: 1812925822}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9974982, y: 0.9974982, z: 0.9974982}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 743426328}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 0, y: 0.000030517578}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1812925824
 MonoBehaviour:
@@ -13323,11 +13225,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e44f3247b815b6459c87e3286122ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObjectList: []
   GraphicisValue: 2
+  IndexChild: 0
   savemenupos: []
   savesettingspos: []
   sliders: []
   savekey: 43010000440100007700000073000000610000006400000064000000
+  PreviousRaycasterHolder: {fileID: 0}
 --- !u!114 &1884615366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13370,7 +13275,7 @@ GameObject:
   - component: {fileID: 1889517738}
   - component: {fileID: 1889517740}
   - component: {fileID: 1889517739}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Camera Settings Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13410,7 +13315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -14896,7 +14801,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh55094
+  m_Name: pb_Mesh34046
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

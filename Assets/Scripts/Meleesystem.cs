@@ -33,11 +33,8 @@ public class Meleesystem : MonoBehaviour
         keybinds[0] = data.keys[0];
         keybinds[1] = data.keys[1];
         //cameramove = Camera.main.GetComponent<Cameramove>();
+        // getstuff im to lazy to drag in lmao -------------------
         max = spawneffect.GetComponent<ParticleSystem>();
-    }
-    
-    private void Awake()
-    {
         Ground = GameObject.Find("Ground");
         Anim = gameObject.GetComponent<Animator>();
         Slider = GameObject.Find("Meleeui").GetComponent<Slider>();
