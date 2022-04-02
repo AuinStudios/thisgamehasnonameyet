@@ -301,8 +301,6 @@ public class Menu : MonoBehaviour
 
                         yield return wait;
                     }
-
-
                 }
                 else
                 {

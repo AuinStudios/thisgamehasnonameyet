@@ -12,7 +12,6 @@ public class NewPlayer : MonoBehaviour
     // transforms and rigidbody------------
     private Rigidbody rig;
     private Transform orientation;
-    public Transform CameraRot;
     // floats ---------------------------------
     public float health = 100f;
     public float movespeed = 17500f;
@@ -100,8 +99,7 @@ public class NewPlayer : MonoBehaviour
         if (!isgroundedboi)
         {
             rig.AddForce(orientation.up * -100 * Time.fixedDeltaTime, ForceMode.Impulse);
-            rig.drag = 0.5f;
-            movespeed = 400;
+          
         }
 
     }
