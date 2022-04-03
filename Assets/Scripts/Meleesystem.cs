@@ -10,6 +10,8 @@ public class Meleesystem : MonoBehaviour
     public AudioClip hitt;
     public KeyCode[] keybinds;
     // pos + gameobjects ---------------------------
+    private Vector3 iswalking;
+    private Rigidbody Player;
     private GameObject Ground;
     public GameObject spawneffect;
     private Transform Spherecastpos;
@@ -28,6 +30,7 @@ public class Meleesystem : MonoBehaviour
     private float TimeUntllResetDamage;
     public float cooldown;
     private float StabOrChargeing;
+    private float idletimer = 0;
     // Animator ---------------------------------------
     private Animator Anim;
     // ints --------------------------------------------
@@ -35,6 +38,7 @@ public class Meleesystem : MonoBehaviour
     // most of the script ----------------------------------
     private void Start()
     {
+        iswalking = new Vector3(0, 0, 0);
         HoldVariables data = SaveSystem.load();
         keybinds = new KeyCode[2];
         keybinds[0] = data.keys[0];
@@ -46,6 +50,7 @@ public class Meleesystem : MonoBehaviour
         Anim = gameObject.GetComponent<Animator>();
         Slider = GameObject.Find("Meleeui").GetComponent<Slider>();
         Spherecastpos = gameObject.transform.GetChild(0).transform;
+        Player = GameObject.Find("Player").GetComponent<Rigidbody>();
     }
     public void OnTriggerEnter(Collider col)
     {
@@ -66,6 +71,38 @@ public class Meleesystem : MonoBehaviour
 
     void Update()
     {
+        // idle -----------------------------------------------------------------------
+
+         if(Player.velocity == iswalking && !Input.GetKeyDown(keybinds[0]))
+         {
+            idletimer += 0.6f * Time.deltaTime;
+            if (Input.GetAxisRaw("Mouse X") != 0 || (Input.GetAxisRaw("Mouse Y") != 0))
+            {
+                idletimer = 0;
+            }
+         }
+         else
+         {
+            idletimer = 0;
+         }
+         if (idletimer >= 5 && !Input.GetKeyDown(keybinds[0]) && cooldown == 0)
+         {
+            Anim.SetBool("idle", true);
+         }
+         else
+         {
+            
+            if (!Anim.GetCurrentAnimatorStateInfo(0).IsName("New AxeAnim"))
+            {
+                Anim.speed = 1;
+            }
+            else
+            {
+                Anim.SetBool("idle", false);
+                Anim.speed = 10;
+               
+            }
+         } 
         // weapon swap code ----------------------------------------------------
         if (Input.GetKeyDown(KeyCode.Alpha1) && selectweapon != 0 || Input.GetKeyDown(KeyCode.Alpha2) && selectweapon != 1 || Input.GetKeyDown(KeyCode.Alpha3) && selectweapon != 2)
         {
@@ -81,9 +118,6 @@ public class Meleesystem : MonoBehaviour
             selectweapon -= 1;
             StartCoroutine(WeaponSelect());
         }
-
-
-
         // ------------------------------------------------------------------------------------------------------------------------------
 
         RaycastHit hit;
@@ -98,11 +132,11 @@ public class Meleesystem : MonoBehaviour
         {
             // call script for CameraMove
             //cameramove.triggerDot = true;
-            if(StabOrChargeing  <= 10)
+            if (StabOrChargeing <= 10)
             {
-             StabOrChargeing += 0.35f * Time.deltaTime;
+                StabOrChargeing += 0.35f * Time.deltaTime;
             }
-            
+
             // chargeing attack
             if (StabOrChargeing > 0.1f && cooldown == 0)
             {
@@ -120,10 +154,13 @@ public class Meleesystem : MonoBehaviour
         // plays the animation and enables hitbox whenever u let go of the mouse to attack and add cooldown
         else if ((Input.GetKeyUp(keybinds[0]) && !Input.GetKey(keybinds[1]) && cooldown == 0))
         {
-
-            if (StabOrChargeing > 0.1f && cooldown == 0)
+            if(Damage  < 15)
             {
-
+                StabOrChargeing = 0;
+            }
+            if (StabOrChargeing > 0.1f && cooldown == 0 )
+            {
+                
                 Anim.SetBool("Chargeing", false);
                 ISResetingDamage = true;
                 cooldown = 5;
@@ -132,8 +169,10 @@ public class Meleesystem : MonoBehaviour
                 swing.PlayDelayed(0.2f);
                 max.maxParticles = 6;
             }
+           
             else if (StabOrChargeing < 0.1f && cooldown == 0)
             {
+                Anim.speed = 1;
                 Damage = 10f;
                 swing.PlayDelayed(0.2f);
                 Anim.SetTrigger("Axestab");
@@ -143,6 +182,7 @@ public class Meleesystem : MonoBehaviour
                 sphereradius = 0.5f;
                 max.maxParticles = 2;
             }
+           
         }
         if (Input.GetKey(keybinds[1]) && cooldown == 0)
         {
@@ -195,11 +235,9 @@ public class Meleesystem : MonoBehaviour
 
     IEnumerator WeaponSelect()
     {
-        int lastchild = transform.childCount - 1;
-      
       for(int i = 0; i < transform.childCount; i++)
       {
-        if(transform.GetChild(i) != transform.GetChild(lastchild))
+        if(transform.GetChild(i) != transform.GetChild(transform.childCount - 1))
         {
             transform.GetChild(i).gameObject.SetActive(false);
         }
