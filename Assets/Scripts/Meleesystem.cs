@@ -73,36 +73,36 @@ public class Meleesystem : MonoBehaviour
     {
         // idle -----------------------------------------------------------------------
 
-         if(Player.velocity == iswalking && !Input.GetKeyDown(keybinds[0]))
-         {
-            idletimer += 0.6f * Time.deltaTime;
-            if (Input.GetAxisRaw("Mouse X") != 0 || (Input.GetAxisRaw("Mouse Y") != 0))
-            {
-                idletimer = 0;
-            }
-         }
-         else
-         {
-            idletimer = 0;
-         }
-         if (idletimer >= 5 && !Input.GetKeyDown(keybinds[0]) && cooldown == 0)
-         {
-            Anim.SetBool("idle", true);
-         }
-         else
-         {
-            
-            if (!Anim.GetCurrentAnimatorStateInfo(0).IsName("New AxeAnim"))
-            {
-                Anim.speed = 1;
-            }
-            else
-            {
-                Anim.SetBool("idle", false);
-                Anim.speed = 10;
-               
-            }
-         } 
+         //if(Player.velocity == iswalking && !Input.GetKeyDown(keybinds[0]))
+         //{
+         //   idletimer += 0.6f * Time.deltaTime;
+         //   if (Input.GetAxisRaw("Mouse X") != 0 || (Input.GetAxisRaw("Mouse Y") != 0))
+         //   {
+         //       idletimer = 0;
+         //   }
+         //}
+         //else
+         //{
+         //   idletimer = 0;
+         //}
+         //if (idletimer >= 5 && !Input.GetKeyDown(keybinds[0]) && cooldown == 0)
+         //{
+         //   Anim.SetBool("idle", true);
+         //}
+         //else
+         //{
+         //   Anim.SetBool("idle", false);
+         //   if (!Anim.GetCurrentAnimatorStateInfo(0).IsName("New AxeAnim"))
+         //   {
+         //       Anim.speed = 1;
+         //   }
+         //   else
+         //   {
+         //       
+         //       Anim.speed = 10;
+         //      
+         //   }
+         //} 
         // weapon swap code ----------------------------------------------------
         if (Input.GetKeyDown(KeyCode.Alpha1) && selectweapon != 0 || Input.GetKeyDown(KeyCode.Alpha2) && selectweapon != 1 || Input.GetKeyDown(KeyCode.Alpha3) && selectweapon != 2)
         {
@@ -121,7 +121,7 @@ public class Meleesystem : MonoBehaviour
         // ------------------------------------------------------------------------------------------------------------------------------
 
         RaycastHit hit;
-        if (Physics.SphereCast(Spherecastpos.position, sphereradius, Spherecastpos.up, out hit, sphererange) && spawneffectdelay == true)
+        if (Physics.SphereCast(Spherecastpos.position, sphereradius, Spherecastpos.forward * -10, out hit, sphererange) && spawneffectdelay == true)
         {
             max.trigger.SetCollider(0, Ground.transform);
             Instantiate(spawneffect, hit.point, spawneffect.transform.rotation = Quaternion.FromToRotation(Vector3.forward, hit.normal));
@@ -164,7 +164,7 @@ public class Meleesystem : MonoBehaviour
                 Anim.SetBool("Chargeing", false);
                 ISResetingDamage = true;
                 cooldown = 5;
-                sphererange = 3;
+                sphererange = 4;
                 sphereradius = 1;
                 swing.PlayDelayed(0.2f);
                 max.maxParticles = 6;
@@ -178,8 +178,8 @@ public class Meleesystem : MonoBehaviour
                 Anim.SetTrigger("Axestab");
                 ISResetingDamage = true;
                 cooldown = 3.5f;
-                sphererange = 2;
-                sphereradius = 0.5f;
+                sphererange = 4;
+                sphereradius = 0.6f;
                 max.maxParticles = 2;
             }
            

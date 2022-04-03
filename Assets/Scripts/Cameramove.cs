@@ -22,7 +22,7 @@ public class Cameramove : MonoBehaviour
     private float xRotation = 0f;
     public float sensitivity = 50f;
     private float sensMultiplier = 1f;
-    private float rayCastRange = 4;
+    private float rayCastRange = 4.5f;
     private float resetArray = -1;
 
     // ints --------------------------------------------------------
