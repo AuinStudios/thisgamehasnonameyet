@@ -120,7 +120,7 @@ public class SWAY : MonoBehaviour
         y = Input.GetAxis("Mouse Y") * sensitivity * Time.fixedDeltaTime ;
         // transfer input to move the rotation and poition of the gameobject ----------------------------------------
         Quaternion rotations = new Quaternion(-y , -x , transform.localRotation.z, transform.localRotation.w);
-        Vector3 positions = new Vector3(-x * 1.5f, -y * 1.5f, transform.localPosition.z);
+        Vector3 positions = new Vector3(x * 1.5f, -y * 1.1f, transform.localPosition.z);
         // lerp the gameobjects rotation and position towards the mouse input value  --------------------------------------------
         transform.localRotation = Quaternion.Lerp(transform.localRotation,rotations , Time.deltaTime * smoothness );
         transform.localPosition = Vector3.Lerp(transform.localPosition,positions , Time.deltaTime * smoothness);

@@ -1,6 +1,8 @@
-﻿
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 public class Meleesystem : MonoBehaviour
 {
     private ParticleSystem max;
@@ -12,9 +14,12 @@ public class Meleesystem : MonoBehaviour
     public GameObject spawneffect;
     private Transform Spherecastpos;
     public ScriptableObectStorage playerhp;
+    // stringforparse ------------------------------
+    public string parsestring;
     // bool ----------------------------------------
     private bool ISResetingDamage;
     private bool spawneffectdelay;
+    private bool tryparsebool;
     // ui + sliders -------------------------
     private Slider Slider;
     // floats -------------------------------
@@ -25,6 +30,8 @@ public class Meleesystem : MonoBehaviour
     private float StabOrChargeing;
     // Animator ---------------------------------------
     private Animator Anim;
+    // ints --------------------------------------------
+    public int selectweapon = -1;
     // most of the script ----------------------------------
     private void Start()
     {
@@ -59,6 +66,26 @@ public class Meleesystem : MonoBehaviour
 
     void Update()
     {
+        // weapon swap code ----------------------------------------------------
+        if (Input.GetKeyDown(KeyCode.Alpha1) && selectweapon != 0 || Input.GetKeyDown(KeyCode.Alpha2) && selectweapon != 1 || Input.GetKeyDown(KeyCode.Alpha3) && selectweapon != 2)
+        {
+            foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
+            {
+                if (Input.GetKeyDown(kcode))
+                {
+                    parsestring = kcode.ToString();
+                }
+            }
+            
+            tryparsebool = int.TryParse(parsestring.Substring(5,1), out selectweapon);
+            selectweapon -= 1;
+            StartCoroutine(WeaponSelect());
+        }
+
+
+
+        // ------------------------------------------------------------------------------------------------------------------------------
+
         RaycastHit hit;
         if (Physics.SphereCast(Spherecastpos.position, sphereradius, Spherecastpos.up, out hit, sphererange) && spawneffectdelay == true)
         {
@@ -108,7 +135,7 @@ public class Meleesystem : MonoBehaviour
             else if (StabOrChargeing < 0.1f && cooldown == 0)
             {
                 Damage = 10f;
-                swing.Play();
+                swing.PlayDelayed(0.2f);
                 Anim.SetTrigger("Axestab");
                 ISResetingDamage = true;
                 cooldown = 3.5f;
@@ -165,4 +192,22 @@ public class Meleesystem : MonoBehaviour
             cooldown = 0;
         }
     }
+
+    IEnumerator WeaponSelect()
+    {
+        int lastchild = transform.childCount - 1;
+      
+      for(int i = 0; i < transform.childCount; i++)
+      {
+        if(transform.GetChild(i) != transform.GetChild(lastchild))
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+       
+      }
+        transform.GetChild(selectweapon).gameObject.SetActive(true);
+
+       yield return null;
+    }
+    
 }
