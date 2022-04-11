@@ -39,6 +39,7 @@ public class NewPlayer : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
         HoldVariables DATA = SaveSystem.load();
         AudioListener.volume = DATA.MasterVolume;
         sensitivity = DATA.sens;
