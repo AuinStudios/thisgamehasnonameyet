@@ -48,7 +48,7 @@ public class entranceElevatorScript : MonoBehaviour
         float timer = 0.5f;
         int i = 0;
         WaitForFixedUpdate wait = new WaitForFixedUpdate();
-        WaitForSeconds waitforsec = new WaitForSeconds(6);
+        WaitForSeconds waitforsec = new WaitForSeconds(10);
         yield return waitforsec;
         while(i <= 1000)
         {

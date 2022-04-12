@@ -105,50 +105,9 @@ public class NewPlayer : MonoBehaviour
 
     }
     // sprinting function  --------------------------------------------------------------------------------------
-    private void sprint()
-    {
-        if (sprintime >= 25)
-        {
-            sprinting = true;
-        }
-        if (sprintime == 0)
-        {
-            sprinting = false;
-        }
-        if (Input.GetKey(keybinds[4]) && sprinting == true && isgroundedboi)
-        {
-            StaminaValue.value = sprintime;
-            StaminaText.text = Mathf.Clamp((int)sprintime, 0, int.MaxValue).ToString();
-            movespeed = 200000;
-            maxspeed = 16;
-            anim.SetBool("walking", false);
-            SoundDelayValue = 0.05f;
-            if (z != 0 || x != 0)
-            {
-                sprintime -= 2.5f * Time.deltaTime;
-            }
-
-            if (z == 0 && x == 0)
-            {
-                anim.SetBool("running", false);
-                sprintime += Time.deltaTime;
-            }
-            else
-            {
-                anim.SetBool("running", true);
-            }
-
-        }
-        else if (sprintime <= 100)
-        {
-
-            anim.SetBool("running", false);
-            movespeed = 100000;
-            maxspeed = 8;
-            SoundDelayValue = 0.3f;
-            sprintime += Time.deltaTime;
-        }
-    }
+ 
+   
+    
     // sound delay loop -----------------------------------------------------------------------------------------------
     private IEnumerator soundelay()
     {
@@ -220,7 +179,48 @@ public class NewPlayer : MonoBehaviour
             StopCoroutine(soundelay());
         }
         // heal and movement force and sprinting ----------------------------------------------
-        sprint();
+        if (sprintime >= 25)
+        {
+            sprinting = true;
+        }
+        if (sprintime == 0)
+        {
+            sprinting = false;
+        }
+        if (Input.GetKey(keybinds[4]) && sprinting == true && isgroundedboi)
+        {
+            StaminaValue.value = sprintime;
+            StaminaText.text = Mathf.Clamp((int)sprintime, 0, int.MaxValue).ToString();
+            movespeed = 200000;
+            maxspeed = 16;
+            anim.SetBool("walking", false);
+            SoundDelayValue = 0.05f;
+            if (z != 0 || x != 0)
+            {
+                sprintime -= 2.5f * Time.deltaTime;
+            }
+
+            if (z == 0 && x == 0 && sprintime < 100)
+            {
+                anim.SetBool("running", false);
+                sprintime += Time.deltaTime;
+            }
+            else if(z != 0 || x != 0)
+            {
+                anim.SetBool("running", true);
+            }
+
+        }
+        else if (sprintime <= 100.1f)
+        {
+            StaminaValue.value = sprintime;
+            StaminaText.text = Mathf.Clamp((int)sprintime, 0, int.MaxValue).ToString();
+            anim.SetBool("running", false);
+            movespeed = 100000;
+            maxspeed = 8;
+            SoundDelayValue = 0.3f;
+            sprintime += Time.deltaTime;
+        }
 
         if (health < 100)
         {
