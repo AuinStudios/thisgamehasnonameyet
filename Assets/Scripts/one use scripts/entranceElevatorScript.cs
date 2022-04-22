@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class entranceElevatorScript : MonoBehaviour
 {
-    public Animator headposanim;
-    public Animator ElevatorDooranim;
+    private Animator dooranim;
+    private Animator headposanim;
+    private Animator ElevatorDooranim;
     public GameObject lights;
     public Material Lightbulbs;
     // buttenpanel view -------------
-    public Headpos poscam;
-    public NewPlayer stopmoveing;
+    private Headpos poscam;
+    private NewPlayer stopmoveing;
     private Transform camera;
     private Transform camplacement;
     private Transform savecampos;
     // private Renderer material;
+    private bool isbuttensenabled = true;
     private bool backandforth = true;
     private Vector3 test1;
     private Vector3 test2;
@@ -22,6 +24,11 @@ public class entranceElevatorScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        poscam = transform.parent.GetComponent<Headpos>();
+        stopmoveing =  GameObject.Find("Player").GetComponent<NewPlayer>();
+        headposanim = GameObject.Find("Head").GetComponent<Animator>();
+        ElevatorDooranim =  GameObject.Find("elevator").GetComponent<Animator>();
+        dooranim = GameObject.Find("firexitdoor").GetComponent<Animator>();
         camera = GameObject.Find("MainCam").transform;
         camplacement = GameObject.Find("camplacement").transform;
         savecampos = GameObject.Find("fixcamposhead").transform;
@@ -41,6 +48,7 @@ public class entranceElevatorScript : MonoBehaviour
                 {
 
                     hit.transform.gameObject.tag = "Ground";
+                    isbuttensenabled = true;
                     poscam.enabled = false;
                     stopmoveing.enabled = false;
                     camera.GetComponent<Cameramove>().enabled = false;
@@ -53,6 +61,10 @@ public class entranceElevatorScript : MonoBehaviour
                     StartCoroutine(selectbuttens(hit.transform.gameObject, camera.rotation));
                     
                     
+                }
+                else if (hit.transform.name == "door" && !dooranim.GetCurrentAnimatorStateInfo(0).IsName("doorhandleanimation"))
+                {
+                    dooranim.SetTrigger("handleanim");
                 }
             }
             //else
@@ -101,6 +113,8 @@ public class entranceElevatorScript : MonoBehaviour
                             ElevatorDooranim.SetBool("closedoors", true);
                             StartCoroutine(shakecamera());
                             StartCoroutine(Lights());
+                            
+                            isbuttensenabled = false;
                             break;
                         }
                     }
@@ -128,10 +142,15 @@ public class entranceElevatorScript : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         camera.GetComponent<Cameramove>().enabled = true;
-        if(hitt.name != "butten 2 start game")
+        if(isbuttensenabled == true)
         {
           hitt.tag = "Untagged";
           hitt.transform.GetComponent<BoxCollider>().enabled = true;
+        }
+        else
+        {
+            hitt.tag = "Ground";
+            hitt.transform.GetComponent<BoxCollider>().enabled = true;
         }
         
         poscam.enabled = true;
