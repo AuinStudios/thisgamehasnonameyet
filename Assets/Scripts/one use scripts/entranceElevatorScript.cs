@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class entranceElevatorScript : MonoBehaviour
 {
@@ -9,11 +10,12 @@ public class entranceElevatorScript : MonoBehaviour
     private Animator headposanim;
     private Animator ElevatorDooranim;
     public GameObject lights;
+    private GameObject transiton;
     public Material Lightbulbs;
     // buttenpanel view -------------
     private Headpos poscam;
     private NewPlayer stopmoveing;
-    private Transform camera;
+    private Transform maincamera;
     private Transform camplacement;
     private Transform savecampos;
     // private Renderer material;
@@ -23,16 +25,18 @@ public class entranceElevatorScript : MonoBehaviour
     private Vector3 test2;
     private float timelerp;
     // Start is called before the first frame update
+    WaitForFixedUpdate wait;
     void Start()
     {
         poscam = transform.parent.GetComponent<Headpos>();
-        stopmoveing =  GameObject.Find("Player").GetComponent<NewPlayer>();
+        stopmoveing = GameObject.Find("Player").GetComponent<NewPlayer>();
         headposanim = GameObject.Find("Head").GetComponent<Animator>();
-        ElevatorDooranim =  GameObject.Find("elevator").GetComponent<Animator>();
+        ElevatorDooranim = GameObject.Find("elevator").GetComponent<Animator>();
         dooranim = GameObject.Find("firexitdoor").GetComponent<Animator>();
-        camera = GameObject.Find("MainCam").transform;
+        maincamera = GameObject.Find("MainCam").transform;
         camplacement = GameObject.Find("camplacement").transform;
         savecampos = GameObject.Find("fixcamposhead").transform;
+        transiton = GameObject.Find("Transition");
         // anim = GameObject.Find("elevator").GetComponent<Animator>();
 
     }
@@ -52,16 +56,16 @@ public class entranceElevatorScript : MonoBehaviour
                     isbuttensenabled = true;
                     poscam.enabled = false;
                     stopmoveing.enabled = false;
-                    camera.GetComponent<Cameramove>().enabled = false;
+                    maincamera.GetComponent<Cameramove>().enabled = false;
                     headposanim.SetBool("walking", false);
                     headposanim.SetBool("running", false);
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
                     hit.transform.GetComponent<BoxCollider>().enabled = false;
                     //poscam.transform.position = savecampos.position;
-                    StartCoroutine(selectbuttens(hit.transform.gameObject, camera.rotation));
-                    
-                    
+                    StartCoroutine(selectbuttens(hit.transform.gameObject, maincamera.rotation));
+
+
                 }
                 else if (hit.transform.name == "door" && !dooranim.GetCurrentAnimatorStateInfo(0).IsName("doorhandleanimation"))
                 {
@@ -92,7 +96,7 @@ public class entranceElevatorScript : MonoBehaviour
                     {
                         Vector3 normalbuttenpos = new Vector3(hit.transform.localPosition.x, hit.transform.localPosition.y, hit.transform.localPosition.z);
                         Vector3 pressedbuttenpos = new Vector3(0.0217f, hit.transform.localPosition.y, hit.transform.localPosition.z);
-                        
+
                         float tempfloat = 0;
                         while (tempfloat < 0.2f)
                         {
@@ -109,23 +113,23 @@ public class entranceElevatorScript : MonoBehaviour
 
                             yield return wait;
                         }
-                        if(hit.transform.name == "butten 2 start game")
+                        if (hit.transform.name == "butten 2 start game")
                         {
                             ElevatorDooranim.SetBool("closedoors", true);
                             StartCoroutine(shakecamera());
                             StartCoroutine(Lights());
-                            
+
                             isbuttensenabled = false;
                             break;
                         }
                     }
-                    
+
                 }
             }
             timelerp += 0.25f * Time.deltaTime;
             disableui.alpha = Mathf.Lerp(disableui.alpha, 0, timelerp);
             poscam.transform.position = Vector3.Lerp(poscam.transform.position, camplacement.position, timelerp / 1.0f);
-            camera.rotation = Quaternion.Lerp(camera.rotation, camplacement.rotation, timelerp / 1.0f);
+            maincamera.rotation = Quaternion.Lerp(maincamera.rotation, camplacement.rotation, timelerp / 1.0f);
             yield return wait;
             //camera.position = Vector3.Lerp(camera.position, camplacement.position, timelerp / 1.0f);
         }
@@ -136,7 +140,7 @@ public class entranceElevatorScript : MonoBehaviour
             timelerp += 0.5f * Time.deltaTime;
             disableui.alpha = Mathf.Lerp(disableui.alpha, 1, timelerp);
             //  camera.position = Vector3.Lerp(camera.position, savecampos.position, timelerp / 1.0f);
-            camera.rotation = Quaternion.Lerp(camera.rotation, camrot, timelerp / 1.0f);
+            maincamera.rotation = Quaternion.Lerp(maincamera.rotation, camrot, timelerp / 1.0f);
             poscam.transform.position = Vector3.Lerp(poscam.transform.position, savecampos.position, timelerp / 1.0f);
             yield return wait;
 
@@ -144,21 +148,21 @@ public class entranceElevatorScript : MonoBehaviour
         timelerp = 0;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        camera.GetComponent<Cameramove>().enabled = true;
-        if(isbuttensenabled == true)
+        maincamera.GetComponent<Cameramove>().enabled = true;
+        if (isbuttensenabled == true)
         {
-          hitt.tag = "Untagged";
-          hitt.transform.GetComponent<BoxCollider>().enabled = true;
+            hitt.tag = "Untagged";
+            hitt.transform.GetComponent<BoxCollider>().enabled = true;
         }
         else
         {
             hitt.tag = "Ground";
             hitt.transform.GetComponent<BoxCollider>().enabled = true;
         }
-        
+
         poscam.enabled = true;
         stopmoveing.enabled = true;
-       
+
     }
     IEnumerator Lights()
     {
@@ -173,7 +177,7 @@ public class entranceElevatorScript : MonoBehaviour
             Lightbulbs.DisableKeyword("_EMISSION");
             //Lightbulbs.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
             // Lightbulbs.SetColor("_EmissionColor", Color.black);
-            yield return new WaitForSeconds(Random.Range(0.2f , 0.4f));
+            yield return new WaitForSeconds(Random.Range(0.2f, 0.4f));
             lights.SetActive(true);
             Lightbulbs.EnableKeyword("_EMISSION");
             yield return new WaitForSeconds(Random.Range(0.2f, 0.4f));
@@ -225,15 +229,43 @@ public class entranceElevatorScript : MonoBehaviour
             i++;
             yield return wait;
         }
-
+        StartCoroutine(Transition());
 
     }
-  //  private void OnTriggerEnter(Collider other)
-  //  {
-  //      //if (other.gameObject.CompareTag("Player"))
-  //      //{
-  //      //    transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
-  //      //    anim.SetBool("closedoors", true);
-  //      //}
-  //  }
+
+
+    public IEnumerator Transition()
+    {
+        WaitForSeconds abitdelay = new WaitForSeconds(0.2f);
+        while (transiton.transform.GetChild(1).localPosition.x <= 50f && transiton.transform.GetChild(2).localPosition.x >= 39)
+        {
+            Vector2 imagelogo = new Vector2(-28f, 40);
+            transiton.transform.GetChild(0).transform.localPosition = Vector2.Lerp(transiton.transform.GetChild(0).transform.localPosition, imagelogo, 2.2f * Time.deltaTime);
+            Vector2 firstranstionimagepos = new Vector2(51f, 17f);
+
+            transiton.transform.GetChild(1).transform.localPosition = Vector2.Lerp(transiton.transform.GetChild(1).transform.localPosition, firstranstionimagepos, 3f * Time.deltaTime);
+
+            Vector2 secoundtransitionimagepos = new Vector2(40.04361f, 5.493075f);
+
+            transiton.transform.GetChild(2).transform.localPosition = Vector2.Lerp(transiton.transform.GetChild(2).transform.localPosition, secoundtransitionimagepos, 2.2f * Time.deltaTime);
+            yield return wait;
+        }
+        AsyncOperation operation = SceneManager.LoadSceneAsync(3);
+        yield return abitdelay;
+        while (!operation.isDone)
+        {
+            transiton.transform.GetChild(0).Rotate(0, 0, 1);
+            SaveSystem.Savesystem();
+            yield return wait;
+        }
+        //  private void OnTriggerEnter(Collider other)
+        //  {
+        //      //if (other.gameObject.CompareTag("Player"))
+        //      //{
+        //      //    transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+        //      //    anim.SetBool("closedoors", true);
+        //      //}
+        //  }
+    }
 }
+
