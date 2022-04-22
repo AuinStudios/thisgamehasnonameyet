@@ -9,11 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/StudioOpen.unity
     guid: a5d125b1adae41149a95856f90c87722
   - enabled: 1
-    path: Assets/Scenes/Entrance.unity
-    guid: da2f1fb33c4994d449aa3683a8445eb7
-  - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 3f7d661489389b048985d9bf2470071d
+  - enabled: 1
+    path: Assets/Scenes/Entrance.unity
+    guid: da2f1fb33c4994d449aa3683a8445eb7
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
