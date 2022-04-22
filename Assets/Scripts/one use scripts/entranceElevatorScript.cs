@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class entranceElevatorScript : MonoBehaviour
 {
+    public CanvasGroup disableui;
     private Animator dooranim;
     private Animator headposanim;
     private Animator ElevatorDooranim;
@@ -122,6 +123,7 @@ public class entranceElevatorScript : MonoBehaviour
                 }
             }
             timelerp += 0.25f * Time.deltaTime;
+            disableui.alpha = Mathf.Lerp(disableui.alpha, 0, timelerp);
             poscam.transform.position = Vector3.Lerp(poscam.transform.position, camplacement.position, timelerp / 1.0f);
             camera.rotation = Quaternion.Lerp(camera.rotation, camplacement.rotation, timelerp / 1.0f);
             yield return wait;
@@ -132,6 +134,7 @@ public class entranceElevatorScript : MonoBehaviour
         while (timelerp < 0.3)
         {
             timelerp += 0.5f * Time.deltaTime;
+            disableui.alpha = Mathf.Lerp(disableui.alpha, 1, timelerp);
             //  camera.position = Vector3.Lerp(camera.position, savecampos.position, timelerp / 1.0f);
             camera.rotation = Quaternion.Lerp(camera.rotation, camrot, timelerp / 1.0f);
             poscam.transform.position = Vector3.Lerp(poscam.transform.position, savecampos.position, timelerp / 1.0f);
