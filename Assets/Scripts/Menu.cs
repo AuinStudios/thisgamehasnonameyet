@@ -105,7 +105,7 @@ public class Menu : MonoBehaviour
                 }
             }
         }
-        
+
         for (int i = 0; i < 7; i++)
         {
             sliders[3].GetChild(0).GetChild(0).GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.keys[i].ToString();
@@ -164,7 +164,7 @@ public class Menu : MonoBehaviour
             //
             //}
             ButtenCooldown = 0;
-            
+
         }
     }
 
@@ -220,11 +220,11 @@ public class Menu : MonoBehaviour
 
     public void ClickUiSettings()
     {
-        if(ObjectList.ToArray()[IndexChild].gameObject != RaycasterHolder)
+        if (ObjectList.ToArray()[IndexChild].gameObject != RaycasterHolder)
         {
-         StartCoroutine(ClickedUiSettings());
+            StartCoroutine(ClickedUiSettings());
         }
-        
+
     }
     public void HoverOverUi()
     {
@@ -245,18 +245,18 @@ public class Menu : MonoBehaviour
     }
 
 
-    public IEnumerator ClickedUiSettings( )
+    public IEnumerator ClickedUiSettings()
     {
         SettingsPanels.transform.GetChild(RaycasterHolder.gameObject.transform.GetSiblingIndex()).gameObject.SetActive(false);
-       
+
         GameObject previos = RaycasterHolder;
         List<RaycastResult> results = new List<RaycastResult>();
-         
+
         data = new PointerEventData(eventsystem);
         data.position = Input.mousePosition;
         graph.Raycast(data, results);
         RaycasterHolder = results.ToArray()[0].gameObject;
-        
+
 
         SettingsPanels.transform.GetChild(RaycasterHolder.transform.GetSiblingIndex()).gameObject.SetActive(true);
 
@@ -265,10 +265,10 @@ public class Menu : MonoBehaviour
             float t = 0;
             t += 3.5f * Time.deltaTime;
             RaycasterHolder.transform.localScale = Vector2.Lerp(RaycasterHolder.transform.localScale, ClickedSettingsPanels, t / 1f);
-            if(RaycasterHolder.transform.localScale.x >= 1.2f)
+            if (RaycasterHolder.transform.localScale.x >= 1.2f)
             {
-               float tt = 0f;
-               tt += 3.5f * Time.deltaTime;
+                float tt = 0f;
+                tt += 3.5f * Time.deltaTime;
                 previos.transform.localScale = Vector2.Lerp(previos.transform.localScale, OGSizeSettingsPanels, tt / 1f);
             }
             yield return wait;
