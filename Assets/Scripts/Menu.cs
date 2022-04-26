@@ -31,8 +31,9 @@ public class Menu : MonoBehaviour
     private bool ComeBack = false, SubComeBack = false;
     private bool canclickbuttens = false;
     private bool isbindingbutten = true;
-    private bool IShovering = false;
-    private bool CanClickPanel = false;
+    private bool isHovering = false;
+
+    //private bool CanClickPanel = false;
     // floats -----------------------------------------
     private float ButtenCooldown = 6;
     // lists ------------------------------------------
@@ -154,7 +155,7 @@ public class Menu : MonoBehaviour
         if (canclickbuttens == true)
         {
             StartCoroutine(Settings());
-            IShovering = false;
+            isHovering = false;
             int bb = IndexChild;
             IndexChild = -1;
             StartCoroutine(IsHoveringOverGameobject(bb, false));
@@ -183,7 +184,7 @@ public class Menu : MonoBehaviour
     {
         if (canclickbuttens == true)
         {
-            IShovering = false;
+            isHovering = false;
             int bb = IndexChild;
             IndexChild = -1;
             StartCoroutine(IsHoveringOverGameobject(bb, false));
@@ -198,7 +199,7 @@ public class Menu : MonoBehaviour
     {
         if (canclickbuttens == true)
         {
-            IShovering = false;
+            isHovering = false;
             int bb = IndexChild;
             IndexChild = -1;
             StartCoroutine(IsHoveringOverGameobject(bb, false));
@@ -228,7 +229,7 @@ public class Menu : MonoBehaviour
     }
     public void HoverOverUi()
     {
-        IShovering = true;
+        isHovering = true;
         int bb = IndexChild;
         //  StopCoroutine(IsHoveringOverGameobject());
         StartCoroutine(IsHoveringOverGameobject(bb, true));
@@ -236,12 +237,11 @@ public class Menu : MonoBehaviour
 
     public void HoverOffUi()
     {
-        IShovering = false;
+        isHovering = false;
         // StopCoroutine(IsHoveringOverGameobject());
         int bb = IndexChild;
         IndexChild = -1;
         StartCoroutine(IsHoveringOverGameobject(bb, true));
-
     }
 
 
@@ -277,8 +277,7 @@ public class Menu : MonoBehaviour
 
     public IEnumerator IsHoveringOverGameobject(int g, bool IsInMenu)
     {
-
-        if (IShovering == true && IsInMenu == true)
+        if (isHovering == true && IsInMenu == true)
         {
 
             List<RaycastResult> results = new List<RaycastResult>();
@@ -291,7 +290,6 @@ public class Menu : MonoBehaviour
             {
                 if (result.gameObject.transform.parent == SettingsPanels.transform.parent)
                 {
-
                     IndexChild = result.gameObject.transform.GetSiblingIndex() + 3;
                     int localindexchild = IndexChild;
 
@@ -345,7 +343,6 @@ public class Menu : MonoBehaviour
                 // Obj.ToArray()[g].rectTransform.sizeDelta = WidthOFMenuSmall;
             }
         }
-
     }
     public IEnumerator selectlettercoroutine()
     {

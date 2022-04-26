@@ -6,6 +6,7 @@ using System;
 public class Meleesystem : MonoBehaviour
 {
     private ParticleSystem max;
+    private ParticleSystem.MainModule maxMainModule;
     public AudioSource swing;
     public AudioClip hitt;
     public KeyCode[] keybinds;
@@ -46,6 +47,7 @@ public class Meleesystem : MonoBehaviour
         //cameramove = Camera.main.GetComponent<Cameramove>();
         // getstuff im to lazy to drag in lmao -------------------
         max = spawneffect.GetComponent<ParticleSystem>();
+        maxMainModule = max.main;
         Ground = GameObject.Find("Ground");
         Anim = gameObject.GetComponent<Animator>();
         Slider = GameObject.Find("Meleeui").GetComponent<Slider>();
@@ -69,6 +71,7 @@ public class Meleesystem : MonoBehaviour
         }
     }
 
+    //[Obsolete, Tooltip("SetMaxParticles is obselete.")]
     void Update()
     {
         // idle -----------------------------------------------------------------------
@@ -174,7 +177,7 @@ public class Meleesystem : MonoBehaviour
                 sphererange = 4;
                 sphereradius = 1;
                 swing.PlayDelayed(0.2f);
-                max.maxParticles = 6;
+                SetMaxParticles(6);
             }
            
             else if (StabOrChargeing < 0.1f && cooldown == 0)
@@ -187,7 +190,7 @@ public class Meleesystem : MonoBehaviour
                 cooldown = 3.5f;
                 sphererange = 4;
                 sphereradius = 0.6f;
-                max.maxParticles = 2;
+                SetMaxParticles(2);
             }
            
         }
@@ -242,17 +245,21 @@ public class Meleesystem : MonoBehaviour
 
     IEnumerator WeaponSelect()
     {
-      for(int i = 0; i < transform.childCount; i++)
-      {
-        if(transform.GetChild(i) != transform.GetChild(transform.childCount - 1))
+        for(int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(false);
+            if(transform.GetChild(i) != transform.GetChild(transform.childCount - 1))
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
-       
-      }
+
         transform.GetChild(selectweapon).gameObject.SetActive(true);
 
-       yield return null;
+        yield return null;
     }
     
+    private void SetMaxParticles(int amount)
+    {
+        maxMainModule.maxParticles = amount;
+    }
 }
