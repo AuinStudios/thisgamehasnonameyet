@@ -11,8 +11,10 @@ public class entranceElevatorScript : MonoBehaviour
     private Animator ElevatorDooranim;
     public GameObject lights;
     private GameObject transiton;
+    private GameObject darkeffect;
     public Material Lightbulbs;
     // buttenpanel view -------------
+    
     private Headpos poscam;
     private NewPlayer stopmoveing;
     private Transform maincamera;
@@ -37,6 +39,8 @@ public class entranceElevatorScript : MonoBehaviour
         camplacement = GameObject.Find("camplacement").transform;
         savecampos = GameObject.Find("fixcamposhead").transform;
         transiton = GameObject.Find("Transition");
+        darkeffect = GameObject.Find("Box Volume");
+        darkeffect.SetActive(false);
         // anim = GameObject.Find("elevator").GetComponent<Animator>();
 
     }
@@ -120,6 +124,7 @@ public class entranceElevatorScript : MonoBehaviour
                             StartCoroutine(Lights());
 
                             isbuttensenabled = false;
+                            yield return new WaitForSeconds(0.35f);
                             break;
                         }
                     }
@@ -175,11 +180,13 @@ public class entranceElevatorScript : MonoBehaviour
         {
             lights.SetActive(false);
             Lightbulbs.DisableKeyword("_EMISSION");
+            darkeffect.SetActive(true);
             //Lightbulbs.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
             // Lightbulbs.SetColor("_EmissionColor", Color.black);
             yield return new WaitForSeconds(Random.Range(0.2f, 0.4f));
             lights.SetActive(true);
             Lightbulbs.EnableKeyword("_EMISSION");
+            darkeffect.SetActive(false);
             yield return new WaitForSeconds(Random.Range(0.2f, 0.4f));
             i++;
             yield return wait;

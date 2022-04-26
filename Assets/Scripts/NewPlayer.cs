@@ -102,11 +102,25 @@ public class NewPlayer : MonoBehaviour
             rig.AddForce(orientation.up * -100 * Time.fixedDeltaTime, ForceMode.Impulse);
           
         }
+        // animation for headbop -----------------------------------------------------------------------------------------
+        if (x == 1 || x == -1 || z == 1 || z == -1)
+        {
+            anim.SetBool("walking", true);
 
+            if (enablesoundelay == true && !sound.isPlaying)
+            {
+                StartCoroutine(soundelay());
+            }
+
+            rig.AddForce(orientation.forward * x * movespeed * Time.deltaTime);
+            rig.AddForce(orientation.right * z * movespeed * Time.deltaTime);
+        }
+        else
+        {
+            anim.SetBool("walking", false);
+            StopCoroutine(soundelay());
+        }
     }
-    // sprinting function  --------------------------------------------------------------------------------------
- 
-   
     
     // sound delay loop -----------------------------------------------------------------------------------------------
     private IEnumerator soundelay()
@@ -159,35 +173,16 @@ public class NewPlayer : MonoBehaviour
             z = 0;
         }
 
-        // animation for headbop -----------------------------------------------------------------------------------------
-
-        if (x == 1 || x == -1 || z == 1 || z == -1)
-        {
-            anim.SetBool("walking", true);
-
-            if (enablesoundelay == true && !sound.isPlaying)
-            {
-                StartCoroutine(soundelay());
-            }
-
-            rig.AddForce(orientation.forward * x * movespeed * Time.deltaTime);
-            rig.AddForce(orientation.right * z * movespeed * Time.deltaTime);
-        }
-        else
-        {
-            anim.SetBool("walking", false);
-            StopCoroutine(soundelay());
-        }
         // heal and movement force and sprinting ----------------------------------------------
         if (sprintime >= 25)
         {
             sprinting = true;
         }
-        if (sprintime == 0)
+        if (sprintime <= 0)
         {
             sprinting = false;
         }
-        if (Input.GetKey(keybinds[4]) && sprinting == true && isgroundedboi)
+        if (Input.GetKey(keybinds[4]) && sprinting == true)
         {
             StaminaValue.value = sprintime;
             StaminaText.text = Mathf.Clamp((int)sprintime, 0, int.MaxValue).ToString();
