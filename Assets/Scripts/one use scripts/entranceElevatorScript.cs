@@ -41,6 +41,8 @@ public class entranceElevatorScript : MonoBehaviour
         transiton = GameObject.Find("Transition");
         darkeffect = GameObject.Find("Box Volume");
         darkeffect.SetActive(false);
+        lights.SetActive(false);
+        Lightbulbs.DisableKeyword("_EMISSION");
         // anim = GameObject.Find("elevator").GetComponent<Animator>();
 
     }
@@ -74,6 +76,14 @@ public class entranceElevatorScript : MonoBehaviour
                 else if (hit.transform.name == "door" && !dooranim.GetCurrentAnimatorStateInfo(0).IsName("doorhandleanimation"))
                 {
                     dooranim.SetTrigger("handleanim");
+                }
+                else if (hit.transform.name == "emergencylightswtich")
+                {
+                    lights.SetActive(true);
+                    Lightbulbs.EnableKeyword("_EMISSION");
+                    ElevatorDooranim.SetTrigger("OpenDoors");
+                    hit.transform.name = "lightswtichon";
+                   
                 }
             }
             //else
@@ -124,7 +134,7 @@ public class entranceElevatorScript : MonoBehaviour
                             StartCoroutine(Lights());
 
                             isbuttensenabled = false;
-                            yield return new WaitForSeconds(0.35f);
+                            yield return new WaitForSeconds(0.4f);
                             break;
                         }
                     }
