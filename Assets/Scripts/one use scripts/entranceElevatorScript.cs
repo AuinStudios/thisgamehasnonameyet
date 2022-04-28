@@ -14,7 +14,7 @@ public class entranceElevatorScript : MonoBehaviour
     [SerializeField]
     private Animator headPosAnim;
     [SerializeField]
-    private Animator elevatorDoorAnim;
+    private Animator ElevatorDoorMove;
     
     [Header("Lighting")]
     [SerializeField]
@@ -110,9 +110,10 @@ public class entranceElevatorScript : MonoBehaviour
                 {
                     lights.SetActive(true);
                     Lightbulbs.EnableKeyword("_EMISSION");
-                    elevatorDoorAnim.SetTrigger("OpenDoors");
-                    hit.transform.name = "lightswtichon";
                    
+                    ElevatorDoorMove.SetTrigger("OpenDoors");
+                    hit.transform.name = "lightswtichon";
+                    hit.transform.GetChild(1).localRotation = Quaternion.Euler(-90.879f,90 ,-90 );
                 }
             }
 
@@ -159,7 +160,7 @@ public class entranceElevatorScript : MonoBehaviour
                         }
                         if (hit.transform.name == "butten 2 start game")
                         {
-                            elevatorDoorAnim.SetBool("closedoors", true);
+                            ElevatorDoorMove.SetBool("closedoors", true);
                             StartCoroutine(shakecamera());
                             StartCoroutine(Lights());
 

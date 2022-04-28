@@ -16,6 +16,8 @@ public class AiTestV2 : MonoBehaviour
 
     private NavMeshAgent agent;
     private Vector3 targetPosition;
+    
+    private float distancebetweenplayer;
 
     private bool isMoving = false;
     private bool isWaiting = false;
@@ -31,6 +33,10 @@ public class AiTestV2 : MonoBehaviour
     [SerializeField, Range(1.0f, 5.0f)]
     private float speed = 3.0f;
 
+    [Header("Transforms")]
+    [SerializeField]
+    private Transform player;
+    
     [Header("Delay between patrols")]
     [SerializeField, Range(0.5f, 5.0f)]
     private float minDelay = 2.5f;
@@ -70,15 +76,24 @@ public class AiTestV2 : MonoBehaviour
                     }
 
                     // TODO: finish switch agent to follow state
-                    if (true)
+                    distancebetweenplayer = Vector3.Distance(player.position, transform.position);
+                    if (distancebetweenplayer <= 10)
                     {
-
+                        agent.speed = 5;
+                        agentState = AgentStates.following;
+                      
                     }
                 }
                 break;
             case AgentStates.following:
                 {
-
+                    agent.SetDestination(player.position);
+                    distancebetweenplayer = Vector3.Distance(player.position, transform.position);
+                    if (distancebetweenplayer >= 30)
+                    {
+                        agent.speed = speed;
+                        agentState = AgentStates.patrolling;
+                    }
                 }
                 break;
             case AgentStates.attacking:
@@ -100,7 +115,7 @@ public class AiTestV2 : MonoBehaviour
                 break;
         }
 
-        agent.SetDestination(targetPosition);
+       // agent.SetDestination(targetPosition);
     }
 
     private IEnumerator WaitForNextPatrol()

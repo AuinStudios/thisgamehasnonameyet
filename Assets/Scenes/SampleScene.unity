@@ -4967,10 +4967,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ec0f8e28c7c9e4197490e40dea4a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1031975006}
   agentState: 0
   agentVisibility: 10.72
   distanceThreashold: 0.922
   speed: 3
+  distancebetweenplayer: 0
   minDelay: 2.5
   maxDelay: 8
 --- !u!195 &2075947857
