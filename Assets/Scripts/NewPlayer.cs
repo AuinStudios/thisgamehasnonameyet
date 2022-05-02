@@ -221,7 +221,6 @@ public class NewPlayer : MonoBehaviour
         {
             health += 0.5f * Time.deltaTime;
             CanLerpHealth = true;
-            Debug.Log("a");
         }
         else
         {
@@ -237,6 +236,10 @@ public class NewPlayer : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             isgroundedboi = true;
+        }
+        if (other.gameObject.CompareTag("goo"))
+        {
+            health -= 10;
         }
     }
 
