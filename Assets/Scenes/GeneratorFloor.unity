@@ -1044,7 +1044,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25808
+  m_Name: pb_Mesh51980
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5081,7 +5081,7 @@ Transform:
   m_GameObject: {fileID: 1572890814228005808}
   m_LocalRotation: {x: -4.6082242e-11, y: 0.48677817, z: 8.2279066e-11, w: 0.8735256}
   m_LocalPosition: {x: 108.22, y: 10.74, z: 84.72}
-  m_LocalScale: {x: 1, y: 0.035186052, z: 1}
+  m_LocalScale: {x: 1, y: 0.025825154, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6517741235510053277}
@@ -11942,10 +11942,8 @@ MonoBehaviour:
   keybinds: 
   spawneffect: {fileID: 8407046875815354011, guid: 4d90d8694f8789147985358f99ae4786, type: 3}
   playerhp: {fileID: 11400000, guid: 4ec8fecd34620ab4bb68cc3d1439260f, type: 2}
-  parsestring: 
   Damage: 0
   cooldown: 0
-  selectweapon: -1
 --- !u!95 &7484472468914405215
 Animator:
   serializedVersion: 4

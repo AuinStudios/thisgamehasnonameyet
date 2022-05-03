@@ -75,7 +75,7 @@ public class AiTestV2 : MonoBehaviour
                         }
                     }
 
-                    // TODO: finish switch agent to follow state
+                   
                     distancebetweenplayer = Vector3.Distance(player.position, transform.position);
                     if (distancebetweenplayer <= 10)
                     {

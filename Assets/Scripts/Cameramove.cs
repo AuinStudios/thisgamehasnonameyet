@@ -4,14 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Cameramove : MonoBehaviour
-{
+{   // meleesystem ----------------------------------------------
+    //public Meleesystem melee;
+    // array ------------------------------------------------------
+    public ActiveOrNot[] weaponactive;
+    // Melee System -----------------------------------------------
+    public Transform MeleeSystem;
     // sound effects --------------------------------------------
     AudioSource sound;
 
     // Bools -------------------------------------------------------
     public bool triggerDot = false;
     private bool closeToAnEnemy = false;
-
+    public bool canopendoor = true;
     // Ui -----------------------------------------------------------
     private Image indicator;
 
@@ -28,10 +33,11 @@ public class Cameramove : MonoBehaviour
     // ints --------------------------------------------------------
     public int runCount = 0;
     private int clearancelevel = 1;
-
+    public int arrayindex;
     // transforms and gameobjects -----------------------------------
+    public Transform meleesystem;
     private Transform orientation;
-    public List<Transform> ithitholder = new List<Transform>();
+    public List<Transform> DoorHolder = new List<Transform>();
     public List<Transform> enemies = new List<Transform>();
     private Transform player;
     private Transform whatdidithit;
@@ -67,24 +73,24 @@ public class Cameramove : MonoBehaviour
             float FixLerpTimer = 0f;
             int i = 0;
             float t = 0f;
-            int index = ithitholder.Count;
+            int index = DoorHolder.Count;
 
-            ithitholder.Add(whatdidithit);
-            ithitholder.ToArray()[index].parent.gameObject.layer = 0;
+            DoorHolder.Add(whatdidithit);
+            DoorHolder.ToArray()[index].parent.gameObject.layer = 0;
             GameObject PlayerBeenHit = null;
-            Vector3 size = new Vector3(ithitholder.ToArray()[index].lossyScale.x * 7, ithitholder.ToArray()[index].lossyScale.y, ithitholder.ToArray()[index].lossyScale.z);
-            Vector3 originalpos = (ithitholder.ToArray()[index].localPosition);
-            Vector3 topos = new Vector3(ithitholder.ToArray()[index].localPosition.x, ithitholder.ToArray()[index].localPosition.y + 5f, ithitholder.ToArray()[index].localPosition.z);
+            Vector3 size = new Vector3(DoorHolder.ToArray()[index].lossyScale.x * 7, DoorHolder.ToArray()[index].lossyScale.y, DoorHolder.ToArray()[index].lossyScale.z);
+            Vector3 originalpos = (DoorHolder.ToArray()[index].localPosition);
+            Vector3 topos = new Vector3(DoorHolder.ToArray()[index].localPosition.x, DoorHolder.ToArray()[index].localPosition.y + 5f, DoorHolder.ToArray()[index].localPosition.z);
             sound.PlayDelayed(0.2f);
 
             while (i < 100)
             {
                 t += 0.1f * Time.deltaTime;
                 cooldownfordoors -= 3 * Time.deltaTime;
-                ithitholder.ToArray()[index].localPosition = Vector3.Lerp(ithitholder.ToArray()[index].localPosition, topos, t / 1);
+                DoorHolder.ToArray()[index].localPosition = Vector3.Lerp(DoorHolder.ToArray()[index].localPosition, topos, t / 1);
 
                 i++;
-                col = Physics.OverlapBox(ithitholder.ToArray()[index].position + ithitholder.ToArray()[index].TransformDirection(new Vector3(0, -3, 0)), size, ithitholder.ToArray()[index].rotation);
+                col = Physics.OverlapBox(DoorHolder.ToArray()[index].position + DoorHolder.ToArray()[index].TransformDirection(new Vector3(0, -3, 0)), size, DoorHolder.ToArray()[index].rotation);
 
                 yield return Waitforfixed;
             }
@@ -107,7 +113,7 @@ public class Cameramove : MonoBehaviour
                 if (cooldownfordoors >= 6f)
                 {
 
-                    col = Physics.OverlapBox(ithitholder.ToArray()[index].position + ithitholder.ToArray()[index].TransformDirection(new Vector3(0, -3, 0)), size, ithitholder.ToArray()[index].rotation);
+                    col = Physics.OverlapBox(DoorHolder.ToArray()[index].position + DoorHolder.ToArray()[index].TransformDirection(new Vector3(0, -3, 0)), size, DoorHolder.ToArray()[index].rotation);
 
                     foreach (Collider hit in col)
                     {
@@ -119,7 +125,7 @@ public class Cameramove : MonoBehaviour
                             t = 0;
                             FixLerpTimer += 0.3f * Time.deltaTime;
                             PlayerBeenHit = hit.gameObject;
-                            ithitholder.ToArray()[index].localPosition = Vector3.Lerp(ithitholder.ToArray()[index].localPosition, topos, FixLerpTimer / 1);
+                            DoorHolder.ToArray()[index].localPosition = Vector3.Lerp(DoorHolder.ToArray()[index].localPosition, topos, FixLerpTimer / 1);
                         }
                         else
                         {
@@ -133,7 +139,7 @@ public class Cameramove : MonoBehaviour
                     resetArray -= 0.001f * Time.deltaTime;
                     FixLerpTimer = 0;
                     t += 0.1f * Time.deltaTime;
-                    ithitholder.ToArray()[index].localPosition = Vector3.Lerp(ithitholder.ToArray()[index].localPosition, originalpos, t / 1);
+                    DoorHolder.ToArray()[index].localPosition = Vector3.Lerp(DoorHolder.ToArray()[index].localPosition, originalpos, t / 1);
 
                     i++;
                 }
@@ -141,8 +147,8 @@ public class Cameramove : MonoBehaviour
                 yield return Waitforfixed;
             }
 
-            ithitholder.ToArray()[index].localPosition = originalpos;
-            ithitholder.ToArray()[index].parent.gameObject.layer = 10;
+            DoorHolder.ToArray()[index].localPosition = originalpos;
+            DoorHolder.ToArray()[index].parent.gameObject.layer = 10;
         }
     }
 
@@ -161,9 +167,9 @@ public class Cameramove : MonoBehaviour
         }
         
 
-        if (resetArray <= 0 && ithitholder.Count > 0)
+        if (resetArray <= 0 && DoorHolder.Count > 0)
         {
-            ithitholder.Clear();
+            DoorHolder.Clear();
         }
 
         if (resetArray > 0 && resetArray != 12.2f)
@@ -184,9 +190,9 @@ public class Cameramove : MonoBehaviour
             }
         }
 
-        RaycastHit hit;
+       
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, rayCastRange) && (triggerDot == true || closeToAnEnemy == true))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, rayCastRange) && (triggerDot == true || closeToAnEnemy == true))
         {
             runCount++;
 
@@ -205,9 +211,9 @@ public class Cameramove : MonoBehaviour
             triggerDot = false;
         }
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, rayCastRange) && Input.GetKeyDown(KeyCode.E))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, rayCastRange) && Input.GetKeyDown(KeyCode.E) )
         {
-            if (hit.collider.gameObject.layer == 10)
+            if (hit.collider.gameObject.layer == 10 && canopendoor == true)
             {
                 whatdidithit = hit.transform;
                 whatdidithit = whatdidithit.GetChild(0);
@@ -215,6 +221,17 @@ public class Cameramove : MonoBehaviour
                 {
                     StartCoroutine(opendoor());
                 }
+            }
+            if (hit.collider.CompareTag("pickableweapons"))
+            {
+                
+               arrayindex = hit.collider.gameObject.GetComponent<ActiveOrNot>().test;
+                
+                  
+                    weaponactive[arrayindex].canbeactive = true;
+
+                Destroy(hit.collider.gameObject);
+               
             }
         }
     }

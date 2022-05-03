@@ -9,6 +9,7 @@ TagManager:
   - TypeWriterStarter
   - goo
   - Buttens
+  - pickableweapons
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Weapon
   - Glow
   - Door
-  - 
+  - Item
   - 
   - 
   - 

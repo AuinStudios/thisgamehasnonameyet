@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 public class Meleesystem : MonoBehaviour
 {
+    public Cameramove cam;
     private ParticleSystem max;
     private ParticleSystem.MainModule maxMainModule;
     public AudioSource swing;
@@ -18,11 +19,12 @@ public class Meleesystem : MonoBehaviour
     private Transform Spherecastpos;
     public ScriptableObectStorage playerhp;
     // stringforparse ------------------------------
-    public string parsestring;
+    private string parsestring;
     // bool ----------------------------------------
     private bool ISResetingDamage;
-    private bool spawneffectdelay;
+    //private bool spawneffectdelay;
     private bool tryparsebool;
+    private bool canattack = false;
     // ui + sliders -------------------------
     private Slider Slider;
     // floats -------------------------------
@@ -35,7 +37,7 @@ public class Meleesystem : MonoBehaviour
     // Animator ---------------------------------------
     private Animator Anim;
     // ints --------------------------------------------
-    public int selectweapon = -1;
+    private int selectweapon = -1;
     // most of the script ----------------------------------
     private void Start()
     {
@@ -61,7 +63,13 @@ public class Meleesystem : MonoBehaviour
         {
             col.gameObject.GetComponent<customsliderhealthui>().health -= Damage;
             // spawn it -----------------------------------------------------
-            spawneffectdelay = true;
+            // spawneffectdelay = true;
+            if (Physics.SphereCast(Spherecastpos.position, sphereradius, Spherecastpos.forward * -10, out RaycastHit hit, sphererange))//&& spawneffectdelay == true)
+            {
+                max.trigger.SetCollider(0, Ground.transform);
+                Instantiate(spawneffect, hit.point, spawneffect.transform.rotation = Quaternion.FromToRotation(Vector3.forward, hit.normal));
+                //spawneffectdelay = false;
+            }
             //col.gameObject.GetComponent<Rigidbody>().AddForce(camtransform.forward * 20000);
         }
 
@@ -76,42 +84,42 @@ public class Meleesystem : MonoBehaviour
     {
         // idle -----------------------------------------------------------------------
 
-         if(Player.velocity == iswalking && !Input.GetKeyDown(keybinds[0]))
-         {
+        if (Player.velocity == iswalking && !Input.GetKeyDown(keybinds[0]))
+        {
             idletimer += 0.6f * Time.deltaTime;
             if (Input.GetAxisRaw("Mouse X") != 0 || (Input.GetAxisRaw("Mouse Y") != 0))
             {
                 idletimer = 0;
             }
-         }
-         else
-         {
+        }
+        else
+        {
 
             idletimer = 0;
-         }
-         if (idletimer >= 5 && !Input.GetKeyDown(keybinds[0]) && cooldown == 0)
-         {
+        }
+        if (idletimer >= 5 && !Input.GetKeyDown(keybinds[0]) && cooldown == 0)
+        {
             Anim.speed = 1;
             Anim.SetBool("idle", true);
-         }
-         else
-         {
+        }
+        else
+        {
             Anim.SetBool("idle", false);
-           
+
             if (Anim.GetCurrentAnimatorStateInfo(0).IsName("NewLightAttack"))
             {
                 Anim.speed = 1;
-               
+
             }
-            else  if(!Anim.GetCurrentAnimatorStateInfo(0).IsName("New AxeAnim") && StabOrChargeing == 0)
+            else if (!Anim.GetCurrentAnimatorStateInfo(0).IsName("New AxeAnim") && StabOrChargeing == 0)
             {
                 Anim.speed = 1;
             }
             else
             {
-              Anim.speed = 10;
+                Anim.speed = 10;
             }
-        } 
+        }
         // weapon swap code ----------------------------------------------------
         if (Input.GetKeyDown(KeyCode.Alpha1) && selectweapon != 0 || Input.GetKeyDown(KeyCode.Alpha2) && selectweapon != 1 || Input.GetKeyDown(KeyCode.Alpha3) && selectweapon != 2)
         {
@@ -122,22 +130,18 @@ public class Meleesystem : MonoBehaviour
                     parsestring = kcode.ToString();
                 }
             }
-            
-            tryparsebool = int.TryParse(parsestring.Substring(5,1), out selectweapon);
+
+            tryparsebool = int.TryParse(parsestring.Substring(5, 1), out selectweapon);
             selectweapon -= 1;
             StartCoroutine(WeaponSelect());
         }
         // ------------------------------------------------------------------------------------------------------------------------------
 
-        RaycastHit hit;
-        if (Physics.SphereCast(Spherecastpos.position, sphereradius, Spherecastpos.forward * -10, out hit, sphererange) && spawneffectdelay == true)
-        {
-            max.trigger.SetCollider(0, Ground.transform);
-            Instantiate(spawneffect, hit.point, spawneffect.transform.rotation = Quaternion.FromToRotation(Vector3.forward, hit.normal));
-            spawneffectdelay = false;
-        }
+
+
         // the main function -----------------------------------------------
-        if (Input.GetKey(keybinds[0]) && !Input.GetKey(keybinds[1]) && cooldown == 0)
+
+        if (Input.GetKey(keybinds[0]) && canattack == true && !Input.GetKey(keybinds[1]) && cooldown == 0)
         {
             Anim.speed = 1;
             // call script for CameraMove
@@ -162,15 +166,15 @@ public class Meleesystem : MonoBehaviour
         }
 
         // plays the animation and enables hitbox whenever u let go of the mouse to attack and add cooldown
-        else if ((Input.GetKeyUp(keybinds[0]) && !Input.GetKey(keybinds[1]) && cooldown == 0))
+        else if ((Input.GetKeyUp(keybinds[0]) && canattack == true && !Input.GetKey(keybinds[1]) && cooldown == 0))
         {
-            if(Damage  < 15)
+            if (Damage < 15)
             {
                 StabOrChargeing = 0;
             }
-            if (StabOrChargeing > 0.1f && cooldown == 0 )
+            if (StabOrChargeing > 0.1f && cooldown == 0)
             {
-                
+
                 Anim.SetBool("Chargeing", false);
                 ISResetingDamage = true;
                 cooldown = 5;
@@ -179,7 +183,7 @@ public class Meleesystem : MonoBehaviour
                 swing.PlayDelayed(0.2f);
                 SetMaxParticles(6);
             }
-           
+
             else if (StabOrChargeing < 0.1f && cooldown == 0)
             {
                 Anim.speed = 1;
@@ -192,9 +196,9 @@ public class Meleesystem : MonoBehaviour
                 sphereradius = 0.6f;
                 SetMaxParticles(2);
             }
-           
+
         }
-        if (Input.GetKey(keybinds[1]) && cooldown == 0)
+        if (Input.GetKey(keybinds[1]) && canattack == true && cooldown == 0)
         {
             Anim.SetBool("block", true);
             playerhp.isblocking = true;
@@ -231,13 +235,13 @@ public class Meleesystem : MonoBehaviour
         }
 
         //  decrease the cooldown over time and enable cooldownslider background ------------------------------------------------------------------------
-        if (cooldown > 0 )
+        if (cooldown > 0)
         {
             cooldown -= Time.deltaTime;
             Slider.maxValue = 5;
             Slider.value = cooldown;
         }
-        else if( cooldown < 0)
+        else if (cooldown < 0)
         {
             cooldown = 0;
         }
@@ -245,19 +249,40 @@ public class Meleesystem : MonoBehaviour
 
     IEnumerator WeaponSelect()
     {
-        for(int i = 0; i < transform.childCount; i++)
+        cam.arrayindex = selectweapon;
+       for (int t = 0; t < transform.childCount; t++)
+       {
+           if (transform.GetChild(t) != transform.GetChild(transform.childCount - 1) && cam.weaponactive[cam.arrayindex].canbeactive == true)
+           {
+               transform.GetChild(t).gameObject.SetActive(false);
+           }
+       }
+
+
+       if (cam.weaponactive[cam.arrayindex].canbeactive == true)
+       {
+           transform.GetChild(selectweapon).gameObject.SetActive(true);
+       }
+       else
+       {
+           StopCoroutine(WeaponSelect());
+       }
+
+
+
+       
+
+        if (transform.GetChild(selectweapon).gameObject.layer == 8)
         {
-            if(transform.GetChild(i) != transform.GetChild(transform.childCount - 1))
-            {
-                transform.GetChild(i).gameObject.SetActive(false);
-            }
+            canattack = true;
         }
-
-        transform.GetChild(selectweapon).gameObject.SetActive(true);
-
+        else
+        {
+            canattack = false;
+        }
         yield return null;
     }
-    
+
     private void SetMaxParticles(int amount)
     {
         maxMainModule.maxParticles = amount;

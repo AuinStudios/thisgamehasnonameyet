@@ -152,6 +152,7 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -168,7 +169,8 @@ PlayerSettings:
   resolutionScalingMode: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Standalone: com.DefaultCompany.New-Unity-Project
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -715,7 +717,7 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 2
-  cloudProjectId: b390f647-1159-4502-97dd-46b47ec321cb
+  cloudProjectId: d15d2ffa-5d1c-4780-9a12-4dca86a88660
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: New Unity Project
