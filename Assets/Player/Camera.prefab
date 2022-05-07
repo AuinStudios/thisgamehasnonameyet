@@ -1232,7 +1232,7 @@ MonoBehaviour:
   sensitivity: 50
   runCount: 0
   arrayindex: 0
-  meleesystem: {fileID: 0}
+  meleesystem: {fileID: 1472648172391058498}
   DoorHolder: []
   enemies:
   - {fileID: 0}

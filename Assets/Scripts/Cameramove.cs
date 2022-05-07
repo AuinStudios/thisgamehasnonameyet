@@ -224,12 +224,17 @@ public class Cameramove : MonoBehaviour
             }
             if (hit.collider.CompareTag("pickableweapons"))
             {
-                
-               arrayindex = hit.collider.gameObject.GetComponent<ActiveOrNot>().test;
+                for(int i  = 0; i < meleesystem.transform.childCount - 1; i++)
+                {
+                    meleesystem.GetChild(i).gameObject.SetActive(false);
+                }
+
+                arrayindex = hit.collider.gameObject.GetComponent<ActiveOrNot>().test;
                 
                   
                     weaponactive[arrayindex].canbeactive = true;
-
+                meleesystem.GetChild(arrayindex).gameObject.SetActive(true);
+                
                 Destroy(hit.collider.gameObject);
                
             }
