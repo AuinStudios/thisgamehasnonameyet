@@ -199,14 +199,14 @@ public class Cameramove : MonoBehaviour
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * rayCastRange, Color.red);
             if (hit.collider.gameObject.CompareTag("Enemy"))
             {
-                indicator.GetComponent<Image>().color = new Vector4(255, 0, 0, 255);
+                indicator.color = new Vector4(255, 0, 0, 255);
             }
 
         }
         else
         {
             //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * rayCastRange, Color.white);
-            indicator.GetComponent<Image>().color = new Vector4(255, 255, 255, 255);
+            indicator.color = new Vector4(255, 255, 255, 255);
 
             triggerDot = false;
         }

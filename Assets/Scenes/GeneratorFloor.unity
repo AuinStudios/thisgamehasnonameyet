@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 23ce84471846a0a478848854adb67ce2, type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: c16d6a24b5ef71b47bcef52841bc879e, type: 2}
+  m_LightingDataAsset: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 477cc4148fad3449482a3bc3178594e2, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -223,7 +223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8408793
 Transform:
   m_ObjectHideFlags: 0
@@ -1535,7 +1535,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -6478536213147159724, guid: 08c680b015f000c4a9ca5a271f8b0ea2, type: 3}
-  - {fileID: 2100000, guid: 3724b2e96ddc08a46a05095c6a5a281d, type: 2}
+  - {fileID: -6478536213147159724, guid: 08c680b015f000c4a9ca5a271f8b0ea2, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6610,7 +6610,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh28022
+  m_Name: pb_Mesh32558
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7268,7 +7268,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -6478536213147159724, guid: 08c680b015f000c4a9ca5a271f8b0ea2, type: 3}
-  - {fileID: 2100000, guid: 3724b2e96ddc08a46a05095c6a5a281d, type: 2}
+  - {fileID: -6478536213147159724, guid: 08c680b015f000c4a9ca5a271f8b0ea2, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7415,7 +7415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &800654945
 Transform:
   m_ObjectHideFlags: 0
@@ -9314,7 +9314,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25816
+  m_Name: pb_Mesh30344
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14360,7 +14360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1574298424
 Transform:
   m_ObjectHideFlags: 0
@@ -14465,7 +14465,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -6478536213147159724, guid: 08c680b015f000c4a9ca5a271f8b0ea2, type: 3}
-  - {fileID: 2100000, guid: 3724b2e96ddc08a46a05095c6a5a281d, type: 2}
+  - {fileID: -6478536213147159724, guid: 08c680b015f000c4a9ca5a271f8b0ea2, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
